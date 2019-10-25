@@ -12,8 +12,20 @@ class UserCabangSchema extends Schema {
       table.string('user_cabang_password', 200).notNullable()
       table.string('user_cabang_telepon', '20')
       table.text('user_cabang_alamat', 'mediumtext')
-      table.integer('kantor_cabang_id')
-      table.integer('user_role_id')
+      table
+        .integer('kantor_cabang_id')
+        .unsigned()
+        .references('kantor_cabang_id')
+        .inTable('kantor_cabangs')
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE')
+      table
+        .integer('user_role_id')
+        .unsigned()
+        .references('user_role_id')
+        .inTable('user_roles')
+        .onUpdate('CASCADE')
+        .onDelete('SET NULL');
       table.timestamps()
     })
   }

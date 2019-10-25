@@ -7,6 +7,14 @@ class KantorStatus extends Model {
     static get primaryKey(){
         return 'kantor_status_id'
     }
+
+    static get createdAtColumn(){
+        return null
+    }
+
+    static get updatedAtColumn(){
+        return null
+    }
     
     kantorCabang(){
         return this.hasMany('App/Models/KantorCabang')

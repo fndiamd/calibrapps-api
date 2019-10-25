@@ -12,12 +12,16 @@ class UserCabang extends Model {
         })
     }
 
-    roleUser(){
-        return this.hashOne('App/Models/UserRole')
+    static get primaryKey(){
+        return 'user_cabang_id'
     }
 
-    kantorCabang(){
-        return this.hashOne('App/Models/KantorCabang')
+    role(){
+        return this.belongsTo('App/Models/UserRole')
+    }
+
+    kantor_cabang(){
+        return this.belongsTo('App/Models/KantorCabang')
     }
 }
 

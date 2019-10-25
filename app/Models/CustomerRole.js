@@ -3,10 +3,9 @@
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
 
-class UserRole extends Model {
-
+class CustomerRole extends Model {
     static get primaryKey(){
-        return 'user_role_id'
+        return 'customer_role_id'
     }
 
     static get createdAtColumn(){
@@ -17,9 +16,9 @@ class UserRole extends Model {
         return null
     }
 
-    userCabang(){
-        return this.hashMany('App/Models/UserCabang')
+    roleUser(){
+        return this.hasMany('App/Models/UserCustomer')
     }
 }
 
-module.exports = UserRole
+module.exports = CustomerRole
