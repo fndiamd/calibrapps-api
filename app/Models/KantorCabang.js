@@ -4,7 +4,7 @@
 const Model = use('Model')
 
 class KantorCabang extends Model {
-
+    
     static get primaryKey(){
         return 'kantor_cabang_id'
     }

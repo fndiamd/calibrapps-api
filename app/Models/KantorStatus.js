@@ -7,7 +7,7 @@ class KantorStatus extends Model {
     static get primaryKey(){
         return 'kantor_status_id'
     }
-    
+
     kantorCabang(){
         return this.hasMany('App/Models/KantorCabang')
     }

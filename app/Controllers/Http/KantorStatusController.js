@@ -3,37 +3,41 @@
 const KantorStatus = use('App/Models/KantorStatus')
 
 class KantorStatusController {
+    
     async index({response}){
         let kantorStatus = await KantorStatus.query().fetch()
         return response.json(kantorStatus)
     }
 
-    async getById({params, response}){
-        const kantorStatus = KantorStatus.findBy('kantor_status_id', params.id)
-        return kantorStatus
-    }
-
-    async store({request, response}){
+    async store({response, request}){
         const kantorStatus = new KantorStatus()
-        const kantorKeterangan = request.input('kantor_status_keterangan')
-        kantorStatus.kantor_status_keterangan = kantorKeterangan
+        const data = {
+            kantor_status_keterangan : request.input('kantor_status_keterangan')
+        }
+
+        kantorStatus.kantor_status_keterangan = data.kantor_status_keterangan
+
         await kantorStatus.save()
-        return response.json(kantorStatus)
+        return response.json(kantorStatus)   
     }
 
-    async update({params, request, response}){
-        const kantorStatus = await KantorStatus.find(params.id)
-        const kantorKeterangan = request.input('kantor_status_keterangan')
-        kantorStatus.kantor_status_keterangan = kantorKeterangan
+    async update({params, response, request}){
+        let kantorStatus = await KantorStatus.find(params.id)
+        
+        const data = {
+          kantor_status_keterangan : request.input('kantor_status_keterangan')
+        }
+
+        kantorStatus.kantor_status_keterangan = data.kantor_status_keterangan
+
         await kantorStatus.save()
-        return response.json(kantorStatus)
+        return response.json(kantorStatus)    
     }
 
-    async delete({params, response}){
-        const kantorStatus = await KantorStatus.find(params.id)
-        await kantorStatus.delete()
-        return response.json({message : 'Status berhasil dihapus'})
-    }
+    async destroy ({ params, request, response }) {
+      await KantorStatus.find(params.id).delete()
+      return response.json({message: 'Kantor status berhasil dihapus'})
+  } 
 }
 
 module.exports = KantorStatusController

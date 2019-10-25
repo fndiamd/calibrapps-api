@@ -4,8 +4,12 @@
 const Model = use('Model')
 
 class UserRole extends Model {
-    userRole(){
-        return this.hashMany('App/Models/UserCabang')
+    static get primaryKey(){
+        return 'user_role_id'
+    }
+
+    userCabang(){
+        return this.hasMany('App/Models/UserCabang')
     }
 }
 

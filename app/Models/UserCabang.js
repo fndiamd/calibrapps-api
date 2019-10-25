@@ -8,16 +8,20 @@ class UserCabang extends Model {
     static boot(){
         super.boot();
         this.addHook('beforeSave', async (userInstance) => {
-            userInstance.user_cabang_password = await Hash.make(userInstance.user_cabang_password)
+            userInstance.user_cabang_password = await Hash.make(userInstance.user_cabang_password) 
         })
     }
+    
+    static get primaryKey(){
+        return 'user_cabang_id'
+    }
 
-    roleUser(){
-        return this.hashOne('App/Models/UserRole')
+    userRole(){
+        return this.hasOne('App/Models/UserRole')
     }
 
     kantorCabang(){
-        return this.hashOne('App/Models/KantorCabang')
+        return this.hasOne('App/Models/KantorCabang')
     }
 }
 
