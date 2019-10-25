@@ -98,16 +98,22 @@ module.exports = {
     model: 'App/Models/UserCabang',
     scheme: 'jwt',
     uid: 'user_cabang_email',
-    password: 'user_cabang_password'
+    password: 'user_cabang_password',
+    options: {
+      secret: Env.get('APP_KEY')
+    }
   },
 
   // Middleware for User Customer
   customer: {
     serializer: 'lucid',
-    model: 'App/Models/UserCabang',
+    model: 'App/Models/UserCustomer',
     scheme: 'jwt',
-    uid: 'user_cabang_email',
-    password: 'user_cabang_password'
+    uid: 'user_customer_email',
+    password: 'user_customer_password',
+    options: {
+      secret: Env.get('APP_KEY')
+    }
   }
 
 }

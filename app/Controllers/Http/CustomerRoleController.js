@@ -1,30 +1,43 @@
 'use strict'
 
-const CustomerRole = use('App/Model/CustomerRole')
+const CustomerRole = use('App/Models/CustomerRole')
 
 class CustomerRoleController {
+    
+    async index({response}){
+        let customerRole = await CustomerRole.query().fetch()
+        return response.json(customerRole)
+    }
 
-  async index ({response}) {
-    let customerRole = CustomerRole.query().fetch()
-    return response.json(customerRole)
-  }
+    async store({response, request}){
+        const customerRole = new CustomerRole()
+        const data = {
+            customer_role_keterangan : request.input('customer_role_keterangan')
+        }
 
-  async store ({ request, response}) {
-    const customerRole = new CustomerRole()
-    customerRole.customer_role_keterangan = request.input('customer_role_keterangan')
-    await customerRole.save()
-    return response.json(customerRole)
-  }
+        customerRole.customer_role_keterangan = data.customer_role_keterangan
 
-  async update ({ params, request, response }) {
-  }
+        await customerRole.save()
+        return response.json(customerRole)   
+    }
 
+    async update({params, response, request}){
+        let customerRole = await CustomerRole.find(params.id)
+        
+        const data = {
+          customer_role_keterangan : request.input('customer_role_keterangan')
+        }
 
-  async destroy ({ params, request, response }) {
-    const customerRole = await CustomerRole.find(params.id)
-    await CustomerRole.delete()
-    return response.json({message : 'Role berhasil dihapus'})
-  }
+        customerRole.customer_role_keterangan = data.customer_role_keterangan
+
+        await customerRole.save()
+        return response.json(customerRole) 
+    }
+
+    async destroy ({ params, request, response }) {
+      await CustomerRole.find(params.id).delete()
+      return response.json({message: 'Customer role berhasil dihapus'})
+  } 
 }
 
 module.exports = CustomerRoleController

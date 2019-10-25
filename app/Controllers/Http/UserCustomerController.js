@@ -1,93 +1,67 @@
 'use strict'
 
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const UserCustomer = use('App/Models/UserCustomer')
 
-/**
- * Resourceful controller for interacting with usercustomers
- */
-class UserCustomerController {
-  /**
-   * Show a list of all usercustomers.
-   * GET usercustomers
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async index ({ request, response, view }) {
-  }
+class UserCabangController {
 
-  /**
-   * Render a form to be used for creating a new usercustomer.
-   * GET usercustomers/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
-  }
+    async index({ response }) {
+        let userCustomer = await UserCustomer.query().fetch()
+        return response.json(userCustomer)
+    }
 
-  /**
-   * Create/save a new usercustomer.
-   * POST usercustomers
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
-  }
+    async store({ response, request }) {
+        const userCustomer = new UserCustomer()
+        const data = {
+            user_customer_nama: request.input('user_customer_nama'),
+            user_customer_email: request.input('user_customer_email'),
+            user_customer_password: request.input('user_customer_password'),
+            user_customer_telepon: request.input('user_customer_telepon'),
+            user_customer_alamat: request.input('user_customer_alamat'),
+            customer_perusahaan_id: request.input('customer_perusahaan_id'),
+            customer_role_id: request.input('customer_role_id')
+        }
 
-  /**
-   * Display a single usercustomer.
-   * GET usercustomers/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
-  }
+        userCustomer.user_customer_nama = data.user_customer_nama
+        userCustomer.user_customer_email = data.user_customer_email
+        userCustomer.user_customer_password = data.user_customer_password
+        userCustomer.user_customer_telepon = data.user_customer_telepon
+        userCustomer.user_customer_alamat = data.user_customer_alamat
+        userCustomer.customer_perusahaan_id = data.customer_perusahaan_id
+        userCustomer.customer_role_id = data.customer_role_id
 
-  /**
-   * Render a form to update an existing usercustomer.
-   * GET usercustomers/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
+        await userCustomer.save()
+        return response.json(userCustomer)
+    }
 
-  /**
-   * Update usercustomer details.
-   * PUT or PATCH usercustomers/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
-  }
+    async update({ params, response, request }) {
+        let userCustomer = await UserCustomer.find(params.id)
 
-  /**
-   * Delete a usercustomer with id.
-   * DELETE usercustomers/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
-  }
+        const data = {
+            user_customer_nama: request.input('user_customer_nama'),
+            user_customer_email: request.input('user_customer_email'),
+            user_customer_password: request.input('user_customer_password'),
+            user_customer_telepon: request.input('user_customer_telepon'),
+            user_customer_alamat: request.input('user_customer_alamat'),
+            customer_perusahaan_id: request.input('customer_perusahaan_id'),
+            customer_role_id: request.input('customer_role_id')
+        }
+
+        userCustomer.user_customer_nama = data.user_customer_nama
+        userCustomer.user_customer_email = data.user_customer_email
+        userCustomer.user_customer_password = data.user_customer_password
+        userCustomer.user_customer_telepon = data.user_customer_telepon
+        userCustomer.user_customer_alamat = data.user_customer_alamat
+        userCustomer.customer_perusahaan_id = data.customer_perusahaan_id
+        userCustomer.customer_role_id = data.customer_role_id
+
+        await userCustomer.save()
+        return response.json(userCustomer)
+    }
+
+    async destroy({ params, request, response }) {
+        await UserCustomer.find(params.id).delete()
+        return response.json({ message: 'User customer berhasil dihapus' })
+    }
 }
 
-module.exports = UserCustomerController
+module.exports = UserCabangController

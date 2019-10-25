@@ -4,21 +4,12 @@
 const Model = use('Model')
 
 class UserRole extends Model {
-
     static get primaryKey(){
         return 'user_role_id'
     }
 
-    static get createdAtColumn(){
-        return null
-    }
-
-    static get updatedAtColumn(){
-        return null
-    }
-
     userCabang(){
-        return this.hashMany('App/Models/UserCabang')
+        return this.hasMany('App/Models/UserCabang')
     }
 }
 

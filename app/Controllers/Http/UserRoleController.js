@@ -3,36 +3,41 @@
 const UserRole = use('App/Models/UserRole')
 
 class UserRoleController {
-    async index({response}){
+
+    async index({ response }) {
         let userRole = await UserRole.query().fetch()
         return response.json(userRole)
     }
 
-    async getById({params, response}){
-        const userRole = await UserRole.findBy('user_role_id', params.id)
-        return userRole
-    }
-
-    async store({request, response}){
+    async store({ response, request }) {
         const userRole = new UserRole()
-        userRole.user_role_keterangan = request.input('user_role_keterangan')
+        const data = {
+            user_role_keterangan: request.input('user_role_keterangan')
+        }
+
+        userRole.user_role_keterangan = data.user_role_keterangan
+
         await userRole.save()
         return response.json(userRole)
     }
 
-    async update({params, request, response}){
-        const userRole = await UserRole.find(params.id)
-        userRole.user_role_keterangan = request.input('user_role_keterangan')
+    async update({ params, response, request }) {
+        let userRole = await UserRole.find(params.id)
+
+        const data = {
+            user_role_keterangan: request.input('user_role_keterangan')
+        }
+
+        userRole.user_role_keterangan = data.user_role_keterangan
+
         await userRole.save()
         return response.json(userRole)
     }
 
-    async delete({params, response}){
-        const userRole = await UserRole.find(params.id)
-        userRole.delete()
-        return response.json({message : 'Role user berhasil dihapus'})
+    async destroy({ params, request, response }) {
+        await UserRole.find(params.id).delete()
+        return response.json({ message: 'User Role berhasil dihapus' })
     }
-
 }
 
 module.exports = UserRoleController

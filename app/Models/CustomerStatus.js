@@ -8,15 +8,7 @@ class CustomerStatus extends Model {
         return 'customer_status_id'
     }
 
-    static get createdAtColumn(){
-        return null
-    }
-
-    static get updatedAtColumn(){
-        return null
-    }
-
-    perusahaanStatus(){
+    customerPerusahaan(){
         return this.hasMany('App/Models/CustomerPerusahaan')
     }
 }

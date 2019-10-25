@@ -4,13 +4,24 @@
 const Model = use('Model')
 
 class CustomerPerusahaan extends Model {
-
     static get primaryKey(){
         return 'customer_perusahaan_id'
     }
 
-    statusPerusahaan(){
-        return this.hasOne('App/Model/CustomerStatus')
+    customerStatus(){
+        return this.hasOne('App/Models/CustomerStatus')
+    }
+
+    userCustomer(){
+        return this.hasMany('App/Models/UserCustomer')
+    }
+
+    progresOrder(){
+        return this.hasMany()
+    }
+
+    tokens () {
+        return this.hasMany('App/Models/CustomerToken')
     }
 }
 

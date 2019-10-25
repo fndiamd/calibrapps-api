@@ -8,6 +8,7 @@ class CustomerStatusSchema extends Schema {
     this.create('customer_statuses', (table) => {
       table.increments('customer_status_id')
       table.string('customer_status_keterangan', 100).notNullable().unique()
+      table.timestamps()
     })
   }
 

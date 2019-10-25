@@ -2,14 +2,30 @@
 
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
+const Hash = use('Hash')
 
 class UserCustomer extends Model {
+    static boot(){
+        super.boot();
+        this.addHook('beforeSave', async (userInstance) => {
+            userInstance.user_customer_password = await Hash.make(userInstance.user_customer_password) 
+        })
+    }
+
     static get primaryKey(){
         return 'user_customer_id'
     }
 
-    userRole(){
-        return this.hasOne('App/Models/CustomerRole')
+    customerRole(){
+        return this.hasOne("App/Models/CustomerRole")
+    }
+
+    customerPerusahaan(){
+        return this.hasOne('App/Models/CustomerPerusahaan')
+    }
+
+    tokens () {
+        return this.hasMany('App/Models/CustomerToken')
     }
 }
 

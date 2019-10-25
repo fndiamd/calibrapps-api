@@ -25,6 +25,7 @@
     "@adonisjs/ignitor": "^2.0.8",
     "@adonisjs/lucid": "^6.1.3",
     "@adonisjs/shield": "^1.0.8",
+    "@adonisjs/vow": "^1.0.17",
     "pg": "^7.12.1"
   },
   "devDependencies": {},

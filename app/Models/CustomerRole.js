@@ -8,15 +8,7 @@ class CustomerRole extends Model {
         return 'customer_role_id'
     }
 
-    static get createdAtColumn(){
-        return null
-    }
-
-    static get updatedAtColumn(){
-        return null
-    }
-
-    roleUser(){
+    userCustomer(){
         return this.hasMany('App/Models/UserCustomer')
     }
 }

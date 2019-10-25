@@ -7,18 +7,18 @@ class KantorCabangSchema extends Schema {
   up () {
     this.create('kantor_cabangs', (table) => {
       table.increments('kantor_cabang_id')
-      table.string('kantor_cabang_nama', '150').notNullable().unique()
-      table.text('kantor_cabang_alamat', 'mediumtext').notNullable()
-      table.string('kantor_cabang_telepon', '20')
-      table.string('kantor_cabang_fax', '20')
-      table.string('kantor_cabang_email', '100').notNullable().unique()
+      table.string('kantor_cabang_nama', 100).notNullable()
+      table.text('kantor_cabang_alamat', 'mediumtext')
+      table.string('kantor_cabang_telepon', 20).notNullable()
+      table.string('kantor_cabang_fax', 20)
+      table.string('kantor_cabang_email', 100).notNullable().unique()
       table
         .integer('kantor_status_id')
         .unsigned()
         .references('kantor_status_id')
         .inTable('kantor_statuses')
         .onUpdate('CASCADE')
-        .onDelete('SET NULL');
+        .onDelete('SET NULL')
       table.timestamps()
     })
   }
