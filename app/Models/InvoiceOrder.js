@@ -3,13 +3,13 @@
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
 
-class PenawaranOrder extends Model {
+class InvoiceOrder extends Model {
     static get primaryKey(){
-        return 'penawaran_order_id'
+        return 'invoice_order_id'
     }
 
-    penawaranStatus(){
-        return this.hasOne('App/Models/PenawaranStatus')
+    invoiceStatus(){
+        return this.hasOne('App/Models/InvoiceStatus')
     }
 
     progresOrder(){
@@ -17,4 +17,4 @@ class PenawaranOrder extends Model {
     }
 }
 
-module.exports = PenawaranOrder
+module.exports = InvoiceOrder

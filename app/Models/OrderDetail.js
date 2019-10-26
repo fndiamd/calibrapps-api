@@ -3,18 +3,18 @@
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
 
-class PenawaranOrder extends Model {
+class OrderDetail extends Model {
     static get primaryKey(){
-        return 'penawaran_order_id'
-    }
-
-    penawaranStatus(){
-        return this.hasOne('App/Models/PenawaranStatus')
+        return 'order_detail_id'
     }
 
     progresOrder(){
         return this.hasOne('App/Models/ProgresOrder')
     }
+
+    barangKalibrasi(){
+        return this.hasOne('App/Models/BarangKalibrasi')
+    }
 }
 
-module.exports = PenawaranOrder
+module.exports = OrderDetail

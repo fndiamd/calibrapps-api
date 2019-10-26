@@ -16,7 +16,7 @@ class UserCustomer extends Model {
     }
 
     customerRole(){
-        return this.hasOne(App/Models/CustomerRole)
+        return this.hasOne('App/Models/CustomerRole')
     }
 
     customerPerusahaan(){

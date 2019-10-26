@@ -2,7 +2,7 @@
 
 const UserCustomer = use('App/Models/UserCustomer')
 
-class UserCabangController {
+class UserCustomerController {
     
     async index({response}){
         let userCustomer = await UserCustomer.query().fetch()
@@ -64,4 +64,4 @@ class UserCabangController {
   } 
 }
 
-module.exports = UserCabangController
+module.exports = UserCustomerController

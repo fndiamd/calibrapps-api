@@ -23,6 +23,10 @@ class UserCabang extends Model {
     kantorCabang(){
         return this.hasOne('App/Models/KantorCabang')
     }
+
+    dataPengamatan(){
+        return this.hasMany('App/Models/DataPengamatan')
+    }
 }
 
 module.exports = UserCabang
