@@ -16,9 +16,15 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.get('/', () => {
-  return { greeting: 'Hello world in JSON' }
-})
+// Routes Auth User Cabang
+Route.post('api/auth/user-cabang-login', 'Auth/UserCabangController.login')
+Route.post('api/auth/user-cabang-logout', 'Auth/UserCabangController.logout').middleware(['auth:user'])
+
+// Route Auth User Customer
+Route.post('api/auth/customer-login', 'Auth/UserCustomerController.login')
+Route.post('api/auth/customer-logout', 'Auth/UserCustomerController.logout').middleware(['auth:customer'])
+// Route.post('/api/auth/user-login', 'AuthUserController.login')
+// Route.post('/api/auth/user-register', 'AuthUserController.register')
 
 // Routes Barang Kalibrasi
 Route.put('/api/barang-kalibrasi/:id', 'BarangKalibrasiController.update')
@@ -84,7 +90,7 @@ Route.get('/api/invoice-status', 'InvoiceStatusController.index')
 Route.put('/api/kantor-cabang/:id', 'KantorCabangController.update')
 Route.delete('/api/kantor-cabang/id', 'KantorCabangController.destroy')
 Route.post('/api/kantor-cabang', 'KantorCabangController.store')
-Route.get('/api/kantor-cabang', 'KantorCabangController.index') 
+Route.get('/api/kantor-cabang', 'KantorCabangController.index')
 
 // Routes Kantor Status
 Route.put('/api/kantor-status/:id', 'KantorStatusController.update')

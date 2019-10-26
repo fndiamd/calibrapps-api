@@ -2,23 +2,23 @@
 
 const UserCustomer = use('App/Models/UserCustomer')
 
-class UserCustomerController {
-    
-    async index({response}){
+class UserCabangController {
+
+    async index({ response }) {
         let userCustomer = await UserCustomer.query().fetch()
         return response.json(userCustomer)
     }
 
-    async store({response, request}){
+    async store({ response, request }) {
         const userCustomer = new UserCustomer()
         const data = {
-            user_customer_nama : request.input('user_customer_nama'),
-            user_customer_email : request.input('user_customer_email'),
-            user_customer_password : request.input('user_customer_password'),
-            user_customer_telepon : request.input('user_customer_telepon'),
-            user_customer_alamat : request.input('user_customer_alamat'),
-            customer_perusahaan_id : request.input('customer_perusahaan_id'),
-            customer_role_id : request.input('customer_role_id')
+            user_customer_nama: request.input('user_customer_nama'),
+            user_customer_email: request.input('user_customer_email'),
+            user_customer_password: request.input('user_customer_password'),
+            user_customer_telepon: request.input('user_customer_telepon'),
+            user_customer_alamat: request.input('user_customer_alamat'),
+            customer_perusahaan_id: request.input('customer_perusahaan_id'),
+            customer_role_id: request.input('customer_role_id')
         }
 
         userCustomer.user_customer_nama = data.user_customer_nama
@@ -30,20 +30,20 @@ class UserCustomerController {
         userCustomer.customer_role_id = data.customer_role_id
 
         await userCustomer.save()
-        return response.json(userCustomer)   
+        return response.json(userCustomer)
     }
 
-    async update({params, response, request}){
+    async update({ params, response, request }) {
         let userCustomer = await UserCustomer.find(params.id)
-        
+
         const data = {
-          user_customer_nama : request.input('user_customer_nama'),
-          user_customer_email : request.input('user_customer_email'),
-          user_customer_password : request.input('user_customer_password'),
-          user_customer_telepon : request.input('user_customer_telepon'),
-          user_customer_alamat : request.input('user_customer_alamat'),
-          customer_perusahaan_id : request.input('customer_perusahaan_id'),
-          customer_role_id : request.input('customer_role_id')
+            user_customer_nama: request.input('user_customer_nama'),
+            user_customer_email: request.input('user_customer_email'),
+            user_customer_password: request.input('user_customer_password'),
+            user_customer_telepon: request.input('user_customer_telepon'),
+            user_customer_alamat: request.input('user_customer_alamat'),
+            customer_perusahaan_id: request.input('customer_perusahaan_id'),
+            customer_role_id: request.input('customer_role_id')
         }
 
         userCustomer.user_customer_nama = data.user_customer_nama
@@ -55,13 +55,13 @@ class UserCustomerController {
         userCustomer.customer_role_id = data.customer_role_id
 
         await userCustomer.save()
-        return response.json(userCustomer)    
+        return response.json(userCustomer)
     }
 
-    async destroy ({ params, request, response }) {
-      await UserCustomer.find(params.id).delete()
-      return response.json({message: 'User customer berhasil dihapus'})
-  } 
+    async destroy({ params, request, response }) {
+        await UserCustomer.find(params.id).delete()
+        return response.json({ message: 'User customer berhasil dihapus' })
+    }
 }
 
 module.exports = UserCustomerController

@@ -2,6 +2,7 @@
 
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
+const Hash = use('Hash')
 
 class UserCustomer extends Model {
     static boot(){
@@ -16,11 +17,15 @@ class UserCustomer extends Model {
     }
 
     customerRole(){
-        return this.hasOne('App/Models/CustomerRole')
+        return this.hasOne("App/Models/CustomerRole")
     }
 
     customerPerusahaan(){
         return this.hasOne('App/Models/CustomerPerusahaan')
+    }
+
+    tokens () {
+        return this.hasMany('App/Models/CustomerToken')
     }
 }
 

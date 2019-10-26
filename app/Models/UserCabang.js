@@ -24,8 +24,8 @@ class UserCabang extends Model {
         return this.hasOne('App/Models/KantorCabang')
     }
 
-    dataPengamatan(){
-        return this.hasMany('App/Models/DataPengamatan')
+    tokens () {
+        return this.hasMany('App/Models/UserToken')
     }
 }
 

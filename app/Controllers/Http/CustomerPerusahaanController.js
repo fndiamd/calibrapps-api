@@ -3,21 +3,21 @@
 const CustomerPerusahaan = use('App/Models/CustomerPerusahaan')
 
 class CustomerPerusahaanController {
-    
-    async index({response}){
+
+    async index({ response }) {
         let customerPerusahaan = await CustomerPerusahaan.query().fetch()
         return response.json(customerPerusahaan)
     }
 
-    async store({response, request}){
+    async store({ response, request }) {
         const customerPerusahaan = new CustomerPerusahaan()
         const data = {
-            customer_perusahaan_pkal : request.input('customer_perusahaan_pkal'),
-            customer_perusahaan_nama : request.input('customer_perusahaan_nama'),
-            customer_perusahaan_alamat : request.input('customer_perusahaan_alamat'),
-            customer_perusahaan_telepon : request.input('customer_perusahaan_telepon'),
-            customer_perusahaan_fax : request.input('customer_perusahaan_fax'),
-            customer_status_id : request.input('customer_status_id')
+            customer_perusahaan_pkal: request.input('customer_perusahaan_pkal'),
+            customer_perusahaan_nama: request.input('customer_perusahaan_nama'),
+            customer_perusahaan_alamat: request.input('customer_perusahaan_alamat'),
+            customer_perusahaan_telepon: request.input('customer_perusahaan_telepon'),
+            customer_perusahaan_fax: request.input('customer_perusahaan_fax'),
+            customer_status_id: request.input('customer_status_id')
         }
 
         customerPerusahaan.customer_perusahaan_pkal = data.customer_perusahaan_pkal
@@ -28,19 +28,19 @@ class CustomerPerusahaanController {
         customerPerusahaan.customer_status_id = data.customer_status_id
 
         await customerPerusahaan.save()
-        return response.json(customerPerusahaan)   
+        return response.json(customerPerusahaan)
     }
 
-    async update({params, response, request}){
+    async update({ params, response, request }) {
         let customerPerusahaan = await CustomerPerusahaan.find(params.id)
-        
+
         const data = {
-          customer_perusahaan_pkal : request.input('customer_perusahaan_pkal'),
-          customer_perusahaan_nama : request.input('customer_perusahaan_nama'),
-          customer_perusahaan_alamat : request.input('customer_perusahaan_alamat'),
-          customer_perusahaan_telepon : request.input('customer_perusahaan_telepon'),
-          customer_perusahaan_fax : request.input('customer_perusahaan_fax'),
-          customer_status_id : request.input('customer_status_id')
+            customer_perusahaan_pkal: request.input('customer_perusahaan_pkal'),
+            customer_perusahaan_nama: request.input('customer_perusahaan_nama'),
+            customer_perusahaan_alamat: request.input('customer_perusahaan_alamat'),
+            customer_perusahaan_telepon: request.input('customer_perusahaan_telepon'),
+            customer_perusahaan_fax: request.input('customer_perusahaan_fax'),
+            customer_status_id: request.input('customer_status_id')
         }
 
         customerPerusahaan.customer_perusahaan_pkal = data.customer_perusahaan_pkal
@@ -51,13 +51,13 @@ class CustomerPerusahaanController {
         customerPerusahaan.customer_status_id = data.customer_status_id
 
         await customerPerusahaan.save()
-        return response.json(customerPerusahaan)   
+        return response.json(customerPerusahaan)
     }
 
-    async destroy ({ params, request, response }) {
-      await CustomerPerusahaan.find(params.id).delete()
-      return response.json({message: 'Customer perusahaan berhasil dihapus'})
-  } 
+    async destroy({ params, request, response }) {
+        await CustomerPerusahaan.find(params.id).delete()
+        return response.json({ message: 'Customer perusahaan berhasil dihapus' })
+    }
 }
 
 module.exports = CustomerPerusahaanController
