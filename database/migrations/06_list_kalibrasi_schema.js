@@ -12,6 +12,7 @@ class ListKalibrasiSchema extends Schema {
       table.integer('ruang_lingkup_id').unsigned().references('ruang_lingkup_id').inTable('ruang_lingkups')
       table.integer('standar_kalibrasi_id').unsigned().references('standar_kalibrasi_id').inTable('standar_kalibrasis')
       table.integer('tipe_pengerjaan_id').unsigned().references('tipe_pengerjaan_id').inTable('tipe_pengerjaans')
+      table.timestamps()
     })
   }
 

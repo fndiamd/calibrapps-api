@@ -8,6 +8,14 @@ class TransaksiBrokerStatus extends Model {
         return 'transaksi_broker_status_id'
     }
 
+    static get createdAtColumn(){
+        return null
+    }
+
+    static get updatedAtColumn(){
+        return null
+    }
+
     transaksiBroker(){
         return this.hasMany('App/Models/TransaksiBroker')
     }

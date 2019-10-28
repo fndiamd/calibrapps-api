@@ -19,3 +19,19 @@
 //     username: faker.username()
 //   }
 // })
+
+const Factory = use('Factory')
+
+Factory.blueprint('App/Models/BarangStatus', (faker) => {
+  return [
+    {
+        barang_status_id : 1, 
+        barang_status_keterangan : 'diambil'
+    }
+    // {barang_status_keterangan : 'dikerjakan'},
+    // {barang_status_keterangan : 'dalam antrian'},
+    // {barang_status_keterangan : 'selesai'},
+    // {barang_status_keterangan : 'serahkan ke broker'}
+]
+})
+
