@@ -7,6 +7,14 @@ class BarangStatus extends Model {
     static get primaryKey(){
         return 'barang_status_id'
     }
+    
+    static get createdAtColumn(){
+        return null
+    }
+
+    static get updatedAtColumn(){
+        return null
+    }
 
     barangKalibrasi(){
         return this.hasMany('App/Models/BarangKalibrasi')

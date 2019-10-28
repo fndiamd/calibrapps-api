@@ -8,6 +8,14 @@ class InvoiceStatus extends Model {
         return 'invoice_status_id'
     }
 
+    static get createdAtColumn(){
+        return null
+    }
+
+    static get updatedAtColumn(){
+        return null
+    }
+    
     invoiceOrder(){
         return this.hasMany('App/Models/InvoiceOrder')
     }

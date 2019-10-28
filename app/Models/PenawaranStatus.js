@@ -8,6 +8,14 @@ class PenawaranStatus extends Model {
         return 'penawaran_status_id'
     }
 
+    static get createdAtColumn(){
+        return null
+    }
+
+    static get updatedAtColumn(){
+        return null
+    }
+    
     penawaranOrder(){
         return this.hasMany('App/Models/PenawaranOrder')
     }

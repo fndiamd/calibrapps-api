@@ -8,6 +8,14 @@ class OrderStatus extends Model {
         return 'order_status_id'
     }
 
+    static get createdAtColumn(){
+        return null
+    }
+
+    static get updatedAtColumn(){
+        return null
+    }
+
     progresOrder(){
         return this.hasMany('App/Models/ProgresOrder')
     }

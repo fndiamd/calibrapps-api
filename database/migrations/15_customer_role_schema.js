@@ -8,7 +8,7 @@ class CustomerRoleSchema extends Schema {
     this.create('customer_roles', (table) => {
       table.increments('customer_role_id')
       table.string('customer_role_keterangan', 100).notNullable().unique()
-      table.timestamps()
+      //table.timestamps()
     })
   }
 

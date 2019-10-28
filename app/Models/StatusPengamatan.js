@@ -8,6 +8,14 @@ class StatusPengamatan extends Model {
         return 'status_pengamatan_id'
     }
 
+    static get createdAtColumn(){
+        return null
+    }
+
+    static get updatedAtColumn(){
+        return null
+    }
+
     dataPengamatan(){
         return this.hasMany('App/Models/DataPengamatan')
     }

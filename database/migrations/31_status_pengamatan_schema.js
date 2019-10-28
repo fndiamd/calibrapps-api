@@ -8,7 +8,7 @@ class StatusPengamatanSchema extends Schema {
     this.create('status_pengamatans', (table) => {
       table.increments('status_pengamatan_id')
       table.string('status_pengamatan_keterangan', 100).notNullable()
-      table.timestamps()
+      //table.timestamps()
     })
   }
 
