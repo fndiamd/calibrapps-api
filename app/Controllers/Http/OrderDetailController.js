@@ -38,8 +38,9 @@ class OrderDetailController {
         return response.json(orderDetail) 
     }
 
-    async destroy ({ params, request, response }) {
-      await OrderDetail.find(params.id).delete()
+    async delete ({ params, response }) {
+      const orderDetail = await OrderDetail.find(params.id)
+      orderDetail.delete()
       return response.json({message: 'Order detail berhasil dihapus'})
   } 
 }

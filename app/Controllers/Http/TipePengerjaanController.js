@@ -34,8 +34,9 @@ class TipePengerjaanController {
         return response.json(tipePengerjaan)    
     }
 
-    async destroy ({ params, request, response }) {
-      await TipePengerjaan.find(params.id).delete()
+    async delete ({ params, response }) {
+      const tipePengerjaan = await TipePengerjaan.find(params.id)
+      tipePengerjaan.delete()
       return response.json({message: 'Tipe pengerjaan berhasil dihapus'})
   } 
 }

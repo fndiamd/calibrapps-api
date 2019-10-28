@@ -54,8 +54,9 @@ class ProgresOrderController {
         return response.json(progresOrder)     
     }
 
-    async destroy ({ params, request, response }) {
-      await ProgresOrder.find(params.id).delete()
+    async delete ({ params, response }) {
+      const progresOrder = await ProgresOrder.find(params.id)
+      progresOrder.delete()
       return response.json({message: 'Progres Order berhasil dihapus'})
   } 
 }

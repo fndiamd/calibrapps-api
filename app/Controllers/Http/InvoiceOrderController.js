@@ -46,8 +46,9 @@ class InvoiceOrderController {
         return response.json(invoiceOrder)   
     }
 
-    async destroy ({ params, request, response }) {
-      await InvoiceOrder.find(params.id).delete()
+    async delete ({ params, response }) {
+      const invoiceOrder = await InvoiceOrder.find(params.id)
+      invoiceOrder.delete()
       return response.json({message: 'Invoice status berhasil dihapus'})
   } 
 }

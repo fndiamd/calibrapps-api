@@ -46,8 +46,9 @@ class SatuanSensorController {
         return response.json(satuanSensor)    
     }
 
-    async destroy ({ params, request, response }) {
-      await SatuanSensor.find(params.id).delete()
+    async delete ({ params, response }) {
+      const satuanSensor = await SatuanSensor.find(params.id)
+      satuanSensor.delete()
       return response.json({message: 'Satuan sensor berhasil dihapus'})
   } 
 }

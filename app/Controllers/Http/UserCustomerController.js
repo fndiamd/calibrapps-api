@@ -58,8 +58,9 @@ class UserCabangController {
         return response.json(userCustomer)
     }
 
-    async destroy({ params, request, response }) {
-        await UserCustomer.find(params.id).delete()
+    async delete({ params, response }) {
+        const unsurCustomer = await UserCustomer.find(params.id)
+        unsurCustomer.delete()
         return response.json({ message: 'User customer berhasil dihapus' })
     }
 }

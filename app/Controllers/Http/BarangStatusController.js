@@ -34,9 +34,10 @@ class BarangStatusController {
         return response.json(barangStatus) 
     }
 
-    async destroy ({ params, request, response }) {
-      await BarangStatus.find(params.id).delete()
-      return response.json({message: 'Barang status berhasil dihapus'})
+    async delete ({ params, response }) {
+        const barangStatus = await BarangStatus.find(params.id)
+        barangStatus.delete()
+        return response.json({message: 'Barang status berhasil dihapus'})
   } 
 }
 

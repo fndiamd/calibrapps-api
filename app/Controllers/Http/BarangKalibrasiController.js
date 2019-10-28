@@ -50,8 +50,9 @@ class BarangKalibrasiController {
         return response.json(barangKalibrasi) 
     }
 
-    async destroy ({ params, request, response }) {
-      await BarangKalibrasi.find(params.id).delete()
+    async delete ({ params, response }) {
+      const barangKalibrasi = await BarangKalibrasi.find(params.id)
+      barangKalibrasi.delete()
       return response.json({message: 'Barang kalibrasi berhasil dihapus'})
   } 
 }

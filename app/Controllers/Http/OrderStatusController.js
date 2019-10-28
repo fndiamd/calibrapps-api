@@ -34,8 +34,9 @@ class OrderStatusController {
         return response.json(orderStatus)    
     }
 
-    async destroy ({ params, request, response }) {
-      await OrderStatus.find(params.id).delete()
+    async delete ({ params, response }) {
+      const orderStatus = await OrderStatus.find(params.id)
+      orderStatus.delete()
       return response.json({message: 'Order status berhasil dihapus'})
   } 
 }

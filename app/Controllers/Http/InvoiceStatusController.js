@@ -34,8 +34,9 @@ class InvoiceStatusController {
         return response.json(invoiceStatus)   
     }
 
-    async destroy ({ params, request, response }) {
-      await InvoiceStatus.find(params.id).delete()
+    async delete ({ params, response }) {
+      const invoiceStatus = await InvoiceStatus.find(params.id)
+      invoiceStatus.delete()
       return response.json({message: 'Invoice status berhasil dihapus'})
   } 
 }

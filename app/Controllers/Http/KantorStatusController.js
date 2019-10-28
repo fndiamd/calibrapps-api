@@ -34,8 +34,9 @@ class KantorStatusController {
         return response.json(kantorStatus)    
     }
 
-    async destroy ({ params, request, response }) {
-      await KantorStatus.find(params.id).delete()
+    async delete ({ params, response }) {
+      const kantorStatus = await KantorStatus.find(params.id)
+      kantorStatus.delete()
       return response.json({message: 'Kantor status berhasil dihapus'})
   } 
 }

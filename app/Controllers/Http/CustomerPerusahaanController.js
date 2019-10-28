@@ -54,8 +54,9 @@ class CustomerPerusahaanController {
         return response.json(customerPerusahaan)
     }
 
-    async destroy({ params, request, response }) {
-        await CustomerPerusahaan.find(params.id).delete()
+    async delete({ params, response }) {
+        const customerPerusahaan = await CustomerPerusahaan.find(params.id)
+        customerPerusahaan.delete()
         return response.json({ message: 'Customer perusahaan berhasil dihapus' })
     }
 }

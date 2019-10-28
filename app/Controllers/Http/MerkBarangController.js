@@ -34,8 +34,9 @@ class MerkBarangController {
         return response.json(merkBarang) 
     }
 
-    async destroy ({ params, request, response }) {
-      await MerkBarang.find(params.id).delete()
+    async delete ({ params, response }) {
+      const merkBarang = await MerkBarang.find(params.id)
+      merkBarang.delete()
       return response.json({message: 'Merk barang berhasil dihapus'})
   } 
 }

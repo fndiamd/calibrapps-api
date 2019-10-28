@@ -34,8 +34,9 @@ class UnsurKajiUlangController {
         return response.json(unsurKajiUlang)
     }
 
-    async destroy ({ params, request, response }) {
-      await UnsurKajiUlang.find(params.id).delete()
+    async delete ({ params, response }) {
+      const unsurKajiUlang = await UnsurKajiUlang.find(params.id)
+      unsurKajiUlang.delete()
       return response.json({message: 'Unsur kaji ulang berhasil dihapus'})
   } 
 }

@@ -42,8 +42,9 @@ class SeqDataUkurController {
         return response.json(seqDataUkur)  
     }
 
-    async destroy ({ params, request, response }) {
-      await SeqDataUkur.find(params.id).delete()
+    async delete ({ params, response }) {
+      const seqDataUkur = await SeqDataUkur.find(params.id)
+      seqDataUkur.delete()
       return response.json({message: 'Seq data ukur berhasil dihapus'})
   } 
 }

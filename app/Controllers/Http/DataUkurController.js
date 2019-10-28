@@ -42,8 +42,9 @@ class DataUkurController {
         return response.json(dataUkur)
     }
 
-    async destroy ({ params, request, response }) {
-      await DataUkur.find(params.id).delete()
+    async delete ({ params, response }) {
+      const dataUkur = await DataUkur.find(params.id)
+      dataUkur.delete()
       return response.json({message: 'Data ukur berhasil dihapus'})
   } 
 }

@@ -42,8 +42,9 @@ class DataPengamatanController {
         return response.json(dataPengamatan)
     }
 
-    async destroy ({ params, request, response }) {
-      await DataPengamatan.find(params.id).delete()
+    async delete ({ params, response }) {
+      const dataPengamatan = await DataPengamatan.find(params.id)
+      dataPengamatan.delete()
       return response.json({message: 'Data pengamatan berhasil dihapus'})
   } 
 }

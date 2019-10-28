@@ -54,8 +54,9 @@ class PerusahaanBrokerController {
         return response.json(perusahaanBroker)   
     }
 
-    async destroy ({ params, request, response }) {
-      await PerusahaanBroker.find(params.id).delete()
+    async delete ({ params, response }) {
+      const perusahaanBroker = await PerusahaanBroker.find(params.id)
+      perusahaanBroker.delete()
       return response.json({message: 'Perusahaan broker berhasil dihapus'})
   } 
 }

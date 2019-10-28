@@ -34,8 +34,9 @@ class CustomerStatusController {
         return response.json(customerStatus)
     }
 
-    async destroy({ params, request, response }) {
-        await CustomerStatus.find(params.id).delete()
+    async delete({ params, response }) {
+        const customerStatus = await CustomerStatus.find(params.id)
+        customerStatus.delete()
         return response.json({ message: 'Customer status berhasil dihapus' })
     }
 }

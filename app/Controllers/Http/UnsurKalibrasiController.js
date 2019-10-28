@@ -34,8 +34,9 @@ class UnsurKalibrasiController {
         return response.json(unsurKajiUlang) 
     }
 
-    async destroy ({ params, request, response }) {
-      await UnsurKalibrasi.find(params.id).delete()
+    async delete ({ params, response }) {
+      const unsurKalibrasi = await UnsurKalibrasi.find(params.id)
+      unsurKalibrasi.delete()
       return response.json({message: 'Unsur kalibrasi berhasil dihapus'})
   } 
 }

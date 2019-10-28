@@ -34,8 +34,9 @@ class PosisiUkurController {
         return response.json(posisiUkur)   
     }
 
-    async destroy ({ params, request, response }) {
-      await PosisiUkur.find(params.id).delete()
+    async delete ({ params, response }) {
+      const posisiUkur = await PosisiUkur.find(params.id)
+      posisiUkur.delete()
       return response.json({message: 'Posisi ukur berhasil dihapus'})
   } 
 }

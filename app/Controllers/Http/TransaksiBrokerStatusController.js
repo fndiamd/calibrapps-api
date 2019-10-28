@@ -34,8 +34,9 @@ class TransaksiBrokerStatusController {
         return response.json(transaksiBrokerStatus) 
     }
 
-    async destroy ({ params, request, response }) {
-      await TransaksiBrokerStatus.find(params.id).delete()
+    async delete ({ params, response }) {
+      const transaksiBrokerStatus = await TransaksiBrokerStatus.find(params.id)
+      transaksiBrokerStatus.delete()
       return response.json({message: 'Transaksi broker status berhasil dihapus'})
   } 
 }
