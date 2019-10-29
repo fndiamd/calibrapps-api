@@ -23,9 +23,12 @@ Route.post('api/auth/user-cabang-logout', 'Auth/UserCabangController.logout').mi
 // Route Auth User Customer
 Route.post('api/auth/customer-login', 'Auth/UserCustomerController.login')
 Route.post('api/auth/customer-logout', 'Auth/UserCustomerController.logout').middleware(['auth:customer'])
-// Route.post('/api/auth/user-login', 'AuthUserController.login')
-// Route.post('/api/auth/user-register', 'AuthUserController.register')
-
+Route.post('api/auth/customer-register', 'Auth/UserCustomerController.register')
+Route.post('api/auth/customer-sendmail', 'Auth/UserCustomerController.sendingEmail')
+Route.get('api/auth/account-verification/:token', 'Auth/UserCustomerController.accountVerification')
+// Route.post('api/auth/customer-sendmail', ({view}) => {
+//     return view.render('email-confirmation')
+// })
 // Routes Broker Status
 Route.put('/api/broker-status/:id', 'BrokerStatusController.update')
 Route.delete('/api/broker-status/id', 'BrokerStatusController.destroy')
@@ -54,7 +57,7 @@ Route.get('/api/customer-status', 'CustomerStatusController.index')
 Route.put('/api/kantor-cabang/:id', 'KantorCabangController.update')
 Route.delete('/api/kantor-cabang/id', 'KantorCabangController.destroy')
 Route.post('/api/kantor-cabang', 'KantorCabangController.store')
-Route.get('/api/kantor-cabang', 'KantorCabangController.index')
+Route.get('/api/kantor-cabang', 'KantorCabangController.index').middleware(['auth:user'])
 
 // Routes Kantor Status
 Route.put('/api/kantor-status/:id', 'KantorStatusController.update')
@@ -112,7 +115,7 @@ Route.get('/api/user-cabang', 'UserCabangController.index')
 
 // Routes User Customer
 Route.put('/api/user-customer/:id', 'UserCustomerController.update')
-Route.delete('/api/user-customer/id', 'UserCustomerController.destroy')
+Route.delete('/api/user-customer/:id', 'UserCustomerController.destroy')
 Route.post('/api/user-customer', 'UserCustomerController.store')
 Route.get('/api/user-customer', 'UserCustomerController.index') 
 

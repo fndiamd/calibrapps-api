@@ -1,0 +1,8 @@
+<div style="background-color:#f9f9f9; padding:20px 10px">
+    <h1 style="color:#222">KONFIRMASI EMAIL</h1>
+    <p style="color:#222">
+        Hai, {{ data.user_customer_nama }}. Sillahkan klik link dibawah ini untuk aktivasi akunmu yaa :) 
+    </p>
+    <br>
+    <a href="http://127.0.0.1:3333/api/auth/account-verification/{{accessToken.token}}" style="background-color:#090057; text-decoration:none; text-align:center; padding:10px; border-radius:5px; color:#fff">Aktifkan Akun!</a>
+</div>

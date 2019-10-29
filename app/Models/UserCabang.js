@@ -17,11 +17,11 @@ class UserCabang extends Model {
     }
 
     userRole(){
-        return this.hasOne('App/Models/UserRole')
+        return this.belongsTo('App/Models/UserRole')
     }
 
     kantorCabang(){
-        return this.hasOne('App/Models/KantorCabang')
+        return this.belongsTo('App/Models/KantorCabang')
     }
 
     tokens () {

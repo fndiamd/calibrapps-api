@@ -7,6 +7,10 @@ class CustomerToken extends Model {
     static get primaryKey(){
         return 'customer_token_id'
     }
+
+    userCustomer(){
+        return this.belongsTo('App/Models/UserCustomer')
+    }
 }
 
 module.exports = CustomerToken

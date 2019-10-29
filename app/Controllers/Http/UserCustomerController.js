@@ -2,7 +2,7 @@
 
 const UserCustomer = use('App/Models/UserCustomer')
 
-class UserCabangController {
+class UserCustomerController {
 
     async index({ response }) {
         let userCustomer = await UserCustomer.query().fetch()
@@ -59,9 +59,10 @@ class UserCabangController {
     }
 
     async destroy({ params, request, response }) {
-        await UserCustomer.find(params.id).delete()
+        let userCustomer = await UserCustomer.find(params.id)
+        userCustomer.delete()
         return response.json({ message: 'User customer berhasil dihapus' })
     }
 }
 
-module.exports = UserCabangController
+module.exports = UserCustomerController

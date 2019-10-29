@@ -12,6 +12,7 @@ class UserCustomerSchema extends Schema {
       table.string('user_customer_password', 150).notNullable()
       table.string('user_customer_telepon', 20)
       table.text('user_customer_alamat', 'mediumtext')
+      table.integer('user_customer_status').defaultTo(0)
       table.integer('customer_perusahaan_id').unsigned().references('customer_perusahaan_id').inTable('customer_perusahaans')
       table.integer('customer_role_id').unsigned().references('customer_role_id').inTable('customer_roles')
       table.timestamps()
