@@ -34,8 +34,9 @@ class UserRoleController {
         return response.json(userRole)
     }
 
-    async destroy({ params, request, response }) {
-        await UserRole.find(params.id).delete()
+    async delete({ params, response }) {
+        const unsurRole = await UserRole.find(params.id)
+        unsurRole.delete()
         return response.json({ message: 'User Role berhasil dihapus' })
     }
 }

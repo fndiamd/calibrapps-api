@@ -8,7 +8,7 @@ class BrokerStatusSchema extends Schema {
     this.create('broker_statuses', (table) => {
       table.increments('broker_status_id')
       table.text('broker_status_keterangan', 'mediumtext')
-      table.timestamps()
+      //table.timestamps()
     })
   }
 

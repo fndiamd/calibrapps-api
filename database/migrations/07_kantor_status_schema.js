@@ -8,7 +8,7 @@ class KantorStatusSchema extends Schema {
     this.create('kantor_statuses', (table) => {
       table.increments('kantor_status_id')
       table.string('kantor_status_keterangan', 100).notNullable().unique()
-      table.timestamps()
+      //table.timestamps()
     })
   }
 

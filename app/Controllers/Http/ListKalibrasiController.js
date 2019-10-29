@@ -50,8 +50,9 @@ class ListKalibrasiController {
         return response.json(listKalibrasi)   
     }
 
-    async destroy ({ params, request, response }) {
-      await ListKalibrasi.find(params.id).delete()
+    async delete ({ params, response }) {
+      const listKalibrasi = await ListKalibrasi.find(params.id)
+      listKalibrasi.delete()
       return response.json({message: 'List kalibrasi berhasil dihapus'})
   } 
 }

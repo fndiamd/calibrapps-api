@@ -8,6 +8,14 @@ class UserRole extends Model {
         return 'user_role_id'
     }
 
+    static get createdAtColumn(){
+        return null
+    }
+
+    static get updatedAtColumn(){
+        return null
+    }
+
     userCabang(){
         return this.hasMany('App/Models/UserCabang')
     }

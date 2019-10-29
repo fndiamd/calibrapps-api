@@ -34,8 +34,9 @@ class StandarKalibrasiController {
         return response.json(standarKalibrasi)   
     }
 
-    async destroy ({ params, request, response }) {
-      await StandarKalibrasi.find(params.id).delete()
+    async delete ({ params, response }) {
+      const standarKalibrasi = await StandarKalibrasi.find(params.id)
+      standarKalibrasi.delete()
       return response.json({message: 'Standar Kalibrasi berhasil dihapus'})
   } 
 }

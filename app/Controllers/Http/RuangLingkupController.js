@@ -34,8 +34,9 @@ class RuangLingkupController {
         return response.json(ruangLingkup)   
     }
 
-    async destroy ({ params, request, response }) {
-      await RuangLingkup.find(params.id).delete()
+    async delete ({ params, response }) {
+      const ruangLingkup = await RuangLingkup.find(params.id)
+      ruangLingkup.delete()
       return response.json({message: 'Ruang lingkup berhasil dihapus'})
   } 
 }

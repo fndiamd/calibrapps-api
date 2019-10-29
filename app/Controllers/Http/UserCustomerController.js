@@ -58,9 +58,9 @@ class UserCustomerController {
         return response.json(userCustomer)
     }
 
-    async destroy({ params, request, response }) {
-        let userCustomer = await UserCustomer.find(params.id)
-        userCustomer.delete()
+    async delete({ params, response }) {
+        const unsurCustomer = await UserCustomer.find(params.id)
+        unsurCustomer.delete()
         return response.json({ message: 'User customer berhasil dihapus' })
     }
 }

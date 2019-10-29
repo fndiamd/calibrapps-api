@@ -59,8 +59,9 @@ class KantorCabangController {
         return response.json(kantorCabang)
     }
 
-    async destroy({ params, request, response }) {
-        await KantorCabang.find(params.id).delete()
+    async delete({ params, response }) {
+        const kantorCabang = await KantorCabang.find(params.id)
+        kantorCabang.delete()
         return response.json({ message: 'Kantor cabang berhasil dihapus' })
     }
 }

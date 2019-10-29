@@ -34,8 +34,9 @@ class PenawaranStatusController {
         return response.json(penawaranStatus) 
     }
 
-    async destroy ({ params, request, response }) {
-      await PenawaranStatus.find(params.id).delete()
+    async delete ({ params, response }) {
+      const penawaranStatus = await PenawaranStatus.find(params.id)
+      penawaranStatus.delete()
       return response.json({message: 'Penawaran status berhasil dihapus'})
   } 
 }

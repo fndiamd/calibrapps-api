@@ -8,7 +8,7 @@ class PenawaranStatusSchema extends Schema {
     this.create('penawaran_statuses', (table) => {
       table.increments('penawaran_status_id')
       table.string('penawaran_status_keterangan', 100).notNullable().unique()
-      table.timestamps()
+      //table.timestamps()
     })
   }
 

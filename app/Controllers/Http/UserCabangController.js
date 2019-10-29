@@ -58,8 +58,9 @@ class UserCabangController {
         return response.json(userCabang)
     }
 
-    async destroy({ params, request, response }) {
-        await UserCabang.find(params.id).delete()
+    async delete({ params, response }) {
+        const unsurCabang = await UserCabang.find(params.id)
+        unsurCabang.delete()
         return response.json({ message: 'User cabang berhasil dihapus' })
     }
 }

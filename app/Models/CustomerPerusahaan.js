@@ -17,7 +17,7 @@ class CustomerPerusahaan extends Model {
     }
 
     progresOrder(){
-        return this.hasMany()
+        return this.hasMany('App/Models/ProgresOrder')
     }
 
     tokens () {

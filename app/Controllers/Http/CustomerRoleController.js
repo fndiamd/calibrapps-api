@@ -34,8 +34,9 @@ class CustomerRoleController {
         return response.json(customerRole) 
     }
 
-    async destroy ({ params, request, response }) {
-      await CustomerRole.find(params.id).delete()
+    async delete ({ params, response }) {
+      const customerRole = await CustomerRole.find(params.id)
+      customerRole.delete()
       return response.json({message: 'Customer role berhasil dihapus'})
   } 
 }

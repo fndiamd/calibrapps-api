@@ -16,6 +16,10 @@ class KantorCabang extends Model {
     kantorStatus(){
         return this.hasOne('App/Models/KantorStatus')
     }
+
+    progresOrder(){
+        return this.hasMany('App/Models/ProgresOrder')
+    }
 }
 
 module.exports = KantorCabang
