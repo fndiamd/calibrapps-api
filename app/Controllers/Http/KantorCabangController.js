@@ -5,13 +5,13 @@ const KantorCabang = use('App/Models/KantorCabang')
 class KantorCabangController {
 
     async index({ auth, response }) {
-        if (auth.current.user) {
-            let kantorCabang = await KantorCabang.query().fetch()
-            return response.json(kantorCabang)
-        }else{
-            return response.send({message : 'tidak login'})
-        }
+        let kantorCabang = await KantorCabang.query().fetch()
+        return response.json(kantorCabang)
+    }
 
+    async view({params, response }){
+        let kantorCabang = await KantorCabang.query().where('kantor_cabang_id', params.id).first()
+        return userCabang
     }
 
     async store({ response, request }) {

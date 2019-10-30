@@ -16,223 +16,292 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-// Routes Auth User Cabang
-Route.post('api/auth/user-cabang-login', 'Auth/UserCabangController.login')
-Route.post('api/auth/user-cabang-logout', 'Auth/UserCabangController.logout').middleware(['auth:user'])
 
-// Route Auth User Customer
-Route.post('api/auth/customer-login', 'Auth/UserCustomerController.login')
-Route.post('api/auth/customer-logout', 'Auth/UserCustomerController.logout').middleware(['auth:customer'])
-Route.post('api/auth/customer-register', 'Auth/UserCustomerController.register')
-Route.post('api/auth/customer-sendmail', 'Auth/UserCustomerController.sendingEmail')
-Route.get('api/auth/account-verification/:token', 'Auth/UserCustomerController.accountVerification')
+Route.group(() => {
+    // Auth User Cabang
+    Route.post('user-cabang-login', 'Auth/UserCabangController.login')
+    Route.post('user-cabang-logout', 'Auth/UserCabangController.logout').middleware(['auth:user'])
+    // Auth User Customer
+    Route.post('customer-login', 'Auth/UserCustomerController.login')
+    Route.post('customer-logout', 'Auth/UserCustomerController.logout').middleware(['auth:customer'])
+    Route.post('customer-register', 'Auth/UserCustomerController.register')
+    Route.post('customer-sendmail', 'Auth/UserCustomerController.sendingEmail')
+    Route.get('account-verification/:token', 'Auth/UserCustomerController.accountVerification')
+}).prefix('api/auth')
 
-// Routes Barang Kalibrasi
-Route.put('/api/barang-kalibrasi/:id', 'BarangKalibrasiController.update')
-Route.delete('/api/barang-kalibrasi/;id', 'BarangKalibrasiController.delete')
-Route.post('/api/barang-kalibrasi', 'BarangKalibrasiController.store')
-Route.get('/api/barang-kalibrasi', 'BarangKalibrasiController.index') 
+Route.group(() => {
+    // Routes Barang Kalibrasi
+    Route.get('barang-kalibrasi', 'BarangKalibrasiController.index')
+    Route.get('barang-kalibrasi/:id', 'BarangKalibrasiController.view')
+    Route.get('barang-kalibrasi-pagination', 'BarangKalibrasiController.pagination')
+    // Routes Barang Status
+    Route.get('barang-status', 'BarangStatusController.index')
+    Route.get('barang-status/:id', 'BarangStatusController.show')
+    Route.get('barang-status-pagination', 'BarangStatusController.pagination')
+    // Routes Broker Status
+    Route.get('broker-status', 'BrokerStatusController.index')
+    Route.get('broker-status/:id', 'BrokerStatusController.view')
+    // Routes Customer Perusahaan
+    Route.get('customer-perusahaan', 'CustomerPerusahaanController.index')
+    Route.get('customer-perusahaan/:id', 'CustomerPerusahaanController.view')
+    Route.get('customer-perusahaan-pagination', 'CustomerPerusahaanController.pagination')
+    // Routes Customer Role
+    Route.get('customer-role', 'CustomerRoleController.index')
+    Route.get('customer-role/:id', 'CustomerRoleController.view')
+    // Routes Customer Status
+    Route.get('customer-status', 'CustomerStatusController.index')
+    Route.get('customer-status/:id', 'CustomerStatusController.view')
+    // Routes Data Pengamatan
+    Route.get('data-pengamatan', 'DataPengamatanController.index')
+    Route.get('data-pengamatan/:id', 'DataPengamatanController.view')
+    // Routes Data Ukur
+    Route.get('data-ukur', 'DataUkurController.index')
+    Route.get('data-ukur/:id', 'DataUkurController.view')
+    // Routes Invoice Order
+    Route.get('invoice-order', 'InvoiceOrderController.index')
+    Route.get('invoice-order/:id', 'InvoiceOrderController.view')
+    // Routes Invoice Status
+    Route.get('invoice-status', 'InvoiceStatusController.index')
+    Route.get('invoice-status/:id', 'InvoiceStatusController.view')
+    // Routes Kantor Cabang
+    Route.get('kantor-cabang', 'KantorCabangController.index')
+    Route.get('kantor-cabang/:id', 'KantorCabangController.view')
+    // Routes Kantor Status
+    Route.get('kantor-status', 'KantorStatusController.index')
+    // Route List Kalibrasi
+    Route.get('list-kalibrasi', 'ListKalibrasiController.index')
+    // Routes Merk Barang
+    Route.get('merk-barang', 'MerkBarangController.index')
+    // Routes Order Detail
+    Route.get('order-detail', 'OrderDetailController.index')
+    // Routes Order Status
+    Route.get('order-status', 'OrderStatusController.index')
+    // Routes Penawaran Order
+    Route.get('penawaran-order', 'PenawaranOrderController.index')
+    // Routes Penawaran status
+    Route.get('penawaran-status', 'PenawaranStatusController.index')
+    // Routes Perusahaan Broker
+    Route.get('perusahaan-broker', 'PerusahaanBrokerController.index')
+    // Routes Posisi Ukur
+    Route.get('posisi-ukur', 'PosisiUkurController.index')
+    // Routes Progres Order
+    Route.get('progres-order', 'ProgresOrderController.index')
+    // Routes Ruang Lingkup
+    Route.get('ruang-lingkup', 'RuangLingkupController.index')
+    // Routes Satuan Sensor
+    Route.get('satuan-sensor', 'SatuanSensorController.index')
+    // Routes Sensor
+    Route.get('sensor', 'SensorController.index')
+    // Routes Seq Data Ukur
+    Route.get('seq-data-ukur', 'SeqDataUkurController.index')
+    // Routes Standar Kalibrasi
+    Route.get('standar-kalibrasi', 'StandarKalibrasiController.index')
+    // Routes Status Pengamatan
+    Route.get('status-pengamatan', 'StatusPengamatanController.index')
+    // Routes Tipe Pengerjaan
+    Route.get('tipe-pengerjaan', 'TipePengerjaanController.index')
+    // Routes Transaksi Broker
+    Route.get('transaksi-broker', 'TransaksiBrokerController.index')
+    // Routes Transaksi Broker Status
+    Route.get('transaksi-broker-status', 'TransaksiBrokerStatusController.index')
+    // Routes Unsur Kaji Ulang
+    Route.get('unsur-kajiulang', 'UnsurKajiUlangController.index')
+    // Routes Unsur Kalibrasi
+    Route.get('unsur-kalibrasi', 'UnsurKalibrasiController.index')
+    // Routes User Cabang
+    Route.get('user-cabang', 'UserCabangController.index')
+    Route.get('user-cabang/:id', 'UserCabangController.view')
+    Route.get('user-cabang-pagination', 'UserCabangController.pagination')
+    // Routes User Customer
+    Route.get('user-customer', 'UserCustomerController.index')
+    Route.get('user-customer/:id', 'UserCustomerController.view')
+    Route.get('user-customer-pagination', 'UserCustomerController.pagination')
+    // Routes User Role
+    Route.get('user-role', 'UserRoleController.index')
 
-// Routes Barang Status
-Route.put('/api/barang-status/:id', 'BarangStatusController.update')
-Route.delete('/api/barang-status/:id', 'BarangStatusController.delete')
-Route.post('/api/barang-status', 'BarangStatusController.store')
-Route.get('/api/barang-status', 'BarangStatusController.index') 
 
-// Routes Broker Status
-Route.put('/api/broker-status/:id', 'BrokerStatusController.update')
-Route.delete('/api/broker-status/:id', 'BrokerStatusController.delete')
-Route.post('/api/broker-status', 'BrokerStatusController.store')
-Route.get('/api/broker-status', 'BrokerStatusController.index') 
+    Route.post('user-cabang', 'UserCabangController.store')
+    Route.post('kantor-cabang', 'KantorCabangController.store')
+    Route.post('user-role', 'UserRoleController.store')
+    Route.post('kantor-status', 'KantorStatusController.store')
+    
+}).prefix('api')
 
-// Routes Customer Perusahaan
-Route.put('/api/customer-perusahaan/:id', 'CustomerPerusahaanController.update')
-Route.delete('/api/customer-perusahaan/:id', 'CustomerPerusahaanController.delete')
-Route.post('/api/customer-perusahaan', 'CustomerPerusahaanController.store')
-Route.get('/api/customer-perusahaan', 'CustomerPerusahaanController.index') 
+Route.group(() => {
+    // Routes with Middleware
+    // Routes barang kalibrasi
+    Route.put('barang-kalibrasi/:id', 'BarangKalibrasiController.update')
+    Route.delete('barang-kalibrasi/;id', 'BarangKalibrasiController.delete')
+    Route.post('barang-kalibrasi', 'BarangKalibrasiController.store')
 
-// Routes Customer Role
-Route.put('/api/customer-role/:id', 'CustomerRoleController.update')
-Route.delete('/api/customer-role/:id', 'CustomerRoleController.delete')
-Route.post('/api/customer-role', 'CustomerRoleController.store')
-Route.get('/api/customer-role', 'CustomerRoleController.index') 
+    // Routes customer role
+    Route.put('customer-role/:id', 'CustomerRoleController.update')
+    Route.delete('customer-role/:id', 'CustomerRoleController.delete')
+    Route.post('customer-role', 'CustomerRoleController.store')
 
-// Routes Customer Status
-Route.put('/api/customer-status/:id', 'CustomerStatusController.update')
-Route.delete('/api/customer-status/:id', 'CustomerStatusController.delete')
-Route.post('/api/customer-status', 'CustomerStatusController.store')
-Route.get('/api/customer-status', 'CustomerStatusController.index') 
+    // Routes user role
+    Route.put('user-role/:id', 'UserRoleController.update')
+    Route.delete('user-role/:id', 'UserRoleController.delete')
 
-// Routes Data Pengamatan
-Route.put('/api/data-pengamatan/:id', 'DataPengamatanController.update')
-Route.delete('/api/data-pengamatan/:id', 'DataPengamatanController.delete')
-Route.post('/api/data-pengamatan', 'DataPengamatanController.store')
-Route.get('/api/data-pengamatan', 'DataPengamatanController.index') 
+    // Routes user customer 
+    Route.put('user-customer/:id', 'UserCustomerController.update')
+    Route.delete('user-customer/:id', 'UserCustomerController.delete')
+    Route.post('user-customer', 'UserCustomerController.store')
 
-// Routes Data Ukur
-Route.put('/api/data-ukur/:id', 'DataUkurController.update')
-Route.delete('/api/data-ukur/:id', 'DataUkurController.delete')
-Route.post('/api/data-ukur', 'DataUkurController.store')
-Route.get('/api/data-ukur', 'DataUkurController.index') 
+    // Routes user cabang
+    Route.put('user-cabang/:id', 'UserCabangController.update')
+    Route.delete('user-cabang/:id', 'UserCabangController.delete')
+    
 
-// Routes Invoice Order
-Route.put('/api/invoice-order/:id', 'InvoiceOrderController.update')
-Route.delete('/api/invoice-order/:id', 'InvoiceOrderController.delete')
-Route.post('/api/invoice-order', 'InvoiceOrderController.store')
-Route.get('/api/invoice-order', 'InvoiceOrderController.index') 
+    // Routes unsur kalibrasi
+    Route.put('unsur-kalibrasi/:id', 'UnsurKalibrasiController.update')
+    Route.delete('unsur-kalibrasi/:id', 'UnsurKalibrasiController.delete')
+    Route.post('unsur-kalibrasi', 'UnsurKalibrasiController.store')
 
-// Routes Invoice Status
-Route.put('/api/invoice-status/:id', 'InvoiceStatusController.update')
-Route.delete('/api/invoice-status/:id', 'InvoiceStatusController.delete')
-Route.post('/api/invoice-status', 'InvoiceStatusController.store')
-Route.get('/api/invoice-status', 'InvoiceStatusController.index') 
+    // Routes unsur kaji ulang
+    Route.put('unsur-kajiulang/:id', 'UnsurKajiUlangController.update')
+    Route.delete('unsur-kajiulang/:id', 'UnsurKajiUlangController.delete')
+    Route.post('unsur-kajiulang', 'UnsurKajiUlangController.store')
 
-// Routes Kantor Cabang
-Route.put('/api/kantor-cabang/:id', 'KantorCabangController.update')
-Route.delete('/api/kantor-cabang/:id', 'KantorCabangController.delete')
-Route.post('/api/kantor-cabang', 'KantorCabangController.store')
-Route.get('/api/kantor-cabang', 'KantorCabangController.index').middleware(['auth:user'])
+    // Routes transaksi broker status
+    Route.put('transaksi-broker-status/:id', 'TransaksiBrokerStatusController.update')
+    Route.delete('transaksi-broker-status/:id', 'TransaksiBrokerStatusController.delete')
+    Route.post('transaksi-broker-status', 'TransaksiBrokerStatusController.store')
 
-// Routes Kantor Status
-Route.put('/api/kantor-status/:id', 'KantorStatusController.update')
-Route.delete('/api/kantor-status/:id', 'KantorStatusController.delete')
-Route.post('/api/kantor-status', 'KantorStatusController.store')
-Route.get('/api/kantor-status', 'KantorStatusController.index') 
+    // Routes transaksi broker
+    Route.put('transaksi-broker/:id', 'TransaksiBrokerController.update')
+    Route.delete('transaksi-broker/:id', 'TransaksiBrokerController.delete')
+    Route.post('transaksi-broker', 'TransaksiBrokerController.store')
 
-// Routes List Kalibrasi
-Route.put('/api/list-kalibrasi/:id', 'ListKalibrasiController.update')
-Route.delete('/api/list-kalibrasi/:id', 'ListKalibrasiController.delete')
-Route.post('/api/list-kalibrasi', 'ListKalibrasiController.store')
-Route.get('/api/list-kalibrasi', 'ListKalibrasiController.index') 
+    // Routes customer status
+    Route.put('customer-status/:id', 'CustomerStatusController.update')
+    Route.delete('customer-status/:id', 'CustomerStatusController.delete')
+    Route.post('customer-status', 'CustomerStatusController.store')
 
-// Routes Merk Barang
-Route.put('/api/merk-barang/:id', 'MerkBarangController.update')
-Route.delete('/api/merk-barang/:id', 'MerkBarangController.delete')
-Route.post('/api/merk-barang', 'MerkBarangController.store')
-Route.get('/api/merk-barang', 'MerkBarangController.index') 
+    // Routes data pengamatan
+    Route.put('data-pengamatan/:id', 'DataPengamatanController.update')
+    Route.delete('data-pengamatan/:id', 'DataPengamatanController.delete')
+    Route.post('data-pengamatan', 'DataPengamatanController.store')
 
-// Routes Order Detail
-Route.put('/api/order-detail/:id', 'OrderDetailController.update')
-Route.delete('/api/order-detail/:id', 'OrderDetailController.delete')
-Route.post('/api/order-detail', 'OrderDetailController.store')
-Route.get('/api/order-detail', 'OrderDetailController.index') 
+    //Routes data ukur
+    Route.put('data-ukur/:id', 'DataUkurController.update')
+    Route.delete('data-ukur/:id', 'DataUkurController.delete')
+    Route.post('data-ukur', 'DataUkurController.store')
 
-// Routes Order Status
-Route.put('/api/order-status/:id', 'OrderStatusController.update')
-Route.delete('/api/order-status/:id', 'OrderStatusController.delete')
-Route.post('/api/order-status', 'OrderStatusController.store')
-Route.get('/api/order-status', 'OrderStatusController.index') 
+    // Routes invoice order
+    Route.put('invoice-order/:id', 'InvoiceOrderController.update')
+    Route.delete('invoice-order/:id', 'InvoiceOrderController.delete')
+    Route.post('invoice-order', 'InvoiceOrderController.store')
 
-// Routes Penawaran Order
-Route.put('/api/penawaran-order/:id', 'PenawaranOrderController.update')
-Route.delete('/api/penawaran-order/:id', 'PenawaranOrderController.delete')
-Route.post('/api/penawaran-order', 'PenawaranOrderController.store')
-Route.get('/api/penawaran-order', 'PenawaranOrderController.index') 
+    // Routes invoice order status
+    Route.put('invoice-status/:id', 'InvoiceStatusController.update')
+    Route.delete('invoice-status/:id', 'InvoiceStatusController.delete')
+    Route.post('invoice-status', 'InvoiceStatusController.store')
 
-// Routes Penawaran status
-Route.put('/api/penawaran-status/:id', 'PenawaranStatusController.update')
-Route.delete('/api/penawaran-status/:id', 'PenawaranStatusController.delete')
-Route.post('/api/penawaran-status', 'PenawaranStatusController.store')
-Route.get('/api/penawaran-status', 'PenawaranStatusController.index') 
+    // Routes kantor cabang
+    Route.put('kantor-cabang/:id', 'KantorCabangController.update')
+    Route.delete('kantor-cabang/:id', 'KantorCabangController.delete')
+    
 
-// Routes Perusahaan Broker
-Route.put('/api/perusahaan-broker/:id', 'PerusahaanBrokerController.update')
-Route.delete('/api/perusahaan-broker/:id', 'PerusahaanBrokerController.delete')
-Route.post('/api/perusahaan-broker', 'PerusahaanBrokerController.store')
-Route.get('/api/perusahaan-broker', 'PerusahaanBrokerController.index') 
+    // Routes kantor status
+    Route.put('kantor-status/:id', 'KantorStatusController.update')
+    Route.delete('kantor-status/:id', 'KantorStatusController.delete')
+    
 
-// Routes Posisi Ukur
-Route.put('/api/posisi-ukur/:id', 'PosisiUkurController.update')
-Route.delete('/api/posisi-ukur/:id', 'PosisiUkurController.delete')
-Route.post('/api/posisi-ukur', 'PosisiUkurController.store')
-Route.get('/api/posisi-ukur', 'PosisiUkurController.index') 
+    // Routes list kalibrasi
+    Route.put('list-kalibrasi/:id', 'ListKalibrasiController.update')
+    Route.delete('list-kalibrasi/:id', 'ListKalibrasiController.delete')
+    Route.post('list-kalibrasi', 'ListKalibrasiController.store')
 
-// Routes Progres Order
-Route.put('/api/progres-order/:id', 'ProgresOrderController.update')
-Route.delete('/api/progres-order/:id', 'ProgresOrderController.delete')
-Route.post('/api/progres-order', 'ProgresOrderController.store')
-Route.get('/api/progres-order', 'ProgresOrderController.index') 
+    // Routes merk barang
+    Route.put('merk-barang/:id', 'MerkBarangController.update')
+    Route.delete('merk-barang/:id', 'MerkBarangController.delete')
+    Route.post('merk-barang', 'MerkBarangController.store')
 
-// Routes Ruang Lingkup
-Route.put('/api/ruang-lingkup/:id', 'RuangLingkupController.update')
-Route.delete('/api/ruang-lingkup/:id', 'RuangLingkupController.delete')
-Route.post('/api/ruang-lingkup', 'RuangLingkupController.store')
-Route.get('/api/ruang-lingkup', 'RuangLingkupController.index') 
+    // Routes order detail
+    Route.put('order-detail/:id', 'OrderDetailController.update')
+    Route.delete('order-detail/:id', 'OrderDetailController.delete')
+    Route.post('order-detail', 'OrderDetailController.store')
 
-// Routes Satuan Sensor
-Route.put('/api/satuan-sensor/:id', 'SatuanSensorController.update')
-Route.delete('/api/satuan-sensor/:id', 'SatuanSensorController.delete')
-Route.post('/api/satuan-sensor', 'SatuanSensorController.store')
-Route.get('/api/satuan-sensor', 'SatuanSensorController.index') 
+    // Routes order status
+    Route.put('order-status/:id', 'OrderStatusController.update')
+    Route.delete('order-status/:id', 'OrderStatusController.delete')
+    Route.post('order-status', 'OrderStatusController.store')
 
-// Routes Sensor
-Route.put('/api/sensor/:id', 'SensorController.update')
-Route.delete('/api/sensor/:id', 'SensorController.delete')
-Route.post('/api/sensor', 'SensorController.store')
-Route.get('/api/sensor', 'SensorController.index') 
+    // Routes penawaran order
+    Route.put('penawaran-order/:id', 'PenawaranOrderController.update')
+    Route.delete('penawaran-order/:id', 'PenawaranOrderController.delete')
+    Route.post('penawaran-order', 'PenawaranOrderController.store')
 
-// Routes Seq Data Ukur
-Route.put('/api/seq-data-ukur/:id', 'SeqDataUkurController.update')
-Route.delete('/api/seq-data-ukur/:id', 'SeqDataUkurController.delete')
-Route.post('/api/seq-data-ukur', 'SeqDataUkurController.store')
-Route.get('/api/seq-data-ukur', 'SeqDataUkurController.index') 
+    // Routes penawaran status
+    Route.put('penawaran-status/:id', 'PenawaranStatusController.update')
+    Route.delete('penawaran-status/:id', 'PenawaranStatusController.delete')
+    Route.post('penawaran-status', 'PenawaranStatusController.store')
 
-// Routes Standar Kalibrasi
-Route.put('/api/standar-kalibrasi/:id', 'StandarKalibrasiController.update')
-Route.delete('/api/standar-kalibrasi/:id', 'StandarKalibrasiController.delete')
-Route.post('/api/standar-kalibrasi', 'StandarKalibrasiController.store')
-Route.get('/api/standar-kalibrasi', 'StandarKalibrasiController.index') 
+    // Routes perusahaan broker
+    Route.put('perusahaan-broker/:id', 'PerusahaanBrokerController.update')
+    Route.delete('perusahaan-broker/:id', 'PerusahaanBrokerController.delete')
+    Route.post('perusahaan-broker', 'PerusahaanBrokerController.store')
 
-// Routes Status Pengamatan
-Route.put('/api/status-pengamatan/:id', 'StatusPengamatanController.update')
-Route.delete('/api/status-pengamatan/:id', 'StatusPengamatanController.delete')
-Route.post('/api/status-pengamatan', 'StatusPengamatanController.store')
-Route.get('/api/status-pengamatan', 'StatusPengamatanController.index') 
+    // Routes posisi ukur
+    Route.put('posisi-ukur/:id', 'PosisiUkurController.update')
+    Route.delete('posisi-ukur/:id', 'PosisiUkurController.delete')
+    Route.post('posisi-ukur', 'PosisiUkurController.store')
 
-// Routes Tipe Pengerjaan
-Route.put('/api/tipe-pengerjaan/:id', 'TipePengerjaanController.update')
-Route.delete('/api/tipe-pengerjaan/:id', 'TipePengerjaanController.delete')
-Route.post('/api/tipe-pengerjaan', 'TipePengerjaanController.store')
-Route.get('/api/tipe-pengerjaan', 'TipePengerjaanController.index') 
+    // Routes progres order
+    Route.put('progres-order/:id', 'ProgresOrderController.update')
+    Route.delete('progres-order/:id', 'ProgresOrderController.delete')
+    Route.post('progres-order', 'ProgresOrderController.store')
 
-// Routes Transaksi Broker
-Route.put('/api/transaksi-broker/:id', 'TransaksiBrokerController.update')
-Route.delete('/api/transaksi-broker/:id', 'TransaksiBrokerController.delete')
-Route.post('/api/transaksi-broker', 'TransaksiBrokerController.store')
-Route.get('/api/transaksi-broker', 'TransaksiBrokerController.index') 
+    // Routes ruang lingkup
+    Route.put('ruang-lingkup/:id', 'RuangLingkupController.update')
+    Route.delete('ruang-lingkup/:id', 'RuangLingkupController.delete')
+    Route.post('ruang-lingkup', 'RuangLingkupController.store')
 
-// Routes Transaksi Broker Status
-Route.put('/api/transaksi-broker-status/:id', 'TransaksiBrokerStatusController.update')
-Route.delete('/api/transaksi-broker-status/:id', 'TransaksiBrokerStatusController.delete')
-Route.post('/api/transaksi-broker-status', 'TransaksiBrokerStatusController.store')
-Route.get('/api/transaksi-broker-status', 'TransaksiBrokerStatusController.index') 
+    // Routes satuan sensor
+    Route.put('satuan-sensor/:id', 'SatuanSensorController.update')
+    Route.delete('satuan-sensor/:id', 'SatuanSensorController.delete')
+    Route.post('satuan-sensor', 'SatuanSensorController.store')
 
-// Routes Unsur Kaji Ulang
-Route.put('/api/unsur-kajiulang/:id', 'UnsurKajiUlangController.update')
-Route.delete('/api/unsur-kajiulang/:id', 'UnsurKajiUlangController.delete')
-Route.post('/api/unsur-kajiulang', 'UnsurKajiUlangController.store')
-Route.get('/api/unsur-kajiulang', 'UnsurKajiUlangController.index') 
+    // Routes sensor
+    Route.put('sensor/:id', 'SensorController.update')
+    Route.delete('sensor/:id', 'SensorController.delete')
+    Route.post('sensor', 'SensorController.store')
 
-// Routes Unsur Kalibrasi
-Route.put('/api/unsur-kalibrasi/:id', 'UnsurKalibrasiController.update')
-Route.delete('/api/unsur-kalibrasi/:id', 'UnsurKalibrasiController.delete')
-Route.post('/api/unsur-kalibrasi', 'UnsurKalibrasiController.store')
-Route.get('/api/unsur-kalibrasi', 'UnsurKalibrasiController.index') 
+    // Routes seq data ukur
+    Route.put('seq-data-ukur/:id', 'SeqDataUkurController.update')
+    Route.delete('seq-data-ukur/:id', 'SeqDataUkurController.delete')
+    Route.post('seq-data-ukur', 'SeqDataUkurController.store')
 
-// Routes User Cabang
-Route.put('/api/user-cabang/:id', 'UserCabangController.update')
-Route.delete('/api/user-cabang/:id', 'UserCabangController.delete')
-Route.post('/api/user-cabang', 'UserCabangController.store')
-Route.get('/api/user-cabang', 'UserCabangController.index') 
+    // Routes standar kalibrasi
+    Route.put('standar-kalibrasi/:id', 'StandarKalibrasiController.update')
+    Route.delete('standar-kalibrasi/:id', 'StandarKalibrasiController.delete')
+    Route.post('standar-kalibrasi', 'StandarKalibrasiController.store')
 
-// Routes User Customer
-Route.put('/api/user-customer/:id', 'UserCustomerController.update')
-Route.delete('/api/user-customer/:id', 'UserCustomerController.delete')
-Route.post('/api/user-customer', 'UserCustomerController.store')
-Route.get('/api/user-customer', 'UserCustomerController.index') 
+    // Routes status pengamatan
+    Route.put('status-pengamatan/:id', 'StatusPengamatanController.update')
+    Route.delete('status-pengamatan/:id', 'StatusPengamatanController.delete')
+    Route.post('status-pengamatan', 'StatusPengamatanController.store')
 
-// Routes User Role
-Route.put('/api/user-role/:id', 'UserRoleController.update')
-Route.delete('/api/user-role/:id', 'UserRoleController.delete')
-Route.post('/api/user-role', 'UserRoleController.store')
-Route.get('/api/user-role', 'UserRoleController.index') 
+    // Routes tipe pengerjaan
+    Route.put('tipe-pengerjaan/:id', 'TipePengerjaanController.update')
+    Route.delete('tipe-pengerjaan/:id', 'TipePengerjaanController.delete')
+    Route.post('tipe-pengerjaan', 'TipePengerjaanController.store')
+
+    //Routes barang status
+    Route.put('barang-status/:id', 'BarangStatusController.update')
+    Route.delete('barang-status/:id', 'BarangStatusController.delete')
+    Route.post('barang-status', 'BarangStatusController.store')
+
+    // Routes broker status
+    Route.put('broker-status/:id', 'BrokerStatusController.update')
+    Route.delete('broker-status/:id', 'BrokerStatusController.delete')
+    Route.post('broker-status', 'BrokerStatusController.store')
+    
+    // Routes customer perusahaan
+    Route.put('customer-perusahaan/:id', 'CustomerPerusahaanController.update')
+    Route.delete('customer-perusahaan/:id', 'CustomerPerusahaanController.delete')
+    Route.post('customer-perusahaan', 'CustomerPerusahaanController.store')
+
+}).prefix('api').middleware(['auth:user'])
+

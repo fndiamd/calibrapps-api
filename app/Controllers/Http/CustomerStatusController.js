@@ -9,6 +9,11 @@ class CustomerStatusController {
         return response.json(customerStatus)
     }
 
+    async view({ params }) {
+        let customerStatus = await CustomerStatus.query().where('customer_status_id', params.id).first()
+        return customerStatus
+    }
+
     async store({ response, request }) {
         const customerStatus = new CustomerStatus()
         const data = {

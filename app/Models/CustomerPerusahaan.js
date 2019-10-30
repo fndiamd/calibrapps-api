@@ -9,7 +9,7 @@ class CustomerPerusahaan extends Model {
     }
 
     customerStatus(){
-        return this.hasOne('App/Models/CustomerStatus')
+        return this.belongsTo('App/Models/CustomerStatus')
     }
 
     userCustomer(){

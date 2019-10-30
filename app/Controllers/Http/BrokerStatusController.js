@@ -9,6 +9,11 @@ class BrokerStatusController {
         return response.json(brokerStatus)
     }
 
+    async view({ params }) {
+        let brokerStatus = await BrokerStatus.query().where('broker_status_id', params.id).first()
+        return brokerStatus
+    }
+
     async store({ response, request }) {
         const brokerStatus = new BrokerStatus()
         const data = {

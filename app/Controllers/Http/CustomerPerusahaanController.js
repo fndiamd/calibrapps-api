@@ -5,8 +5,16 @@ const CustomerPerusahaan = use('App/Models/CustomerPerusahaan')
 class CustomerPerusahaanController {
 
     async index({ response }) {
-        let customerPerusahaan = await CustomerPerusahaan.query().fetch()
+        let customerPerusahaan = await CustomerPerusahaan.query().with('customerStatus').fetch()
         return response.json(customerPerusahaan)
+    }
+
+    async view({ params }) {
+        let customerPerusahaan = await CustomerPerusahaan.query()
+            .where('customer_perusahaan_id', params.id)
+            .with('customerStatus')
+            .first()
+        return customerPerusahaan
     }
 
     async store({ response, request }) {
@@ -58,6 +66,14 @@ class CustomerPerusahaanController {
         const customerPerusahaan = await CustomerPerusahaan.find(params.id)
         customerPerusahaan.delete()
         return response.json({ message: 'Customer perusahaan berhasil dihapus' })
+    }
+
+    async pagination({ request, response }) {
+        let pagination = request.only(['page', 'limit'])
+        let page = pagination.page || 1;
+        let limit = pagination.limit || 10;
+        const customerPerusahaan = await CustomerPerusahaan.query().with('customerStatus').paginate(page, limit)
+        return response.json(customerPerusahaan)
     }
 }
 

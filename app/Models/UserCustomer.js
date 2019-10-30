@@ -17,11 +17,11 @@ class UserCustomer extends Model {
     }
 
     customerRole(){
-        return this.hasOne("App/Models/CustomerRole")
+        return this.belongsTo("App/Models/CustomerRole")
     }
 
     customerPerusahaan(){
-        return this.hasOne('App/Models/CustomerPerusahaan')
+        return this.belongsTo('App/Models/CustomerPerusahaan')
     }
 
     tokens () {

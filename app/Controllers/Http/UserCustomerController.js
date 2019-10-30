@@ -5,8 +5,14 @@ const UserCustomer = use('App/Models/UserCustomer')
 class UserCustomerController {
 
     async index({ response }) {
-        let userCustomer = await UserCustomer.query().fetch()
+        let userCustomer = await UserCustomer.query().with('customerPerusahaan').with('customerRole').fetch()
         return response.json(userCustomer)
+    }
+
+    async view({params, response }){
+        let userCustomer = await UserCustomer.query().where('user_customer_id', params.id)
+        .with('customerPerusahaan').with('customerRole').first()
+        return userCabang
     }
 
     async store({ response, request }) {
@@ -59,9 +65,17 @@ class UserCustomerController {
     }
 
     async delete({ params, response }) {
-        const unsurCustomer = await UserCustomer.find(params.id)
-        unsurCustomer.delete()
+        const userCustomer = await UserCustomer.find(params.id)
+        userCustomer.delete()
         return response.json({ message: 'User customer berhasil dihapus' })
+    }
+
+    async pagination({request, response}){
+        let pagination = request.only(['page', 'limit'])
+        let page = pagination.page || 1;
+        let limit = pagination.limit || 10;
+        const userCustomer = await UserCustomer.query().paginate(page, limit)
+        return response.json(userCustomer)
     }
 }
 

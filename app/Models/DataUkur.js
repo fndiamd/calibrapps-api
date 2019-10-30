@@ -13,7 +13,7 @@ class DataUkur extends Model {
     }
 
     barangKalibrasi(){
-        return this.hasOne('App/Models/BarangKalibrasi')
+        return this.belongsTo('App/Models/BarangKalibrasi')
     }
 
     seqDataUkur(){

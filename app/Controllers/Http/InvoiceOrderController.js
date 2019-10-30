@@ -3,19 +3,24 @@
 const InvoiceOrder = use('App/Models/InvoiceOrder')
 
 class InvoiceOrderController {
-    
-    async index({response}){
+
+    async index({ response }) {
         let invoiceOrder = await InvoiceOrder.query().fetch()
         return response.json(invoiceOrder)
     }
 
-    async store({response, request}){
+    async view({ params }) { 
+        let invoiceOrder = await InvoiceOrder.query().where('invoice_order_id', params.id).first()
+        return invoiceOrder
+    }
+
+    async store({ response, request }) {
         const invoiceOrder = new InvoiceOrder()
         const data = {
-            invoice_order_tanggal : request.input('invoice_order_tanggal'),
-            invoice_order_total : request.input('invoice_order_total'),
-            progres_order_id : request.input('progres_order_id'),
-            invoice_status_id : request.input('invoice_status_id')
+            invoice_order_tanggal: request.input('invoice_order_tanggal'),
+            invoice_order_total: request.input('invoice_order_total'),
+            progres_order_id: request.input('progres_order_id'),
+            invoice_status_id: request.input('invoice_status_id')
         }
 
         invoiceOrder.invoice_order_tanggal = data.invoice_order_tanggal
@@ -24,17 +29,17 @@ class InvoiceOrderController {
         invoiceOrder.invoice_status_id = data.invoice_status_id
 
         await invoiceOrder.save()
-        return response.json(invoiceOrder)   
+        return response.json(invoiceOrder)
     }
 
-    async update({params, response, request}){
+    async update({ params, response, request }) {
         let invoiceOrder = await InvoiceOrder.find(params.id)
-        
+
         const data = {
-          invoice_order_tanggal : request.input('invoice_order_tanggal'),
-          invoice_order_total : request.input('invoice_order_total'),
-          progres_order_id : request.input('progres_order_id'),
-          invoice_status_id : request.input('invoice_status_id')
+            invoice_order_tanggal: request.input('invoice_order_tanggal'),
+            invoice_order_total: request.input('invoice_order_total'),
+            progres_order_id: request.input('progres_order_id'),
+            invoice_status_id: request.input('invoice_status_id')
         }
 
         invoiceOrder.invoice_order_tanggal = data.invoice_order_tanggal
@@ -43,14 +48,14 @@ class InvoiceOrderController {
         invoiceOrder.invoice_status_id = data.invoice_status_id
 
         await invoiceOrder.save()
-        return response.json(invoiceOrder)   
+        return response.json(invoiceOrder)
     }
 
-    async delete ({ params, response }) {
-      const invoiceOrder = await InvoiceOrder.find(params.id)
-      invoiceOrder.delete()
-      return response.json({message: 'Invoice status berhasil dihapus'})
-  } 
+    async delete({ params, response }) {
+        const invoiceOrder = await InvoiceOrder.find(params.id)
+        invoiceOrder.delete()
+        return response.json({ message: 'Invoice status berhasil dihapus' })
+    }
 }
 
 module.exports = InvoiceOrderController

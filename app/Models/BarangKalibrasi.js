@@ -9,7 +9,7 @@ class BarangKalibrasi extends Model {
     }
 
     merkBarang(){
-        return this.hasOne('App/Models/MerkBarang')
+        return this.belongsTo('App/Models/MerkBarang')
     }
 
     orderDetail(){
@@ -17,7 +17,7 @@ class BarangKalibrasi extends Model {
     }
 
     barangStatus(){
-        return this.hasOne('App/Models/BarangStatus')
+        return this.belongsTo('App/Models/BarangStatus')
     }
 
     transaksiBroker(){
@@ -29,7 +29,7 @@ class BarangKalibrasi extends Model {
     }
 
     listKalibrasi(){
-        return this.hasOne('App/Models/ListKalibrasi')
+        return this.belongsTo('App/Models/ListKalibrasi')
     }
 }
 

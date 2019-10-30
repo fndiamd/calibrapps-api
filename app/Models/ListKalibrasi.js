@@ -9,15 +9,15 @@ class ListKalibrasi extends Model {
     }
 
     ruangLingkup(){
-        return this.hasOne('App/Models/RuangLingkup')
+        return this.belongsTo('App/Models/RuangLingkup')
     }
 
     standarKalibrasi(){
-        return this.hasOne('App/Models/StandarKalibrasi')
+        return this.belongsTo('App/Models/StandarKalibrasi')
     }
 
     tipePengerjaan(){
-        return this.hasOne('App/Models/TipePengerjaan')
+        return this.belongsTo('App/Models/TipePengerjaan')
     }
 
     barangKalibrasi(){
