@@ -44,6 +44,7 @@ Route.group(() => {
     // Routes Broker Status
     Route.get('broker-status', 'BrokerStatusController.index')
     Route.get('broker-status/:id', 'BrokerStatusController.view')
+    Route.get('broker-status-pagination', 'BrokerStatusController.pagination')
     
     // Routes Customer Perusahaan
     Route.get('customer-perusahaan', 'CustomerPerusahaanController.index')
@@ -53,10 +54,12 @@ Route.group(() => {
     // Routes Customer Role
     Route.get('customer-role', 'CustomerRoleController.index')
     Route.get('customer-role/:id', 'CustomerRoleController.view')
+    Route.get('customer-role-pagination', 'CustomerRoleController.pagination')
     
     // Routes Customer Status
     Route.get('customer-status', 'CustomerStatusController.index')
     Route.get('customer-status/:id', 'CustomerStatusController.view')
+    Route.get('customer-status-pagination', 'CustomerStatusController.pagination')
     
     // Routes Data Pengamatan
     Route.get('data-pengamatan', 'DataPengamatanController.index')
@@ -76,6 +79,7 @@ Route.group(() => {
     // Routes Invoice Status
     Route.get('invoice-status', 'InvoiceStatusController.index')
     Route.get('invoice-status/:id', 'InvoiceStatusController.view')
+    Route.get('invoice-status-pagination', 'InvoiceStatusController.pagination')
     
     // Routes Kantor Cabang
     Route.get('kantor-cabang', 'KantorCabangController.index')
@@ -85,78 +89,122 @@ Route.group(() => {
     // Routes Kantor Status
     Route.get('kantor-status', 'KantorStatusController.index')
     Route.get('kantor-status/:id', 'KantorStatusController.view')
+    Route.get('kantor-status-pagination', 'KantorStatusController.pagination')
     
     // Route List Kalibrasi
     Route.get('list-kalibrasi', 'ListKalibrasiController.index')
     Route.get('list-kalibrasi/:id', 'ListKalibrasiController.view')
+    Route.get('list-kalibrasi-pagination', 'ListKalibrasiController.pagination')
     
     // Routes Merk Barang
     Route.get('merk-barang', 'MerkBarangController.index')
     Route.get('merk-barang/:id', 'MerkBarangController.view')
+    Route.get('merk-barang-pagination', 'MerkBarangController.pagination')
     
     // Routes Order Detail
     Route.get('order-detail', 'OrderDetailController.index')
     Route.get('order-detail/:id', 'OrderDetailController.view')
+    Route.get('order-detail-pagination', 'OrderDetailController.pagination')
     
     // Routes Order Status
     Route.get('order-status', 'OrderStatusController.index')
     Route.get('order-status/:id', 'OrderStatusController.view')
+    Route.get('order-status-pagination', 'OrderStatusController.pagination')
     
     // Routes Penawaran Order
     Route.get('penawaran-order', 'PenawaranOrderController.index')
+    Route.get('penawaran-order/:id', 'PenawaranOrderController.view')
+    Route.get('penawaran-order-pagination', 'PenawaranOrderController.pagination')
     
     // Routes Penawaran status
     Route.get('penawaran-status', 'PenawaranStatusController.index')
+    Route.get('penawaran-status/:id', 'PenawaranStatusController.view')
+    Route.get('penawaran-status-pagination', 'PenawaranStatusController.pagination')
     
     // Routes Perusahaan Broker
     Route.get('perusahaan-broker', 'PerusahaanBrokerController.index')
+    Route.get('perusahaan-broker/:id', 'PerusahaanBrokerController.view')
+    Route.get('perusahaan-broker-pagination', 'PerusahaanBrokerController.pagination')
     
     // Routes Posisi Ukur
     Route.get('posisi-ukur', 'PosisiUkurController.index')
+    Route.get('posisi-ukur/:id', 'PosisiUkurController.view')
+    Route.get('posisi-ukur-pagination', 'PosisiUkurController.pagination')
     
     // Routes Progres Order
     Route.get('progres-order', 'ProgresOrderController.index')
+    Route.get('progres-order/:id', 'ProgresOrderController.view')
+    Route.get('progres-order-pagination', 'ProgresOrderController.pagination')
     
     // Routes Ruang Lingkup
     Route.get('ruang-lingkup', 'RuangLingkupController.index')
+    Route.get('ruang-lingkup/:id', 'RuangLingkupController.view')
+    Route.get('ruang-lingkup-pagination', 'RuangLingkupController.pagination')
     
     // Routes Satuan Sensor
     Route.get('satuan-sensor', 'SatuanSensorController.index')
+    Route.get('satuan-sensor/:id', 'SatuanSensorController.view')
+    Route.get('satuan-sensor-pagination', 'SatuanSensorController.pagination')
     
     // Routes Sensor
     Route.get('sensor', 'SensorController.index')
+    Route.get('sensor/:id', 'SensorController.view')
+    Route.get('sensor-pagination', 'SensorController.pagination')
     
     // Routes Seq Data Ukur
     Route.get('seq-data-ukur', 'SeqDataUkurController.index')
+    Route.get('seq-data-ukur/:id', 'SeqDataUkurController.view')
+    Route.get('seq-data-ukur-pagination', 'SeqDataUkurController.pagination')
     
     // Routes Standar Kalibrasi
     Route.get('standar-kalibrasi', 'StandarKalibrasiController.index')
+    Route.get('standar-kalibrasi/:id', 'StandarKalibrasiController.view')
+    Route.get('standar-kalibrasi-pagination', 'StandarKalibrasiController.pagination')
     
     // Routes Status Pengamatan
     Route.get('status-pengamatan', 'StatusPengamatanController.index')
+    Route.get('status-pengamatan/:id', 'StatusPengamatanController.view')
+    Route.get('status-pengamatan-pagination', 'StatusPengamatanController.pagination')
     
     // Routes Tipe Pengerjaan
     Route.get('tipe-pengerjaan', 'TipePengerjaanController.index')
+    Route.get('tipe-pengerjaan/:id', 'TipePengerjaanController.view')
+    Route.get('tipe-pengerjaan-pagination', 'TipePengerjaanController.pagination')
     
     // Routes Transaksi Broker
     Route.get('transaksi-broker', 'TransaksiBrokerController.index')
+    Route.get('transaksi-broker/:id', 'TransaksiBrokerController.view')
+    Route.get('transaksi-broker-pagination', 'TransaksiBrokerController.pagination')
     
     // Routes Transaksi Broker Status
     Route.get('transaksi-broker-status', 'TransaksiBrokerStatusController.index')
+    Route.get('transaksi-broker-status/:id', 'TransaksiBrokerStatusController.view')
+    Route.get('transaksi-broker-status-pagination', 'TransaksiBrokerStatusController.pagination')
+
     // Routes Unsur Kaji Ulang
     Route.get('unsur-kajiulang', 'UnsurKajiUlangController.index')
+    Route.get('unsur-kajiulang/:id', 'UnsurKajiUlangController.view')
+    Route.get('unsur-kajiulang-pagination', 'UnsurKajiUlangController.pagination')
+
     // Routes Unsur Kalibrasi
     Route.get('unsur-kalibrasi', 'UnsurKalibrasiController.index')
+    Route.get('unsur-kalibrasi/:id', 'UnsurKalibrasiController.view')
+    Route.get('unsur-kalibrasi-pagination', 'UnsurKalibrasiController.pagination')
+
     // Routes User Cabang
     Route.get('user-cabang', 'UserCabangController.index')
     Route.get('user-cabang/:id', 'UserCabangController.view')
     Route.get('user-cabang-pagination', 'UserCabangController.pagination')
+
     // Routes User Customer
     Route.get('user-customer', 'UserCustomerController.index')
     Route.get('user-customer/:id', 'UserCustomerController.view')
     Route.get('user-customer-pagination', 'UserCustomerController.pagination')
+
     // Routes User Role
     Route.get('user-role', 'UserRoleController.index')
+    Route.get('user-role/:id', 'UserRoleController.view')
+    Route.get('user-role-pagination', 'UserRoleController.pagination')
 
 
     Route.post('user-cabang', 'UserCabangController.store')
