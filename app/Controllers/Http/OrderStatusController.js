@@ -9,6 +9,11 @@ class OrderStatusController {
         return response.json(orderStatus)
     }
 
+    async view({params, response }){
+        let orderStatus = await OrderStatus.query().where('order_status_id', params.id).first()
+        return orderStatus
+    }
+
     async store({response, request}){
         const orderStatus = new OrderStatus()
         const data = {
@@ -38,7 +43,16 @@ class OrderStatusController {
       const orderStatus = await OrderStatus.find(params.id)
       orderStatus.delete()
       return response.json({message: 'Order status berhasil dihapus'})
-  } 
+    }
+    
+    async pagination({ request, response }) {
+        let pagination = request.only(['page', 'limit'])
+        let page = pagination.page || 1;
+        let limit = pagination.limit || 10;
+        const orderStatus = await OrderStatus.query()
+        .paginate(page, limit)
+        return response.json(orderStatus)
+    }
 }
 
 module.exports = OrderStatusController

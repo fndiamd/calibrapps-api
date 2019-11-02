@@ -44,6 +44,15 @@ class InvoiceStatusController {
         invoiceStatus.delete()
         return response.json({ message: 'Invoice status berhasil dihapus' })
     }
+
+    async pagination({ request, response }) {
+        let pagination = request.only(['page', 'limit'])
+        let page = pagination.page || 1;
+        let limit = pagination.limit || 10;
+        const invoiceStatus = await InvoiceStatus.query()
+        .paginate(page, limit)
+        return response.json(invoiceStatus)
+    }
 }
 
 module.exports = InvoiceStatusController

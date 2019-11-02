@@ -5,8 +5,21 @@ const ListKalibrasi = use('App/Models/ListKalibrasi')
 class ListKalibrasiController {
     
     async index({response}){
-        let listKalibrasi = await ListKalibrasi.query().fetch()
+        let listKalibrasi = await ListKalibrasi.query()
+        .with('ruangLingkup')
+        .with('standarKalibrasi')
+        .with('tipePengerjaan')
+        .fetch()
         return response.json(listKalibrasi)
+    }
+
+    async view({params, response }){
+        let listKalibrasi = await ListKalibrasi.query().where('list_kalibrasi_id', params.id)
+        .with('ruangLingkup')
+        .with('standarKalibrasi')
+        .with('tipePengerjaan')
+        .first()
+        return listKalibrasi
     }
 
     async store({response, request}){
@@ -54,7 +67,21 @@ class ListKalibrasiController {
       const listKalibrasi = await ListKalibrasi.find(params.id)
       listKalibrasi.delete()
       return response.json({message: 'List kalibrasi berhasil dihapus'})
-  } 
+    } 
+
+    async pagination({ request, response }) {
+        let pagination = request.only(['page', 'limit'])
+        let page = pagination.page || 1;
+        let limit = pagination.limit || 10;
+        const listKalibrasi = await ListKalibrasi.query()
+        .with('ruangLingkup')
+        .with('standarKalibrasi')
+        .with('tipePengerjaan')
+        .paginate(page, limit)
+        return response.json(listKalibrasi)
+    }
+
+
 }
 
 module.exports = ListKalibrasiController

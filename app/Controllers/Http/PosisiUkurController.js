@@ -9,6 +9,11 @@ class PosisiUkurController {
         return response.json(posisiUkur)
     }
 
+    async view({params, response }){
+        let posisiUkur = await PosisiUkur.query().where('posisi_ukur_id', params.id).first()
+        return posisiUkur
+    }
+
     async store({response, request}){
         const posisiUkur = new PosisiUkur()
         const data = {
@@ -38,7 +43,16 @@ class PosisiUkurController {
       const posisiUkur = await PosisiUkur.find(params.id)
       posisiUkur.delete()
       return response.json({message: 'Posisi ukur berhasil dihapus'})
-  } 
+    }
+    
+    async pagination({ request, response }) {
+        let pagination = request.only(['page', 'limit'])
+        let page = pagination.page || 1;
+        let limit = pagination.limit || 10;
+        const posisiUkur = await PosisiUkur.query()
+        .paginate(page, limit)
+        return response.json(posisiUkur)
+    }
 }
 
 module.exports = PosisiUkurController

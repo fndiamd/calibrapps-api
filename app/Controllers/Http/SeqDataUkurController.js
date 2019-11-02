@@ -5,8 +5,19 @@ const SeqDataUkur = use('App/Models/SeqDataUkur')
 class SeqDataUkurController {
     
     async index({response}){
-        let seqDataUkur = await SeqDataUkur.query().fetch()
+        let seqDataUkur = await SeqDataUkur.query()
+        .with('dataUkur')
+        .with('posisiUkur')
+        .fetch()
         return response.json(seqDataUkur)
+    }
+
+    async view({params, response }){
+        let seqDataUkur = await SeqDataUkur.query().where('seq_data_ukur_id', params.id)
+        .with('dataUkur')
+        .with('posisiUkur')
+        .first()
+        return seqDataUkur
     }
 
     async store({response, request}){
@@ -46,7 +57,18 @@ class SeqDataUkurController {
       const seqDataUkur = await SeqDataUkur.find(params.id)
       seqDataUkur.delete()
       return response.json({message: 'Seq data ukur berhasil dihapus'})
-  } 
+    }
+    
+    async pagination({ request, response }) {
+        let pagination = request.only(['page', 'limit'])
+        let page = pagination.page || 1;
+        let limit = pagination.limit || 10;
+        const seqDataUkur = await SeqDataUkur.query()
+        .with('dataUkur')
+        .with('posisiUkur')
+        .paginate(page, limit)
+        return response.json(seqDataUkur)
+    }
 }
 
 module.exports = SeqDataUkurController

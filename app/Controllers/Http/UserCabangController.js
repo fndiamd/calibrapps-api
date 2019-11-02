@@ -5,13 +5,18 @@ const UserCabang = use('App/Models/UserCabang')
 class UserCabangController {
 
     async index({ response }) {
-        let userCabang = await UserCabang.query().with('kantorCabang').with('userRole').fetch()
+        let userCabang = await UserCabang.query()
+        .with('kantorCabang')
+        .with('userRole')
+        .fetch()
         return response.json(userCabang)
     }
 
     async view({params, response }){
         let userCabang = await UserCabang.query().where('user_cabang_id', params.id)
-        .with('kantorCabang').with('userRole').first()
+        .with('kantorCabang')
+        .with('userRole')
+        .first()
         return userCabang
     }
 
@@ -78,6 +83,16 @@ class UserCabangController {
         return response.json(userCabang)
     }
 
+    async pagination({ request, response }) {
+        let pagination = request.only(['page', 'limit'])
+        let page = pagination.page || 1;
+        let limit = pagination.limit || 10;
+        const userCabang = await UserCabang.query()
+        .with('kantorCabang')
+        .with('userRole')
+        .paginate(page, limit)
+        return response.json(userCabang)
+    }
 }
 
 module.exports = UserCabangController

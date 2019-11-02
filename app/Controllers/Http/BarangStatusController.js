@@ -9,7 +9,7 @@ class BarangStatusController {
         return response.json(barangStatus)
     }
 
-    async show({ params }) {
+    async view({ params }) {
         let barangStatus = await BarangStatus.query().where('barang_status_id', params.id).first()
         return barangStatus
     }

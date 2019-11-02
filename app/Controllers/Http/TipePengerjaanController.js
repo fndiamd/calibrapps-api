@@ -9,6 +9,11 @@ class TipePengerjaanController {
         return response.json(tipePengerjaan)
     }
 
+    async view({params, response }){
+        let tipePengerjaan = await TipePengerjaan.query().where('tipe_pengerjaan_id', params.id).first()
+        return tipePengerjaan
+    }  
+
     async store({response, request}){
         const tipePengerjaan = new TipePengerjaan()
         const data = {
@@ -38,7 +43,16 @@ class TipePengerjaanController {
       const tipePengerjaan = await TipePengerjaan.find(params.id)
       tipePengerjaan.delete()
       return response.json({message: 'Tipe pengerjaan berhasil dihapus'})
-  } 
+    }
+    
+    async pagination({ request, response }) {
+        let pagination = request.only(['page', 'limit'])
+        let page = pagination.page || 1;
+        let limit = pagination.limit || 10;
+        const tipePengerjaan = await TipePengerjaan.query()
+        .paginate(page, limit)
+        return response.json(tipePengerjaan)
+    }
 }
 
 module.exports = TipePengerjaanController

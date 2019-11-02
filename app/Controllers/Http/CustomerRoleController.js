@@ -44,6 +44,14 @@ class CustomerRoleController {
         customerRole.delete()
         return response.json({ message: 'Customer role berhasil dihapus' })
     }
+
+    async pagination({ request, response }) {
+        let pagination = request.only(['page', 'limit'])
+        let page = pagination.page || 1;
+        let limit = pagination.limit || 10;
+        const customerRole = await CustomerRole.query().paginate(page, limit)
+        return response.json(customerRole)
+    }
 }
 
 module.exports = CustomerRoleController

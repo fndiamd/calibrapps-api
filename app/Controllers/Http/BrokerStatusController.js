@@ -44,6 +44,14 @@ class BrokerStatusController {
         brokerStatus.delete()
         return response.json({ message: 'Broker status berhasil dihapus' })
     }
+
+    async pagination({ request, response }) {
+        let pagination = request.only(['page', 'limit'])
+        let page = pagination.page || 1;
+        let limit = pagination.limit || 10;
+        const brokerStatus = await BrokerStatus.query().paginate(page, limit)
+        return response.json(brokerStatus)
+    }
 }
 
 module.exports = BrokerStatusController

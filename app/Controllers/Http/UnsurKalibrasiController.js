@@ -9,16 +9,21 @@ class UnsurKalibrasiController {
         return response.json(unsurKalibrasi)
     }
 
+    async view({params, response }){
+        let unsurKalibrasi = await UnsurKalibrasi.query().where('unsur_kalibrasi_id', params.id).first()
+        return unsurKalibrasi
+    }
+
     async store({ response, request }) {
-        const unsurKajiUlang = new UnsurKalibrasi()
+        const unsurKalibrasi = new UnsurKalibrasi()
         const data = {
             unsur_kalibrasi_nama: request.input('unsur_kalibrasi_nama')
         }
 
-        unsurKajiUlang.unsur_kalibrasi_nama = data.unsur_kalibrasi_nama
+        unsurKalibrasi.unsur_kalibrasi_nama = data.unsur_kalibrasi_nama
 
-        await unsurKajiUlang.save()
-        return response.json(unsurKajiUlang)
+        await unsurKalibrasi.save()
+        return response.json(unsurKalibrasi)
     }
 
     async update({ params, response, request }) {
@@ -28,16 +33,25 @@ class UnsurKalibrasiController {
             unsur_kalibrasi_nama: request.input('unsur_kalibrasi_nama')
         }
 
-        unsurKajiUlang.unsur_kalibrasi_nama = data.unsur_kalibrasi_nama
+        unsurKalibrasi.unsur_kalibrasi_nama = data.unsur_kalibrasi_nama
 
-        await unsurKajiUlang.save()
-        return response.json(unsurKajiUlang)
+        await unsurKalibrasi.save()
+        return response.json(unsurKalibrasi)
     }
 
     async delete({ params, response }) {
         const unsurKalibrasi = await UnsurKalibrasi.find(params.id)
         unsurKalibrasi.delete()
         return response.json({ message: 'Unsur kalibrasi berhasil dihapus' })
+    }
+
+    async pagination({ request, response }) {
+        let pagination = request.only(['page', 'limit'])
+        let page = pagination.page || 1;
+        let limit = pagination.limit || 10;
+        const unsurKalibrasi = await UnsurKalibrasi.query()
+        .paginate(page, limit)
+        return response.json(unsurKalibrasi)
     }
 }
 

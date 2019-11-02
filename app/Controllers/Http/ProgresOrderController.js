@@ -5,8 +5,23 @@ const ProgresOrder = use('App/Models/ProgresOrder')
 class ProgresOrderController {
     
     async index({response}){
-        let progresOrder = await ProgresOrder.query().fetch()
+        let progresOrder = await ProgresOrder.query()
+        .with('customerPerusahaan')
+        .with('penawaranOrder')
+        .with('kantorCabang')
+        .with('orderStatus')
+        .fetch()
         return response.json(progresOrder)
+    }
+
+    async view({params, response }){
+      let progresOrder = await ProgresOrder.query().where('progres_order_id', params.id)
+      .with('customerPerusahaan')
+      .with('penawaranOrder')
+      .with('kantorCabang')
+      .with('orderStatus')
+      .first()
+      return progresOrder
     }
 
     async store({response, request}){
@@ -58,7 +73,20 @@ class ProgresOrderController {
       const progresOrder = await ProgresOrder.find(params.id)
       progresOrder.delete()
       return response.json({message: 'Progres Order berhasil dihapus'})
-  } 
+    } 
+
+    async pagination({ request, response }) {
+      let pagination = request.only(['page', 'limit'])
+      let page = pagination.page || 1;
+      let limit = pagination.limit || 10;
+      const progresOrder = await ProgresOrder.query()
+      .with('customerPerusahaan')
+      .with('penawaranOrder')
+      .with('kantorCabang')
+      .with('orderStatus')
+      .paginate(page, limit)
+      return response.json(progresOrder)
+  }
 }
 
 module.exports = ProgresOrderController

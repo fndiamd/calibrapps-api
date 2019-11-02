@@ -5,13 +5,17 @@ const KantorCabang = use('App/Models/KantorCabang')
 class KantorCabangController {
 
     async index({ auth, response }) {
-        let kantorCabang = await KantorCabang.query().fetch()
+        let kantorCabang = await KantorCabang.query()
+        .with('kantorStatus')
+        .fetch()
         return response.json(kantorCabang)
     }
 
     async view({params, response }){
-        let kantorCabang = await KantorCabang.query().where('kantor_cabang_id', params.id).first()
-        return userCabang
+        let kantorCabang = await KantorCabang.query().where('kantor_cabang_id', params.id)
+        .with('kantorStatus')
+        .first()
+        return kantorCabang
     }
 
     async store({ response, request }) {
@@ -63,6 +67,16 @@ class KantorCabangController {
         const kantorCabang = await KantorCabang.find(params.id)
         kantorCabang.delete()
         return response.json({ message: 'Kantor cabang berhasil dihapus' })
+    }
+
+    async pagination({ request, response }) {
+        let pagination = request.only(['page', 'limit'])
+        let page = pagination.page || 1;
+        let limit = pagination.limit || 10;
+        const kantorCabang = await KantorCabang.query()
+        .with('kantorStatus')
+        .paginate(page, limit)
+        return response.json(kantorCabang)
     }
 }
 

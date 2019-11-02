@@ -5,12 +5,17 @@ const DataPengamatan = use('App/Models/DataPengamatan')
 class DataPengamatanController {
 
     async index({ response }) {
-        let dataPengamatan = await DataPengamatan.query().fetch()
+        let dataPengamatan = await DataPengamatan.query()
+        .with('sensor')
+        .with('statusPengamatan')
+        .with('userCabang')
+        .fetch()
         return response.json(dataPengamatan)
     }
 
     async view({ params }) {
-        let dataPengamatan = await DataPengamatan.query().where('data_pengamatan_id', params.id).first()
+        let dataPengamatan = await DataPengamatan.query().where('data_pengamatan_id', params.id)
+        .with('sensor').with('statusPengamatan').with('userCabang').first()
         return dataPengamatan
     }
 
@@ -51,6 +56,18 @@ class DataPengamatanController {
         const dataPengamatan = await DataPengamatan.find(params.id)
         dataPengamatan.delete()
         return response.json({ message: 'Data pengamatan berhasil dihapus' })
+    }
+
+    async pagination({ request, response }) {
+        let pagination = request.only(['page', 'limit'])
+        let page = pagination.page || 1;
+        let limit = pagination.limit || 10;
+        const dataPengamatan = await DataPengamatan.query()
+        .with('sensor')
+        .with('statusPengamatan')
+        .with('userCabang')
+        .paginate(page, limit)
+        return response.json(dataPengamatan)
     }
 }
 

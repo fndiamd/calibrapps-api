@@ -12,7 +12,7 @@ class UserCustomerController {
     async view({params, response }){
         let userCustomer = await UserCustomer.query().where('user_customer_id', params.id)
         .with('customerPerusahaan').with('customerRole').first()
-        return userCabang
+        return userCustomer
     }
 
     async store({ response, request }) {
@@ -74,7 +74,10 @@ class UserCustomerController {
         let pagination = request.only(['page', 'limit'])
         let page = pagination.page || 1;
         let limit = pagination.limit || 10;
-        const userCustomer = await UserCustomer.query().paginate(page, limit)
+        const userCustomer = await UserCustomer.query()
+        .with('customerPerusahaan')
+        .with('customerRole')
+        .paginate(page, limit)
         return response.json(userCustomer)
     }
 }

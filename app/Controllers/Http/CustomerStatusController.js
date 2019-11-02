@@ -44,6 +44,14 @@ class CustomerStatusController {
         customerStatus.delete()
         return response.json({ message: 'Customer status berhasil dihapus' })
     }
+
+    async pagination({ request, response }) {
+        let pagination = request.only(['page', 'limit'])
+        let page = pagination.page || 1;
+        let limit = pagination.limit || 10;
+        const customerStatus = await CustomerStatus.query().paginate(page, limit)
+        return response.json(customerStatus)
+    }
 }
 
 module.exports = CustomerStatusController

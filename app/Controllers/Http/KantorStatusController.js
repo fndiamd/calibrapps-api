@@ -9,6 +9,11 @@ class KantorStatusController {
         return response.json(kantorStatus)
     }
 
+    async view({params, response }){
+        let kantorStatus = await KantorStatus.query().where('kantor_status_id', params.id).first()
+        return kantorStatus
+    }
+
     async store({response, request}){
         const kantorStatus = new KantorStatus()
         const data = {
@@ -38,7 +43,17 @@ class KantorStatusController {
       const kantorStatus = await KantorStatus.find(params.id)
       kantorStatus.delete()
       return response.json({message: 'Kantor status berhasil dihapus'})
-  } 
+    } 
+
+    async pagination({ request, response }) {
+        let pagination = request.only(['page', 'limit'])
+        let page = pagination.page || 1;
+        let limit = pagination.limit || 10;
+        const kantorStatus = await KantorStatus.query()
+        .paginate(page, limit)
+        return response.json(kantorStatus)
+    }
+
 }
 
 module.exports = KantorStatusController

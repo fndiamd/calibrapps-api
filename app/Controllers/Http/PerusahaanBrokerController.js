@@ -5,8 +5,17 @@ const PerusahaanBroker = use('App/Models/PerusahaanBroker')
 class PerusahaanBrokerController {
     
     async index({response}){
-        let perusahaanBroker = await PerusahaanBroker.query().fetch()
+        let perusahaanBroker = await PerusahaanBroker.query()
+        .with('brokerStatus')
+        .fetch()
         return response.json(perusahaanBroker)
+    }
+
+    async view({params, response }){
+        let perusahaanBroker = await PerusahaanBroker.query().where('perusahaan_broker_id', params.id)
+        .with('brokerStatus')
+        .first()
+        return perusahaanBroker
     }
 
     async store({response, request}){
@@ -58,7 +67,17 @@ class PerusahaanBrokerController {
       const perusahaanBroker = await PerusahaanBroker.find(params.id)
       perusahaanBroker.delete()
       return response.json({message: 'Perusahaan broker berhasil dihapus'})
-  } 
+    }
+    
+    async pagination({ request, response }) {
+        let pagination = request.only(['page', 'limit'])
+        let page = pagination.page || 1;
+        let limit = pagination.limit || 10;
+        const perusahaanBroker = await PerusahaanBroker.query()
+        .with('brokerStatus')
+        .paginate(page, limit)
+        return response.json(perusahaanBroker)
+    }
 }
 
 module.exports = PerusahaanBrokerController

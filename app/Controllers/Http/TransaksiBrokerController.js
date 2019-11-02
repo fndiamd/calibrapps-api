@@ -5,9 +5,22 @@ const TransaksiBroker = use('App/Models/TransaksiBroker')
 class TransaksiBrokerController {
     
     async index({response}){
-        let transaksiBroker = await TransaksiBroker.query().fetch()
+        let transaksiBroker = await TransaksiBroker.query()
+        .with('perusahaanBroker')
+        .with('barangKalibrasi')
+        .with('transaksiBrokerStatus')
+        .fetch()
         return response.json(transaksiBroker)
     }
+
+    async view({params, response }){
+        let transaksiBroker = await TransaksiBroker.query().where('transaksi_broker_id', params.id)
+        .with('perusahaanBroker')
+        .with('barangKalibrasi')
+        .with('transaksiBrokerStatus')
+        .first()
+        return transaksiBroker
+    }  
 
     async store({response, request}){
         const transaksiBroker = new TransaksiBroker()
@@ -50,7 +63,19 @@ class TransaksiBrokerController {
       const transaksiBroker = await TransaksiBroker.find(params.id)
       transaksiBroker.delete()
       return response.json({message: 'Transaksi broker berhasil dihapus'})
-  } 
+    }
+    
+    async pagination({ request, response }) {
+        let pagination = request.only(['page', 'limit'])
+        let page = pagination.page || 1;
+        let limit = pagination.limit || 10;
+        const transaksiBroker = await TransaksiBroker.query()
+        .with('perusahaanBroker')
+        .with('barangKalibrasi')
+        .with('transaksiBrokerStatus')
+        .paginate(page, limit)
+        return response.json(transaksiBroker)
+    }
 }
 
 module.exports = TransaksiBrokerController

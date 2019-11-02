@@ -9,6 +9,11 @@ class StandarKalibrasiController {
         return response.json(standarKalibrasi)
     }
 
+    async view({params, response }){
+        let standarKalibrasi = await StandarKalibrasi.query().where('standar_kalibrasi_id', params.id).first()
+        return standarKalibrasi
+    }  
+
     async store({response, request}){
         const standarKalibrasi = new StandarKalibrasi()
         const data = {
@@ -38,7 +43,16 @@ class StandarKalibrasiController {
       const standarKalibrasi = await StandarKalibrasi.find(params.id)
       standarKalibrasi.delete()
       return response.json({message: 'Standar Kalibrasi berhasil dihapus'})
-  } 
+    }
+    
+    async pagination({ request, response }) {
+        let pagination = request.only(['page', 'limit'])
+        let page = pagination.page || 1;
+        let limit = pagination.limit || 10;
+        const standarKalibrasi = await StandarKalibrasi.query()
+        .paginate(page, limit)
+        return response.json(standarKalibrasi)
+    }
 }
 
 module.exports = StandarKalibrasiController

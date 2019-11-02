@@ -9,6 +9,12 @@ class RuangLingkupController {
         return response.json(ruangLingkup)
     }
 
+    async view({params, response }){
+        let ruangLingkup = await RuangLingkup.query().where('ruang_lingkup_id', params.id).first()
+        return ruangLingkup
+    }
+  
+
     async store({response, request}){
         const ruangLingkup = new RuangLingkup()
         const data = {
@@ -38,7 +44,16 @@ class RuangLingkupController {
       const ruangLingkup = await RuangLingkup.find(params.id)
       ruangLingkup.delete()
       return response.json({message: 'Ruang lingkup berhasil dihapus'})
-  } 
+    } 
+
+    async pagination({ request, response }) {
+        let pagination = request.only(['page', 'limit'])
+        let page = pagination.page || 1;
+        let limit = pagination.limit || 10;
+        const ruangLingkup = await RuangLingkup.query()
+        .paginate(page, limit)
+        return response.json(ruangLingkup)
+    }
 }
 
 module.exports = RuangLingkupController

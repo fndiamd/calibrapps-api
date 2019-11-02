@@ -9,6 +9,11 @@ class MerkBarangController {
         return response.json(merkBarang)
     }
 
+    async view({params, response }){
+        let merkBarang = await MerkBarang.query().where('merk_barang_id', params.id).first()
+        return merkBarang
+    }
+
     async store({response, request}){
         const merkBarang = new MerkBarang()
         const data = {
@@ -38,7 +43,16 @@ class MerkBarangController {
       const merkBarang = await MerkBarang.find(params.id)
       merkBarang.delete()
       return response.json({message: 'Merk barang berhasil dihapus'})
-  } 
+    }
+    
+    async pagination({ request, response }) {
+        let pagination = request.only(['page', 'limit'])
+        let page = pagination.page || 1;
+        let limit = pagination.limit || 10;
+        const merkBarang = await MerkBarang.query()
+        .paginate(page, limit)
+        return response.json(merkBarang)
+    }
 }
 
 module.exports = MerkBarangController

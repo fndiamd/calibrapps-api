@@ -5,8 +5,17 @@ const SatuanSensor = use('App/Models/SatuanSensor')
 class SatuanSensorController {
     
     async index({response}){
-        let satuanSensor = await SatuanSensor.query().fetch()
+        let satuanSensor = await SatuanSensor.query()
+        .with('sensor')
+        .fetch()
         return response.json(satuanSensor)
+    }
+
+    async view({params, response }){
+      let satuanSensor = await SatuanSensor.query().where('satuan_sensor_id', params.id)
+      .with('sensor')
+      .first()
+      return satuanSensor
     }
 
     async store({response, request}){
@@ -50,7 +59,17 @@ class SatuanSensorController {
       const satuanSensor = await SatuanSensor.find(params.id)
       satuanSensor.delete()
       return response.json({message: 'Satuan sensor berhasil dihapus'})
-  } 
+    }
+    
+    async pagination({ request, response }) {
+      let pagination = request.only(['page', 'limit'])
+      let page = pagination.page || 1;
+      let limit = pagination.limit || 10;
+      const satuanSensor = await SatuanSensor.query()
+      .with('sensor')
+      .paginate(page, limit)
+      return response.json(satuanSensor)
+  }
 }
 
 module.exports = SatuanSensorController

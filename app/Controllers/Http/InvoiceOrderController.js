@@ -5,12 +5,18 @@ const InvoiceOrder = use('App/Models/InvoiceOrder')
 class InvoiceOrderController {
 
     async index({ response }) {
-        let invoiceOrder = await InvoiceOrder.query().fetch()
+        let invoiceOrder = await InvoiceOrder.query()
+        .with('progresOrder')
+        .with('invoiceStatus')
+        .fetch()
         return response.json(invoiceOrder)
     }
 
     async view({ params }) { 
-        let invoiceOrder = await InvoiceOrder.query().where('invoice_order_id', params.id).first()
+        let invoiceOrder = await InvoiceOrder.query().where('invoice_order_id', params.id)
+        .with('progresOrder')
+        .with('invoiceStatus')
+        .first()
         return invoiceOrder
     }
 
@@ -55,6 +61,17 @@ class InvoiceOrderController {
         const invoiceOrder = await InvoiceOrder.find(params.id)
         invoiceOrder.delete()
         return response.json({ message: 'Invoice status berhasil dihapus' })
+    }
+
+    async pagination({ request, response }) {
+        let pagination = request.only(['page', 'limit'])
+        let page = pagination.page || 1;
+        let limit = pagination.limit || 10;
+        const invoiceOrder = await InvoiceOrder.query()
+        .with('progresOrder')
+        .with('invoiceStatus')
+        .paginate(page, limit)
+        return response.json(invoiceOrder)
     }
 }
 

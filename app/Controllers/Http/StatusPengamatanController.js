@@ -9,6 +9,11 @@ class StatusPengamatanController {
         return response.json(statusPengamatan)
     }
 
+    async view({params, response }){
+        let statusPengamatan = await StatusPengamatan.query().where('status_pengamatan_id', params.id).first()
+        return statusPengamatan
+    }  
+
     async store({response, request}){
         const statusPengamatan = new StatusPengamatan()
         const data = {
@@ -38,7 +43,16 @@ class StatusPengamatanController {
       const statusPengamatan = await StatusPengamatan.find(params.id)
       statusPengamatan.delete()
       return response.json({message: 'Status pengamatan berhasil dihapus'})
-  } 
+    }
+    
+    async pagination({ request, response }) {
+        let pagination = request.only(['page', 'limit'])
+        let page = pagination.page || 1;
+        let limit = pagination.limit || 10;
+        const statusPengamatan = await StatusPengamatan.query()
+        .paginate(page, limit)
+        return response.json(statusPengamatan)
+    }
 }
 
 module.exports = StatusPengamatanController

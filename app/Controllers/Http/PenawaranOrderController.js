@@ -5,8 +5,17 @@ const PenawaranOrder = use('App/Models/PenawaranOrder')
 class PenawaranOrderController {
     
     async index({response}){
-        let penawaranOrder = await PenawaranOrder.query().fetch()
+        let penawaranOrder = await PenawaranOrder.query()
+        .with('statusPenawaran')
+        .fetch()
         return response.json(penawaranOrder)
+    }
+
+    async view({params, response }){
+        let penawaranOrder = await PenawaranOrder.query().where('penawaran_order_id', params.id)
+        .with('statusPenawaran')
+        .first()
+        return penawaranOrder
     }
 
     async store({response, request}){
@@ -15,7 +24,7 @@ class PenawaranOrderController {
             penawaran_order_nomor : request.input('penawaran_order_nomor'),
             penawaran_order_perusahaan : request.input('penawaran_order_perusahaan'),
             penawaran_order_tanggal_penawaran : request.input('penawaran_order_tanggal_penawaran'),
-            penawaran_order_order_file : request.input('penawaran_order_order_file'),
+            penawaran_order_file : request.input('penawaran_order_file'),
             penawaran_status_id : request.input('penawaran_status_id')
         }
 
@@ -54,7 +63,17 @@ class PenawaranOrderController {
       const penawaranOrder = await PenawaranOrder.find(params.id)
       penawaranOrder.delete()
       return response.json({message: 'Penawaran oder berhasil dihapus'})
-  } 
+    }
+    
+    async pagination({ request, response }) {
+        let pagination = request.only(['page', 'limit'])
+        let page = pagination.page || 1;
+        let limit = pagination.limit || 10;
+        const penawaranOrder = await PenawaranOrder.query()
+        .with('statusPenawaran')
+        .paginate(page, limit)
+        return response.json(penawaranOrder)
+    }
 }
 
 module.exports = PenawaranOrderController

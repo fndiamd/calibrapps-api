@@ -5,12 +5,18 @@ const DataUkur = use('App/Models/DataUkur')
 class DataUkurController {
 
     async index({ response }) {
-        let dataUkur = await DataUkur.query().fetch()
+        let dataUkur = await DataUkur.query()
+        .with('dataPengamatan')
+        .with('barangKalibrasi')
+        .fetch()
         return response.json(dataUkur)
     }
 
     async view({ params }) {
-        let dataUkur = await DataUkur.query().where('data_ukur_id', params.id).first()
+        let dataUkur = await DataUkur.query().where('data_ukur_id', params.id)
+        .with('dataPengamatan')
+        .with('barangKalibrasi')
+        .first()
         return dataUkur
     }
 
@@ -51,6 +57,17 @@ class DataUkurController {
         const dataUkur = await DataUkur.find(params.id)
         dataUkur.delete()
         return response.json({ message: 'Data ukur berhasil dihapus' })
+    }
+
+    async pagination({ request, response }) {
+        let pagination = request.only(['page', 'limit'])
+        let page = pagination.page || 1;
+        let limit = pagination.limit || 10;
+        const dataUkur = await DataUkur.query()
+        .with('dataPengamatan')
+        .with('barangKalibrasi')
+        .paginate(page, limit)
+        return response.json(dataUkur)
     }
 }
 

@@ -10,10 +10,9 @@ class CustomerPerusahaanController {
     }
 
     async view({ params }) {
-        let customerPerusahaan = await CustomerPerusahaan.query()
-            .where('customer_perusahaan_id', params.id)
-            .with('customerStatus')
-            .first()
+        let customerPerusahaan = await CustomerPerusahaan.query().where('customer_perusahaan_id', params.id)
+        .with('customerStatus')
+        .first()
         return customerPerusahaan
     }
 
@@ -72,7 +71,9 @@ class CustomerPerusahaanController {
         let pagination = request.only(['page', 'limit'])
         let page = pagination.page || 1;
         let limit = pagination.limit || 10;
-        const customerPerusahaan = await CustomerPerusahaan.query().with('customerStatus').paginate(page, limit)
+        const customerPerusahaan = await CustomerPerusahaan.query()
+        .with('customerStatus')
+        .paginate(page, limit)
         return response.json(customerPerusahaan)
     }
 }

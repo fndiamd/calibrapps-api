@@ -5,8 +5,18 @@ const UnsurKajiUlang = use('App/Models/UnsurKajiUlang')
 class UnsurKajiUlangController {
     
     async index({response}){
-        let unsurKajiUlang = await UnsurKajiUlang.query().fetch()
+        let unsurKajiUlang = await UnsurKajiUlang.query()
+        .with('unsurKalibrasi')
+        .with('progresOrder')
+        .fetch()
         return response.json(unsurKajiUlang)
+    }
+
+    async view({params, response }){
+        let unsurKajiUlang = await UnsurKajiUlang.query().where('progres_order_id', params.id)
+        .with('unsurKalibrasi')
+        .fetch()
+        return unsurKajiUlang
     }
 
     async store({response, request}){
@@ -38,7 +48,18 @@ class UnsurKajiUlangController {
       const unsurKajiUlang = await UnsurKajiUlang.find(params.id)
       unsurKajiUlang.delete()
       return response.json({message: 'Unsur kaji ulang berhasil dihapus'})
-  } 
+    }
+    
+    async pagination({ request, response }) {
+        let pagination = request.only(['page', 'limit'])
+        let page = pagination.page || 1;
+        let limit = pagination.limit || 10;
+        const unsurKajiUlang = await UnsurKajiUlang.query()
+        .with('unsurKalibrasi')
+        .with('progresOrder')
+        .paginate(page, limit)
+        return response.json(unsurKajiUlang)
+    }
 }
 
 module.exports = UnsurKajiUlangController

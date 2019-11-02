@@ -9,6 +9,11 @@ class UserRoleController {
         return response.json(userRole)
     }
 
+    async view({params, response }){
+        let userRole = await UserRole.query().where('user_role_id', params.id).first()
+        return userRole
+    }
+
     async store({ response, request }) {
         const userRole = new UserRole()
         const data = {
@@ -38,6 +43,15 @@ class UserRoleController {
         const unsurRole = await UserRole.find(params.id)
         unsurRole.delete()
         return response.json({ message: 'User Role berhasil dihapus' })
+    }
+
+    async pagination({request, response}){
+        let pagination = request.only(['page', 'limit'])
+        let page = pagination.page || 1;
+        let limit = pagination.limit || 10;
+        const userRole = await UserRole.query()
+        .paginate(page, limit)
+        return response.json(userRole)
     }
 }
 

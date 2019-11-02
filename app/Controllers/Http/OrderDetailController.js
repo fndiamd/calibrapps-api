@@ -5,9 +5,20 @@ const OrderDetail = use('App/Models/OrderDetail')
 class OrderDetailController {
     
     async index({response}){
-        let orderDetail = await OrderDetail.query().fetch()
+        let orderDetail = await OrderDetail.query()
+        .with('progresOrder')
+        .with('barangKalibrasi')
+        .fetch()
         return response.json(orderDetail)
     }
+
+    async view({params, response }){
+      let orderDetail = await OrderDetail.query().where('order_detail_id', params.id)
+      .with('progresOrder')
+      .with('barangKalibrasi')
+      .first()
+      return orderDetail
+  }
 
     async store({response, request}){
         const orderDetail = new OrderDetail()
@@ -42,7 +53,18 @@ class OrderDetailController {
       const orderDetail = await OrderDetail.find(params.id)
       orderDetail.delete()
       return response.json({message: 'Order detail berhasil dihapus'})
-  } 
+    }
+    
+    async pagination({ request, response }) {
+      let pagination = request.only(['page', 'limit'])
+      let page = pagination.page || 1;
+      let limit = pagination.limit || 10;
+      const orderDetail = await OrderDetail.query()
+      .with('progresOrder')
+      .with('barangKalibrasi')
+      .paginate(page, limit)
+      return response.json(orderDetail)
+  }
 }
 
 module.exports = OrderDetailController
