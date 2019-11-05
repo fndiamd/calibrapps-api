@@ -17,10 +17,12 @@ class InvoiceStatusController {
     async store({ response, request }) {
         const invoiceStatus = new InvoiceStatus()
         const data = {
-            invoice_status_keterangan: request.input('invoice_status_keterangan')
+            invoice_status_keterangan: request.input('invoice_status_keterangan'),
+            invoice_status_warna: request.input('invoice_status_warna')
         }
 
         invoiceStatus.invoice_status_keterangan = data.invoice_status_keterangan
+        invoiceStatus.invoice_status_warna = data.invoice_status_warna
 
         await invoiceStatus.save()
         return response.json(invoiceStatus)
@@ -30,10 +32,12 @@ class InvoiceStatusController {
         let invoiceStatus = await InvoiceStatus.find(params.id)
 
         const data = {
-            invoice_status_keterangan: request.input('invoice_status_keterangan')
+            invoice_status_keterangan: request.input('invoice_status_keterangan'),
+            invoice_status_warna: request.input('invoice_status_warna')
         }
 
         invoiceStatus.invoice_status_keterangan = data.invoice_status_keterangan
+        invoiceStatus.invoice_status_warna = data.invoice_status_warna
 
         await invoiceStatus.save()
         return response.json(invoiceStatus)

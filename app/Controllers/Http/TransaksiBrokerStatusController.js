@@ -17,10 +17,12 @@ class TransaksiBrokerStatusController {
     async store({response, request}){
         const transaksiBrokerStatus = new TransaksiBrokerStatus()
         const data = {
-            transaksi_broker_status_keterangan : request.input('transaksi_broker_status_keterangan')
+            transaksi_broker_status_keterangan : request.input('transaksi_broker_status_keterangan'),
+            transaksi_broker_status_warna: request.input('transaksi_broker_status_warna')
         }
 
         transaksiBrokerStatus.transaksi_broker_status_keterangan = data.transaksi_broker_status_keterangan
+        transaksiBrokerStatus.transaksi_broker_status_warna = data.transaksi_broker_status_warna
 
         await transaksiBrokerStatus.save()
         return response.json(transaksiBrokerStatus)   
@@ -30,10 +32,12 @@ class TransaksiBrokerStatusController {
         let transaksiBrokerStatus = await TransaksiBrokerStatus.find(params.id)
         
         const data = {
-          transaksi_broker_status_keterangan : request.input('transaksi_broker_status_keterangan')
+          transaksi_broker_status_keterangan : request.input('transaksi_broker_status_keterangan'),
+          transaksi_broker_status_warna: request.input('transaksi_broker_status_warna')
         }
 
         transaksiBrokerStatus.transaksi_broker_status_keterangan = data.transaksi_broker_status_keterangan
+        transaksiBrokerStatus.transaksi_broker_status_warna = data.transaksi_broker_status_warna
 
         await transaksiBrokerStatus.save()
         return response.json(transaksiBrokerStatus) 

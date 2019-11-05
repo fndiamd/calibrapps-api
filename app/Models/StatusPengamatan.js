@@ -5,7 +5,7 @@ const Model = use('Model')
 
 class StatusPengamatan extends Model {
     static get primaryKey(){
-        return 'status_pengamatan_id'
+        return 'pengamatan_status_id'
     }
 
     static get createdAtColumn(){

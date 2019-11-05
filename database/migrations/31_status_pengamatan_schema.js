@@ -6,8 +6,9 @@ const Schema = use('Schema')
 class StatusPengamatanSchema extends Schema {
   up () {
     this.create('status_pengamatans', (table) => {
-      table.increments('status_pengamatan_id')
-      table.string('status_pengamatan_keterangan', 100).notNullable()
+      table.increments('pengamatan_status_id')
+      table.string('pengamatan_status_keterangan', 100).notNullable()
+      table.string('pengamatan_status_warna', 50).unique()
       //table.timestamps()
     })
   }

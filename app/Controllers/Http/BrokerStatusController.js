@@ -17,10 +17,12 @@ class BrokerStatusController {
     async store({ response, request }) {
         const brokerStatus = new BrokerStatus()
         const data = {
-            broker_status_keterangan: request.input('broker_status_keterangan')
+            broker_status_keterangan: request.input('broker_status_keterangan'),
+            broker_status_warna: request.input('broker_status_warna')
         }
 
         brokerStatus.broker_status_keterangan = data.broker_status_keterangan
+        brokerStatus.broker_status_warna = data.broker_status_warna
 
         await brokerStatus.save()
         return response.json(brokerStatus)
@@ -30,10 +32,12 @@ class BrokerStatusController {
         let brokerStatus = await BrokerStatus.find(params.id)
 
         const data = {
-            broker_status_keterangan: request.input('broker_status_keterangan')
+            broker_status_keterangan: request.input('broker_status_keterangan'),
+            broker_status_warna: request.input('broker_status_warna')
         }
 
         brokerStatus.broker_status_keterangan = data.broker_status_keterangan
+        brokerStatus.broker_status_warna = data.broker_status_warna
 
         await brokerStatus.save()
         return response.json(brokerStatus)

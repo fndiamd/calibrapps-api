@@ -23,12 +23,12 @@ class DataPengamatanController {
         const dataPengamatan = new DataPengamatan()
         const data = {
             sensor_id: request.input('sensor_id'),
-            status_pengamatan_id: request.input('status_pengamatan_id'),
+            status_pengamatan_id: request.input('pengamatan_status_id'),
             user_cabang_id: request.input('user_cabang_id')
         }
 
         dataPengamatan.sensor_id = data.sensor_id
-        dataPengamatan.status_pengamatan_id = data.status_pengamatan_id
+        dataPengamatan.pengamatan_status_id = data.status_pengamatan_id
         dataPengamatan.user_cabang_id = data.user_cabang_id
 
         await dataPengamatan.save()
@@ -40,12 +40,12 @@ class DataPengamatanController {
 
         const data = {
             sensor_id: request.input('sensor_id'),
-            status_pengamatan_id: request.input('status_pengamatan_id'),
+            status_pengamatan_id: request.input('pengamatan_status_id'),
             user_cabang_id: request.input('user_cabang_id')
         }
 
         dataPengamatan.sensor_id = data.sensor_id
-        dataPengamatan.status_pengamatan_id = data.status_pengamatan_id
+        dataPengamatan.pengamatan_status_id = data.status_pengamatan_id
         dataPengamatan.user_cabang_id = data.user_cabang_id
 
         await dataPengamatan.save()

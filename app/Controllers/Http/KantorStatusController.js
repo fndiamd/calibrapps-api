@@ -17,10 +17,12 @@ class KantorStatusController {
     async store({response, request}){
         const kantorStatus = new KantorStatus()
         const data = {
-            kantor_status_keterangan : request.input('kantor_status_keterangan')
+            kantor_status_keterangan : request.input('kantor_status_keterangan'),
+            kantor_status_warna: request.input('kantor_status_warna')
         }
 
         kantorStatus.kantor_status_keterangan = data.kantor_status_keterangan
+        kantorStatus.kantor_status_warna = data.kantor_status_warna
 
         await kantorStatus.save()
         return response.json(kantorStatus)   
@@ -30,10 +32,12 @@ class KantorStatusController {
         let kantorStatus = await KantorStatus.find(params.id)
         
         const data = {
-          kantor_status_keterangan : request.input('kantor_status_keterangan')
+          kantor_status_keterangan : request.input('kantor_status_keterangan'),
+          kantor_status_warna: request.input('kantor_status_warna')
         }
 
         kantorStatus.kantor_status_keterangan = data.kantor_status_keterangan
+        kantorStatus.kantor_status_warna = data.kantor_status_warna
 
         await kantorStatus.save()
         return response.json(kantorStatus)    

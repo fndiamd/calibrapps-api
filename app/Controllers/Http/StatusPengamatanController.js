@@ -10,17 +10,19 @@ class StatusPengamatanController {
     }
 
     async view({params, response }){
-        let statusPengamatan = await StatusPengamatan.query().where('status_pengamatan_id', params.id).first()
+        let statusPengamatan = await StatusPengamatan.query().where('pengamatan_status_id', params.id).first()
         return statusPengamatan
     }  
 
     async store({response, request}){
         const statusPengamatan = new StatusPengamatan()
         const data = {
-            status_pengamatan_keterangan : request.input('status_pengamatan_keterangan')
+            pengamatan_status_keterangan : request.input('pengamatan_status_keterangan'),
+            pengamatan_status_warna: request.input('pengamatan_status_warna')
         }
 
-        statusPengamatan.status_pengamatan_keterangan = data.status_pengamatan_keterangan
+        statusPengamatan.pengamatan_status_keterangan = data.pengamatan_status_keterangan
+        statusPengamatan.pengamatan_status_warna = data.pengamatan_status_warna
 
         await statusPengamatan.save()
         return response.json(statusPengamatan)   
@@ -30,10 +32,12 @@ class StatusPengamatanController {
         let statusPengamatan = await StatusPengamatan.find(params.id)
         
         const data = {
-          status_pengamatan_keterangan : request.input('status_pengamatan_keterangan')
+          pengamatan_status_keterangan : request.input('pengamatan_status_keterangan'),
+          pengamatan_status_warna: request.input('pengamatan_status_warna')
         }
 
-        statusPengamatan.status_pengamatan_keterangan = data.status_pengamatan_keterangan
+        statusPengamatan.pengamatan_status_keterangan = data.pengamatan_status_keterangan
+        statusPengamatan.pengamatan_status_warna = data.pengamatan_status_warna
 
         await statusPengamatan.save()
         return response.json(statusPengamatan)  
@@ -42,7 +46,7 @@ class StatusPengamatanController {
     async delete ({ params, response }) {
       const statusPengamatan = await StatusPengamatan.find(params.id)
       statusPengamatan.delete()
-      return response.json({message: 'Status pengamatan berhasil dihapus'})
+      return response.json({message: 'Pengamatan status berhasil dihapus'})
     }
     
     async pagination({ request, response }) {

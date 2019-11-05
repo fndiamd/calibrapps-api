@@ -8,6 +8,7 @@ class OrderStatusSchema extends Schema {
     this.create('order_statuses', (table) => {
       table.increments('order_status_id')
       table.string('order_status_keterangan', 100).notNullable()
+      table.string('order_status_warna', 50).unique()
       //table.timestamps()
     })
   }

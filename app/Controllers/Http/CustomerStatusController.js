@@ -17,10 +17,12 @@ class CustomerStatusController {
     async store({ response, request }) {
         const customerStatus = new CustomerStatus()
         const data = {
-            customer_status_keterangan: request.input('customer_status_keterangan')
+            customer_status_keterangan: request.input('customer_status_keterangan'),
+            customer_status_warna: request.input('customer_status_warna')
         }
 
         customerStatus.customer_status_keterangan = data.customer_status_keterangan
+        customerStatus.customer_status_warna = data.customer_status_warna
 
         await customerStatus.save()
         return response.json(customerStatus)
@@ -30,10 +32,12 @@ class CustomerStatusController {
         let customerStatus = await CustomerStatus.find(params.id)
 
         const data = {
-            customer_status_keterangan: request.input('customer_status_keterangan')
+            customer_status_keterangan: request.input('customer_status_keterangan'),
+            customer_status_warna: request.input('customer_status_warna')
         }
 
         customerStatus.customer_status_keterangan = data.customer_status_keterangan
+        customerStatus.customer_status_warna = data.customer_status_warna
 
         await customerStatus.save()
         return response.json(customerStatus)

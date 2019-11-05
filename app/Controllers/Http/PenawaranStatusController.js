@@ -17,10 +17,12 @@ class PenawaranStatusController {
     async store({response, request}){
         const penawaranStatus = new PenawaranStatus()
         const data = {
-            penawaran_status_keterangan : request.input('penawaran_status_keterangan')
+            penawaran_status_keterangan : request.input('penawaran_status_keterangan'),
+            penawaran_status_warna: request.input('penawaran_status_warna')
         }
 
         penawaranStatus.penawaran_status_keterangan = data.penawaran_status_keterangan
+        penawaranStatus.penawaran_status_warna = data.penawaran_status_warna
 
         await penawaranStatus.save()
         return response.json(penawaranStatus)   
@@ -30,10 +32,12 @@ class PenawaranStatusController {
         let penawaranStatus = await PenawaranStatus.find(params.id)
         
         const data = {
-          penawaran_status_keterangan : request.input('penawaran_status_keterangan')
+          penawaran_status_keterangan : request.input('penawaran_status_keterangan'),
+          penawaran_status_warna: request.input('penawaran_status_warna')
         }
 
         penawaranStatus.penawaran_status_keterangan = data.penawaran_status_keterangan
+        penawaranStatus.penawaran_status_warna = data.penawaran_status_warna
 
         await penawaranStatus.save()
         return response.json(penawaranStatus) 

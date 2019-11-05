@@ -161,10 +161,10 @@ Route.group(() => {
     Route.get('standar-kalibrasi/:id', 'StandarKalibrasiController.view')
     Route.get('standar-kalibrasi-pagination', 'StandarKalibrasiController.pagination')
     
-    // Routes Status Pengamatan
-    Route.get('status-pengamatan', 'StatusPengamatanController.index')
-    Route.get('status-pengamatan/:id', 'StatusPengamatanController.view')
-    Route.get('status-pengamatan-pagination', 'StatusPengamatanController.pagination')
+    // Routes Pengamatan Status
+    Route.get('pengamatan-status', 'StatusPengamatanController.index')
+    Route.get('pengamatan-status/:id', 'StatusPengamatanController.view')
+    Route.get('pengamatan-status-pagination', 'StatusPengamatanController.pagination')
     
     // Routes Tipe Pengerjaan
     Route.get('tipe-pengerjaan', 'TipePengerjaanController.index')
@@ -365,10 +365,10 @@ Route.group(() => {
     Route.delete('standar-kalibrasi/:id', 'StandarKalibrasiController.delete')
     Route.post('standar-kalibrasi', 'StandarKalibrasiController.store')
 
-    // Routes status pengamatan
-    Route.put('status-pengamatan/:id', 'StatusPengamatanController.update')
-    Route.delete('status-pengamatan/:id', 'StatusPengamatanController.delete')
-    Route.post('status-pengamatan', 'StatusPengamatanController.store')
+    // Routes pengamatan status
+    Route.put('pengamatan-status/:id', 'StatusPengamatanController.update')
+    Route.delete('pengamatan-status/:id', 'StatusPengamatanController.delete')
+    Route.post('pengamatan-status', 'StatusPengamatanController.store')
 
     // Routes tipe pengerjaan
     Route.put('tipe-pengerjaan/:id', 'TipePengerjaanController.update')

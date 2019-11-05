@@ -8,6 +8,7 @@ class BarangStatusSchema extends Schema {
     this.create('barang_statuses', (table) => {
       table.increments('barang_status_id')
       table.string('barang_status_keterangan', 100).notNullable()
+      table.string('barang_status_warna', 50).unique()
       //table.timestamps()
     })
   }
