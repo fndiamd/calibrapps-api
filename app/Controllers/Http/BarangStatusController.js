@@ -50,10 +50,12 @@ class BarangStatusController {
     }
 
     async pagination({ request, response }) {
-        let pagination = request.only(['page', 'limit'])
+        let pagination = request.only(['page', 'limit', 'column', 'sort'])
         let page = pagination.page || 1;
         let limit = pagination.limit || 10;
-        const barangStatus = await BarangStatus.query().paginate(page, limit)
+        const barangStatus = await BarangStatus.query()
+        .orderBy(`${pagination.column}`, `${pagination.sort}`)
+        .paginate(page, limit)
         return response.json(barangStatus)
     }
 }

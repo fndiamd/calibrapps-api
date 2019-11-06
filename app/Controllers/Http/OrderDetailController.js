@@ -56,12 +56,13 @@ class OrderDetailController {
     }
     
     async pagination({ request, response }) {
-      let pagination = request.only(['page', 'limit'])
+      let pagination = request.only(['page', 'limit', 'column', 'sort'])
       let page = pagination.page || 1;
       let limit = pagination.limit || 10;
       const orderDetail = await OrderDetail.query()
       .with('progresOrder')
       .with('barangKalibrasi')
+      .orderBy(`${pagination.column}`, `${pagination.sort}`)
       .paginate(page, limit)
       return response.json(orderDetail)
   }

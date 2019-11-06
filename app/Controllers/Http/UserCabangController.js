@@ -75,21 +75,14 @@ class UserCabangController {
         return response.json({ message: 'User cabang berhasil dihapus' })
     }
 
-    async pagination({request, response}){
-        let pagination = request.only(['page', 'limit'])
-        const page = pagination.page || 1;
-        const limit = pagination.limit || 10;
-        const userCabang = await UserCabang.query().paginate(page, limit)
-        return response.json(userCabang)
-    }
-
     async pagination({ request, response }) {
-        let pagination = request.only(['page', 'limit'])
+        let pagination = request.only(['page', 'limit', 'column', 'sort'])
         let page = pagination.page || 1;
         let limit = pagination.limit || 10;
         const userCabang = await UserCabang.query()
         .with('kantorCabang')
         .with('userRole')
+        .orderBy(`${pagination.column}`, `${pagination.sort}`)
         .paginate(page, limit)
         return response.json(userCabang)
     }

@@ -64,12 +64,13 @@ class InvoiceOrderController {
     }
 
     async pagination({ request, response }) {
-        let pagination = request.only(['page', 'limit'])
+        let pagination = request.only(['page', 'limit', 'column', 'sort'])
         let page = pagination.page || 1;
         let limit = pagination.limit || 10;
         const invoiceOrder = await InvoiceOrder.query()
         .with('progresOrder')
         .with('invoiceStatus')
+        .orderBy(`${pagination.column}`, `${pagination.sort}`)
         .paginate(page, limit)
         return response.json(invoiceOrder)
     }

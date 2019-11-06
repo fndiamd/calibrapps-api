@@ -70,13 +70,14 @@ class ListKalibrasiController {
     } 
 
     async pagination({ request, response }) {
-        let pagination = request.only(['page', 'limit'])
+        let pagination = request.only(['page', 'limit', 'column', 'sort'])
         let page = pagination.page || 1;
         let limit = pagination.limit || 10;
         const listKalibrasi = await ListKalibrasi.query()
         .with('ruangLingkup')
         .with('standarKalibrasi')
         .with('tipePengerjaan')
+        .orderBy(`${pagination.column}`, `${pagination.sort}`)
         .paginate(page, limit)
         return response.json(listKalibrasi)
     }

@@ -51,12 +51,13 @@ class UnsurKajiUlangController {
     }
     
     async pagination({ request, response }) {
-        let pagination = request.only(['page', 'limit'])
+        let pagination = request.only(['page', 'limit', 'column', 'sort'])
         let page = pagination.page || 1;
         let limit = pagination.limit || 10;
         const unsurKajiUlang = await UnsurKajiUlang.query()
         .with('unsurKalibrasi')
         .with('progresOrder')
+        .orderBy(`${pagination.column}`, request.sort)
         .paginate(page, limit)
         return response.json(unsurKajiUlang)
     }

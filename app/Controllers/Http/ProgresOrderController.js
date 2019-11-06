@@ -76,7 +76,7 @@ class ProgresOrderController {
     } 
 
     async pagination({ request, response }) {
-      let pagination = request.only(['page', 'limit'])
+      let pagination = request.only(['page', 'limit', 'column', 'sort'])
       let page = pagination.page || 1;
       let limit = pagination.limit || 10;
       const progresOrder = await ProgresOrder.query()
@@ -84,6 +84,7 @@ class ProgresOrderController {
       .with('penawaranOrder')
       .with('kantorCabang')
       .with('orderStatus')
+      .orderBy(`${pagination.column}`, `${pagination.sort}`)
       .paginate(page, limit)
       return response.json(progresOrder)
   }

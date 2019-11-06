@@ -71,13 +71,14 @@ class BarangKalibrasiController {
     }
 
     async pagination({ request, response }) {
-        let pagination = request.only(['page', 'limit'])
+        let pagination = request.only(['page', 'limit', 'column', 'sort'])
         let page = pagination.page || 1;
         let limit = pagination.limit || 10;
         const barangKalibrasi = await BarangKalibrasi.query()
             .with('merkBarang')
             .with('barangStatus')
             .with('listKalibrasi')
+            .orderBy(`${pagination.column}`, `${pagination.sort}`)
             .paginate(page, limit)
         return response.json(barangKalibrasi)
     }
