@@ -70,6 +70,16 @@ class DataUkurController {
         .paginate(page, limit)
         return response.json(dataUkur)
     }
+
+    async search({request, response}){
+        let search = request.only(['column', 'value'])
+        let dataUkur = await DataUkur.query()
+        .with('dataPengamatan')
+        .with('barangKalibrasi')
+        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .fetch()
+        return response.json(dataUkur)
+    }
 }
 
 module.exports = DataUkurController

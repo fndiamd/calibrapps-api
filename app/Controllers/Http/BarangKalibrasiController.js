@@ -82,6 +82,17 @@ class BarangKalibrasiController {
             .paginate(page, limit)
         return response.json(barangKalibrasi)
     }
+
+    async search({request, response}){
+        let search = request.only(['column', 'value'])
+        let barangKalibrasi = await BarangKalibrasi.query()
+        .with('merkBarang')
+        .with('barangStatus')
+        .with('listKalibrasi')
+        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .fetch()
+        return response.json(barangKalibrasi)
+    }
 }
 
 module.exports = BarangKalibrasiController

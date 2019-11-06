@@ -58,6 +58,15 @@ class StatusPengamatanController {
         .paginate(page, limit)
         return response.json(statusPengamatan)
     }
+
+    async search({request, response}){
+        let search = request.only(['column', 'value'])
+
+        let statusPengamatan = await StatusPengamatan.query()
+        .whereRaw(`${search.column} LIKE '%${search.value.toLowerCase()}%'`)
+        .fetch()
+        return response.json(statusPengamatan)
+    }
 }
 
 module.exports = StatusPengamatanController

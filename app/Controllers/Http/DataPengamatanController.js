@@ -70,6 +70,17 @@ class DataPengamatanController {
         .paginate(page, limit)
         return response.json(dataPengamatan)
     }
+
+    async search({request, response}){
+        let search = request.only(['column', 'value'])
+        let dataPengamatan = await DataPengamatan.query()
+        .with('sensor')
+        .with('statusPengamatan')
+        .with('userCabang')
+        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .fetch()
+        return response.json(dataPengamatan)
+    }
 }
 
 module.exports = DataPengamatanController

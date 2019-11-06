@@ -66,6 +66,16 @@ class OrderDetailController {
       .paginate(page, limit)
       return response.json(orderDetail)
   }
+
+  async search({request, response}){
+    let search = request.only(['column', 'value'])
+    let orderDetail = await OrderDetail.query()
+    .with('progresOrder')
+    .with('barangKalibrasi')
+    .whereRaw(`${search.column} LIKE %${search.value}%`)
+    .fetch()
+    return response.json(orderDetail)
+}
 }
 
 module.exports = OrderDetailController

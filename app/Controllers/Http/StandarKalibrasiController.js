@@ -54,6 +54,15 @@ class StandarKalibrasiController {
         .paginate(page, limit)
         return response.json(standarKalibrasi)
     }
+
+    async search({request, response}){
+        let search = request.only(['column', 'value'])
+
+        let standarKalibrasi = await StandarKalibrasi.query()
+        .whereRaw(`${search.column} LIKE '%${search.value.toLowerCase()}%'`)
+        .fetch()
+        return response.json(standarKalibrasi)
+    }
 }
 
 module.exports = StandarKalibrasiController

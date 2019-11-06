@@ -79,6 +79,15 @@ class PerusahaanBrokerController {
         .paginate(page, limit)
         return response.json(perusahaanBroker)
     }
+
+    async search({request, response}){
+        let search = request.only(['column', 'value'])
+        let perusahaanBroker = await PerusahaanBroker.query()
+        .with('brokerStatus')
+        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .fetch()
+        return response.json(perusahaanBroker)
+    }
 }
 
 module.exports = PerusahaanBrokerController

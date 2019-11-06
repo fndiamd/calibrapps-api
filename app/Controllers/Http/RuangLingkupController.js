@@ -55,6 +55,14 @@ class RuangLingkupController {
         .paginate(page, limit)
         return response.json(ruangLingkup)
     }
+
+    async search({request, response}){
+        let search = request.only(['column', 'value'])
+        let ruangLingkup = await RuangLingkup.query()
+        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .fetch()
+        return response.json(ruangLingkup)
+      }
 }
 
 module.exports = RuangLingkupController

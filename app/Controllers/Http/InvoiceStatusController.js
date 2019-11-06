@@ -58,6 +58,14 @@ class InvoiceStatusController {
         .paginate(page, limit)
         return response.json(invoiceStatus)
     }
+
+    async search({request, response}){
+        let search = request.only(['column', 'value'])
+        let invoiceStatus = await InvoiceStatus.query()
+        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .fetch()
+        return response.json(invoiceStatus)
+    }
 }
 
 module.exports = InvoiceStatusController

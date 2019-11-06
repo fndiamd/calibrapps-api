@@ -54,6 +54,14 @@ class CustomerRoleController {
         .paginate(page, limit)
         return response.json(customerRole)
     }
+
+    async search({request, response}){
+        let search = request.only(['column', 'value'])
+        let customerRole = await CustomerRole.query()
+        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .fetch()
+        return response.json(customerRole)
+    }
 }
 
 module.exports = CustomerRoleController

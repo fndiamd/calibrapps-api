@@ -54,6 +54,14 @@ class MerkBarangController {
         .paginate(page, limit)
         return response.json(merkBarang)
     }
+
+    async search({request, response}){
+        let search = request.only(['column', 'value'])
+        let merkBarang = await MerkBarang.query()
+        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .fetch()
+        return response.json(merkBarang)
+    }
 }
 
 module.exports = MerkBarangController

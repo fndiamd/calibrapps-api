@@ -54,6 +54,14 @@ class PosisiUkurController {
         .paginate(page, limit)
         return response.json(posisiUkur)
     }
+
+    async search({request, response}){
+        let search = request.only(['column', 'value'])
+        let posisiUkur = await PosisiUkur.query()
+        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .fetch()
+        return response.json(posisiUkur)
+    }
 }
 
 module.exports = PosisiUkurController

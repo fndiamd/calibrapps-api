@@ -55,6 +55,14 @@ class SensorController {
         .paginate(page, limit)
         return response.json(sensor)
     }
+
+    async search({request, response}){
+        let search = request.only(['column', 'value'])
+        let sensor = await Sensor.query()
+        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .fetch()
+        return response.json(sensor)
+      }
 }
 
 module.exports = SensorController

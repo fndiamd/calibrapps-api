@@ -58,6 +58,14 @@ class BrokerStatusController {
         .paginate(page, limit)
         return response.json(brokerStatus)
     }
+
+    async search({request, response}){
+        let search = request.only(['column', 'value'])
+        let brokerStatus = await BrokerStatus.query()
+        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .fetch()
+        return response.json(brokerStatus)
+    }
 }
 
 module.exports = BrokerStatusController

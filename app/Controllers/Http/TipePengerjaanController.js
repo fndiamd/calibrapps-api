@@ -54,6 +54,15 @@ class TipePengerjaanController {
         .paginate(page, limit)
         return response.json(tipePengerjaan)
     }
+
+    async search({request, response}){
+        let search = request.only(['column', 'value'])
+
+        let tipePengerjaan = await TipePengerjaan.query()
+        .whereRaw(`${search.column} LIKE '%${search.value.toLowerCase()}%'`)
+        .fetch()
+        return response.json(tipePengerjaan)
+    }
 }
 
 module.exports = TipePengerjaanController

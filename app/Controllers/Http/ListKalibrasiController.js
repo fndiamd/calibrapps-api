@@ -82,6 +82,16 @@ class ListKalibrasiController {
         return response.json(listKalibrasi)
     }
 
+    async search({request, response}){
+        let search = request.only(['column', 'value'])
+        let listKalibrasi = await ListKalibrasi.query()
+        .with('ruangLingkup')
+        .with('standarKalibrasi')
+        .with('tipePengerjaan')
+        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .fetch()
+        return response.json(listKalibrasi)
+    }
 
 }
 

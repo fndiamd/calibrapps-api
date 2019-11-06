@@ -50,8 +50,17 @@ class UnsurKalibrasiController {
         let page = pagination.page || 1;
         let limit = pagination.limit || 10;
         const unsurKalibrasi = await UnsurKalibrasi.query()
-        .orderBy(`${pagination.column}`, request.sort)
+        .orderBy(`${pagination.column}`, `${pagination.sort}`)
         .paginate(page, limit)
+        return response.json(unsurKalibrasi)
+    }
+
+    async search({request, response}){
+        let search = request.only(['column', 'value'])
+
+        let unsurKalibrasi = await UnsurKalibrasi.query()
+        .whereRaw(`${search.column} LIKE '%${search.value.toLowerCase()}%'`)
+        .fetch()
         return response.json(unsurKalibrasi)
     }
 }

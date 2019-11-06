@@ -79,6 +79,15 @@ class KantorCabangController {
         .paginate(page, limit)
         return response.json(kantorCabang)
     }
+
+    async search({request, response}){
+        let search = request.only(['column', 'value'])
+        let kantorCabang = await KantorCabang.query()
+        .with('kantorStatus')
+        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .fetch()
+        return response.json(kantorCabang)
+    }
 }
 
 module.exports = KantorCabangController

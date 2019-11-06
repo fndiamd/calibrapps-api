@@ -58,6 +58,14 @@ class PenawaranStatusController {
         .paginate(page, limit)
         return response.json(penawaranStatus)
     }
+
+    async search({request, response}){
+        let search = request.only(['column', 'value'])
+        let penawaranStatus = await PenawaranStatus.query()
+        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .fetch()
+        return response.json(penawaranStatus)
+    }
 }
 
 module.exports = PenawaranStatusController

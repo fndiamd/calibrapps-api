@@ -86,6 +86,17 @@ class UserCabangController {
         .paginate(page, limit)
         return response.json(userCabang)
     }
+
+    async search({request, response}){
+        let search = request.only(['column', 'value'])
+
+        let userCabang = await UserCabang.query()
+        .with('kantorCabang')
+        .with('userRole')
+        .whereRaw(`${search.column} LIKE '%${search.value.toLowerCase()}%'`)
+        .fetch()
+        return response.json(userCabang)
+    }
 }
 
 module.exports = UserCabangController

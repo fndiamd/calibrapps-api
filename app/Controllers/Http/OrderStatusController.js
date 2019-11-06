@@ -58,6 +58,14 @@ class OrderStatusController {
         .paginate(page, limit)
         return response.json(orderStatus)
     }
+
+    async search({request, response}){
+        let search = request.only(['column', 'value'])
+        let orderStatus = await OrderStatus.query()
+        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .fetch()
+        return response.json(orderStatus)
+    }
 }
 
 module.exports = OrderStatusController

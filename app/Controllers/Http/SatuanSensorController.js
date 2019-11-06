@@ -71,6 +71,15 @@ class SatuanSensorController {
       .paginate(page, limit)
       return response.json(satuanSensor)
   }
+
+  async search({request, response}){
+    let search = request.only(['column', 'value'])
+    let satuanSensor = await SatuanSensor.query()
+    .with('sensor')
+    .whereRaw(`${search.column} LIKE %${search.value}%`)
+    .fetch()
+    return response.json(satuanSensor)
+  }
 }
 
 module.exports = SatuanSensorController

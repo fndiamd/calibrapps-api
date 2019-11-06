@@ -58,6 +58,15 @@ class TransaksiBrokerStatusController {
         .paginate(page, limit)
         return response.json(transaksiBrokerStatus)
     }
+
+    async search({request, response}){
+        let search = request.only(['column', 'value'])
+
+        let transaksiBrokerStatus = await TransaksiBrokerStatus.query()
+        .whereRaw(`${search.column} LIKE '%${search.value.toLowerCase()}%'`)
+        .fetch()
+        return response.json(transaksiBrokerStatus)
+    }
 }
 
 module.exports = TransaksiBrokerStatusController

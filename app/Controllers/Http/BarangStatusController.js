@@ -58,6 +58,14 @@ class BarangStatusController {
         .paginate(page, limit)
         return response.json(barangStatus)
     }
+
+    async search({request, response}){
+        let search = request.only(['column', 'value'])
+        let barangStatus = await BarangStatus.query()
+        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .fetch()
+        return response.json(barangStatus)
+    }
 }
 
 module.exports = BarangStatusController

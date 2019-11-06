@@ -59,6 +59,14 @@ class KantorStatusController {
         return response.json(kantorStatus)
     }
 
+    async search({request, response}){
+        let search = request.only(['column', 'value'])
+        let kantorStatus = await KantorStatus.query()
+        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .fetch()
+        return response.json(kantorStatus)
+    }
+
 }
 
 module.exports = KantorStatusController

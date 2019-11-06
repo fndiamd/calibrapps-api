@@ -74,6 +74,16 @@ class InvoiceOrderController {
         .paginate(page, limit)
         return response.json(invoiceOrder)
     }
+
+    async search({request, response}){
+        let search = request.only(['column', 'value'])
+        let invoiceOrder = await InvoiceOrder.query()
+        .with('progresOrder')
+        .with('invoiceStatus')
+        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .fetch()
+        return response.json(invoiceOrder)
+    }
 }
 
 module.exports = InvoiceOrderController

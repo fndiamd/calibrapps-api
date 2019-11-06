@@ -81,6 +81,17 @@ class UserCustomerController {
         .paginate(page, limit)
         return response.json(userCustomer)
     }
+
+    async search({request, response}){
+        let search = request.only(['column', 'value'])
+
+        let userCustomer = await UserCustomer.query()
+        .with('customerPerusahaan')
+        .with('customerRole')
+        .whereRaw(`${search.column} LIKE '%${search.value.toLowerCase()}%'`)
+        .fetch()
+        return response.json(userCustomer)
+    }
 }
 
 module.exports = UserCustomerController

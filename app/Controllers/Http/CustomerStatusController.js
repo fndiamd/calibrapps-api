@@ -58,6 +58,14 @@ class CustomerStatusController {
         .paginate(page, limit)
         return response.json(customerStatus)
     }
+
+    async search({request, response}){
+        let search = request.only(['column', 'value'])
+        let customerStatus = await CustomerStatus.query()
+        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .fetch()
+        return response.json(customerStatus)
+    }
 }
 
 module.exports = CustomerStatusController

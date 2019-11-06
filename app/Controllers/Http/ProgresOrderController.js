@@ -87,7 +87,19 @@ class ProgresOrderController {
       .orderBy(`${pagination.column}`, `${pagination.sort}`)
       .paginate(page, limit)
       return response.json(progresOrder)
-  }
+    }
+
+    async search({request, response}){
+      let search = request.only(['column', 'value'])
+      let progresOrder = await ProgresOrder.query()
+      .with('customerPerusahaan')
+      .with('penawaranOrder')
+      .with('kantorCabang')
+      .with('orderStatus')
+      .whereRaw(`${search.column} LIKE %${search.value}%`)
+      .fetch()
+      return response.json(progresOrder)
+    }
 }
 
 module.exports = ProgresOrderController

@@ -70,6 +70,16 @@ class SeqDataUkurController {
         .paginate(page, limit)
         return response.json(seqDataUkur)
     }
+
+    async search({request, response}){
+        let search = request.only(['column', 'value'])
+        let seqDataUkur = await SeqDataUkur.query()
+        .with('dataUkur')
+        .with('posisiUkur')
+        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .fetch()
+        return response.json(seqDataUkur)
+    }
 }
 
 module.exports = SeqDataUkurController

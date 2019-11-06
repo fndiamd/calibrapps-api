@@ -57,8 +57,19 @@ class UnsurKajiUlangController {
         const unsurKajiUlang = await UnsurKajiUlang.query()
         .with('unsurKalibrasi')
         .with('progresOrder')
-        .orderBy(`${pagination.column}`, request.sort)
+        .orderBy(`${pagination.column}`, `${pagination.sort}`)
         .paginate(page, limit)
+        return response.json(unsurKajiUlang)
+    }
+
+    async search({request, response}){
+        let search = request.only(['column', 'value'])
+
+        let unsurKajiUlang = await UnsurKajiUlang.query()
+        .with('unsurKalibrasi')
+        .with('progresOrder')
+        .whereRaw(`${search.column} LIKE '%${search.value.toLowerCase()}%'`)
+        .fetch()
         return response.json(unsurKajiUlang)
     }
 }
