@@ -4,19 +4,24 @@
 const Schema = use('Schema')
 
 class PenawaranOrderSchema extends Schema {
-  up () {
+  up() {
     this.create('penawaran_orders', (table) => {
       table.increments('penawaran_order_id')
       table.string('penawaran_order_nomor', 50).notNullable().unique()
       table.string('penawaran_order_perusahaan', 150).notNullable().unique()
       table.date('penawaran_order_tanggal_penawaran')
       table.string('penawaran_order_file', 200)
-      table.integer('penawaran_status_id').unsigned().references('penawaran_status_id').inTable('penawaran_statuses')
+      table.integer('penawaran_status_id')
+        .unsigned()
+        .references('penawaran_status_id')
+        .inTable('penawaran_statuses')
+        .onUpdate('CASCADE')
+        .onDelete('SET NULL')
       table.timestamps()
     })
   }
 
-  down () {
+  down() {
     this.drop('penawaran_orders')
   }
 }

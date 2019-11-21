@@ -5,93 +5,179 @@ const BarangKalibrasi = use('App/Models/BarangKalibrasi')
 class BarangKalibrasiController {
 
     async index({ response }) {
-        let barangKalibrasi = await BarangKalibrasi.query()
-            .with('merkBarang')
-            .with('barangStatus')
-            .with('listKalibrasi')
-            .fetch()
-        return response.json(barangKalibrasi)
+        try {
+            let barangKalibrasi = await BarangKalibrasi
+                .query()
+                .with('merkBarang')
+                .with('barangStatus')
+                .with('listKalibrasi')
+                .fetch()
+
+            return response.json(barangKalibrasi)
+        } catch (error) {
+            return response.status(400).send({
+                message: 'Ops, kelihatannya ada yang tidak beres!'
+            })
+        }
+
     }
 
     async view({ params }) {
-        let barangKalibrasi = await BarangKalibrasi.query()
-            .where('barang_kalibrasi_id', params.id)
-            .with('merkBarang')
-            .with('barangStatus')
-            .with('listKalibrasi')
-            .first()
-        return barangKalibrasi
+        try {
+
+            let barang = await BarangKalibrasi.findOrFail(params.id)
+            let barangKalibrasi = await BarangKalibrasi.query()
+                .where('barang_kalibrasi_id', params.id)
+                .with('merkBarang')
+                .with('barangStatus')
+                .with('listKalibrasi')
+                .fetch()
+
+            return barangKalibrasi
+
+        } catch (error) {
+
+            if (error.name === 'ModelNotFoundException') {
+                return response.status(404).send({
+                    message: 'Barang kalibrasi tidak ditemukan'
+                })
+            }
+
+            return response.status(400).send({
+                message: error
+            })
+
+        }
+
     }
 
     async store({ response, request }) {
-        const barangKalibrasi = new BarangKalibrasi()
-        const data = {
-            barang_kalibrasi_kode: request.input('barang_kalibrasi_kode'),
-            barang_kalibrasi_sn: request.input('barang_kalibrasi_sn'),
-            list_kalibrasi_id: request.input('list_kalibrasi_id'),
-            barang_status_id: request.input('barang_status_id'),
-            merk_barang_id: request.input('merk_barang_id')
+        try {
+            const barangKalibrasi = new BarangKalibrasi()
+            const data = {
+                barang_kalibrasi_kode: request.input('barang_kalibrasi_kode'),
+                barang_kalibrasi_sn: request.input('barang_kalibrasi_sn'),
+                list_kalibrasi_id: request.input('list_kalibrasi_id'),
+                barang_status_id: request.input('barang_status_id'),
+                merk_barang_id: request.input('merk_barang_id')
+            }
+
+            barangKalibrasi.barang_kalibrasi_kode = data.barang_kalibrasi_kode
+            barangKalibrasi.barang_kalibrasi_sn = data.barang_kalibrasi_sn
+            barangKalibrasi.list_kalibrasi_id = data.list_kalibrasi_id
+            barangKalibrasi.barang_status_id = data.barang_status_id
+            barangKalibrasi.merk_barang_id = data.merk_barang_id
+
+            await barangKalibrasi.save()
+            return response.json(barangKalibrasi)
+        } catch (error) {
+            return response.status(400).send({
+                message: 'Ops, kelihatannya ada yang tidak beres!'
+            })
         }
-
-        barangKalibrasi.barang_kalibrasi_kode = data.barang_kalibrasi_kode
-        barangKalibrasi.barang_kalibrasi_sn = data.barang_kalibrasi_sn
-        barangKalibrasi.list_kalibrasi_id = data.list_kalibrasi_id
-        barangKalibrasi.barang_status_id = data.barang_status_id
-        barangKalibrasi.merk_barang_id = data.merk_barang_id
-
-        await barangKalibrasi.save()
-        return response.json(barangKalibrasi)
     }
 
     async update({ params, response, request }) {
-        let barangKalibrasi = await BarangKalibrasi.find(params.id)
+        try {
+            let barangKalibrasi = await BarangKalibrasi.findOrFail(params.id)
 
-        const data = {
-            barang_kalibrasi_kode: request.input('barang_kalibrasi_kode'),
-            barang_kalibrasi_sn: request.input('barang_kalibrasi_sn'),
-            list_kalibrasi_id: request.input('list_kalibrasi_id'),
-            barang_status_id: request.input('barang_status_id'),
-            merk_barang_id: request.input('merk_barang_id')
+            const data = {
+                barang_kalibrasi_kode: request.input('barang_kalibrasi_kode'),
+                barang_kalibrasi_sn: request.input('barang_kalibrasi_sn'),
+                list_kalibrasi_id: request.input('list_kalibrasi_id'),
+                barang_status_id: request.input('barang_status_id'),
+                merk_barang_id: request.input('merk_barang_id')
+            }
+
+            barangKalibrasi.barang_kalibrasi_kode = data.barang_kalibrasi_kode
+            barangKalibrasi.barang_kalibrasi_sn = data.barang_kalibrasi_sn
+            barangKalibrasi.list_kalibrasi_id = data.list_kalibrasi_id
+            barangKalibrasi.barang_status_id = data.barang_status_id
+            barangKalibrasi.merk_barang_id = data.merk_barang_id
+
+            await barangKalibrasi.save()
+            return response.json(barangKalibrasi)
+        } catch (error) {
+            if(error.name === 'ModelNotFoundException'){
+                return response.status(404).send({
+                    message : 'Barang kalibrasi tidak ditemukan'
+                })
+            }
+
+            return response.status(400).send({
+                message : 'Ops, kelihatannya ada yang tidak beres!'
+            })
         }
 
-        barangKalibrasi.barang_kalibrasi_kode = data.barang_kalibrasi_kode
-        barangKalibrasi.barang_kalibrasi_sn = data.barang_kalibrasi_sn
-        barangKalibrasi.list_kalibrasi_id = data.list_kalibrasi_id
-        barangKalibrasi.barang_status_id = data.barang_status_id
-        barangKalibrasi.merk_barang_id = data.merk_barang_id
-
-        await barangKalibrasi.save()
-        return response.json(barangKalibrasi)
     }
 
     async delete({ params, response }) {
-        const barangKalibrasi = await BarangKalibrasi.find(params.id)
-        barangKalibrasi.delete()
-        return response.json({ message: 'Barang kalibrasi berhasil dihapus' })
+        try {
+            const barangKalibrasi = await BarangKalibrasi.findOrFail(params.id)
+            barangKalibrasi.delete()
+            
+            return response.json({ message: 'Barang kalibrasi berhasil dihapus' })
+        } catch (error) {
+            if (error.name === 'ModelNotFoundException') {
+                return response.status(404).send({
+                    message: 'Barang kalibrasi tidak ditemukan'
+                })
+            }
+
+            return response.status(400).send({
+                message: 'Ops, kelihatannya ada yang tidak beres!'
+            })
+        }
     }
 
     async pagination({ request, response }) {
-        let pagination = request.only(['page', 'limit', 'column', 'sort'])
-        let page = pagination.page || 1;
-        let limit = pagination.limit || 10;
-        const barangKalibrasi = await BarangKalibrasi.query()
-            .with('merkBarang')
-            .with('barangStatus')
-            .with('listKalibrasi')
-            .orderBy(`${pagination.column}`, `${pagination.sort}`)
-            .paginate(page, limit)
-        return response.json(barangKalibrasi)
+        try {
+            let pagination = request.only(['page', 'limit', 'column', 'sort'])
+            let page = pagination.page || 1;
+            let limit = pagination.limit || 10;
+            let column = pagination.column || 'barang_kalibrasi_id';
+            let column = pagination.sort || 'desc';
+
+            const barangKalibrasi = await BarangKalibrasi.query()
+                .with('merkBarang')
+                .with('barangStatus')
+                .with('listKalibrasi')
+                .orderBy(`${column}`, `${sort}`)
+                .paginate(page, limit)
+
+            return response.json(barangKalibrasi)
+        } catch (error) {
+            return response.status(400).send({
+                message: 'Ops, kelihatannya ada yang tidak beres!'
+            })
+        }
     }
 
-    async search({request, response}){
-        let search = request.only(['column', 'value'])
-        let barangKalibrasi = await BarangKalibrasi.query()
-        .with('merkBarang')
-        .with('barangStatus')
-        .with('listKalibrasi')
-        .whereRaw(`${search.column} LIKE %${search.value}%`)
-        .fetch()
-        return response.json(barangKalibrasi)
+    async search({ request, response }) {
+        try {
+            let search = request.only(['column', 'value'])
+            let column = search.column || 'barang_kalibrasi_kode';
+            let value = search.value.toLowerCase();
+
+            let barangKalibrasi = await BarangKalibrasi.query()
+                .with('merkBarang')
+                .with('barangStatus')
+                .with('listKalibrasi')
+                .whereRaw(`LOWER(${column}) LIKE '%${value}%'`)
+                .fetch()
+
+            if(barangKalibrasi.rows.length == 0){
+                return response.status(404).send({
+                    message : 'Pencarian untuk ' + value + ' tidak ditemukan'
+                })
+            }
+
+            return response.json(barangKalibrasi)
+        } catch (error) {
+            return response.status(400).send({
+                message: 'Ops, kelihatannya ada yang tidak beres!'
+            })
+        }
     }
 }
 

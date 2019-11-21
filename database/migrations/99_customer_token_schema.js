@@ -4,10 +4,15 @@
 const Schema = use('Schema')
 
 class CustomerTokenSchema extends Schema {
-  up () {
+  up() {
     this.create('customer_tokens', (table) => {
       table.increments('customer_token_id')
-      table.integer('user_customer_id').unsigned().references('user_customer_id').inTable('user_customers')
+      table.integer('user_customer_id')
+        .unsigned()
+        .references('user_customer_id')
+        .inTable('user_customers')
+        .onUpdate('CASCADE')
+        .onDelete('SET NULL')
       table.string('token', 255).notNullable().unique().index()
       table.string('type', 80).notNullable()
       table.boolean('is_revoked').defaultTo(false)
@@ -15,7 +20,7 @@ class CustomerTokenSchema extends Schema {
     })
   }
 
-  down () {
+  down() {
     this.drop('customer_tokens')
   }
 }

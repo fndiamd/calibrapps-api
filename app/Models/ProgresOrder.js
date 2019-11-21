@@ -4,39 +4,50 @@
 const Model = use('Model')
 
 class ProgresOrder extends Model {
-    static get primaryKey(){
+    static get primaryKey() {
         return 'progres_order_id'
     }
 
-    orderStatus(){
-        return this.hasOne('App/Models/OrderStatus')
+    static get dates() {
+        return super.dates.concat(['progres_order_tanggal_order', 'progres_order_estimasi'])
     }
 
-    penawaranOrder(){
-        return this.hasOne('App/Models/PenawaranOrder')
+    static formatDates(field, value) {
+        if (field === 'progres_order_tanggal_order' || field === 'progres_order_estimasi') {
+            return value.format('YYYY-MM-DD')
+        }
+        return super.formatDates(field, value)
     }
 
-    invoiceOrder(){
+    orderStatus() {
+        return this.belongsTo('App/Models/OrderStatus')
+    }
+
+    penawaranOrder() {
+        return this.belongsTo('App/Models/PenawaranOrder')
+    }
+
+    invoiceOrder() {
         return this.hasOne('App/Models/InvoiceOrder')
     }
 
-    unsurKajiUlang(){
+    unsurKajiUlang() {
         return this.hasMany('App/Models/UnsurKajiUlang')
     }
 
-    kantorCabang(){
-        return this.hasOne('App/Models/KantorCabang')
+    kantorCabang() {
+        return this.belongsTo('App/Models/KantorCabang')
     }
 
-    customerPerusahaan(){
-        return this.hasOne('App/Models/CustomerPerusahaan')
+    customerPerusahaan() {
+        return this.belongsTo('App/Models/CustomerPerusahaan')
     }
 
-    orderDetail(){
+    orderDetail() {
         return this.hasMany('App/Models/OrderDetail')
     }
 
-    
+
 }
 
 module.exports = ProgresOrder

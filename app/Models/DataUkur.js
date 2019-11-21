@@ -9,7 +9,7 @@ class DataUkur extends Model {
     }
 
     dataPengamatan(){
-        return this.hasMany('App/Models/DataPengamatan')
+        return this.belongsTo('App/Models/DataPengamatan')
     }
 
     barangKalibrasi(){
@@ -17,7 +17,7 @@ class DataUkur extends Model {
     }
 
     seqDataUkur(){
-        return this.hasOne('App/Models/SeqDataUkur')
+        return this.hasMany('App/Models/SeqDataUkur')
     }
 }
 

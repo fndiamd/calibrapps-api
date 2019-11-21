@@ -1,90 +1,207 @@
 'use strict'
 
 const CustomerPerusahaan = use('App/Models/CustomerPerusahaan')
+const { validate } = use('Validator')
+
+let rules = {
+    customer_perusahaan_pkal: 'required|unique:customer_perusahaans,customer_perusahaan_pkal',
+    customer_perusahaan_nama: 'required',
+    customer_status_id: 'required'
+}
+
+const vmessage = {
+    'customer_perusahaan_pkal.unique': 'Nomor PKAL sudah digunakan, tidak boleh duplikat',
+    'customer_perusahaan_pkal.required': 'Nomor PKAL tidak boleh kosong',
+    'customer_status_id.required': 'Status customer tidak boleh kosong'
+}
 
 class CustomerPerusahaanController {
 
     async index({ response }) {
-        let customerPerusahaan = await CustomerPerusahaan.query().with('customerStatus').fetch()
-        return response.json(customerPerusahaan)
+        try {
+            let customerPerusahaan = await CustomerPerusahaan
+                .query()
+                .with('customerStatus')
+                .fetch()
+
+            return response.json(customerPerusahaan)
+        } catch (error) {
+            return response.status(400).send({
+                message: 'Ops, sepertinya ada yang tidak beres!'
+            })
+        }
     }
 
     async view({ params }) {
-        let customerPerusahaan = await CustomerPerusahaan.query().where('customer_perusahaan_id', params.id)
-        .with('customerStatus')
-        .first()
-        return customerPerusahaan
+        try {
+            let perusahaan = await CustomerPerusahaan.findOrFail(params.id)
+            let customerPerusahaan = await CustomerPerusahaan
+                .query()
+                .where('customer_perusahaan_id', params.id)
+                .with('customerStatus')
+                .first()
+
+            return customerPerusahaan
+        } catch (error) {
+            if (error.name === 'ModelNotFoundException') {
+                return response.status(404).send({
+                    message: 'Perusahaan customer tidak ditemukan'
+                })
+            }
+
+            return response.status(400).send({
+                message: 'Ops, sepertinya ada yang tidak beres!'
+            })
+        }
     }
 
     async store({ response, request }) {
-        const customerPerusahaan = new CustomerPerusahaan()
-        const data = {
-            customer_perusahaan_pkal: request.input('customer_perusahaan_pkal'),
-            customer_perusahaan_nama: request.input('customer_perusahaan_nama'),
-            customer_perusahaan_alamat: request.input('customer_perusahaan_alamat'),
-            customer_perusahaan_telepon: request.input('customer_perusahaan_telepon'),
-            customer_perusahaan_fax: request.input('customer_perusahaan_fax'),
-            customer_status_id: request.input('customer_status_id')
+        try {
+            const customerPerusahaan = new CustomerPerusahaan()
+            const validation = await validate(request.all(), rules, vmessage)
+
+            const data = {
+                customer_perusahaan_pkal: request.input('customer_perusahaan_pkal'),
+                customer_perusahaan_nama: request.input('customer_perusahaan_nama'),
+                customer_perusahaan_alamat: request.input('customer_perusahaan_alamat'),
+                customer_perusahaan_telepon: request.input('customer_perusahaan_telepon'),
+                customer_perusahaan_fax: request.input('customer_perusahaan_fax'),
+                customer_status_id: request.input('customer_status_id')
+            }
+
+            if (validation.fails()) {
+                return response.status(400).send({
+                    message: validation.messages()[0].message,
+                    field: validation.messages()[0].field
+                })
+            }
+
+            customerPerusahaan.customer_perusahaan_pkal = data.customer_perusahaan_pkal
+            customerPerusahaan.customer_perusahaan_nama = data.customer_perusahaan_nama
+            customerPerusahaan.customer_perusahaan_alamat = data.customer_perusahaan_alamat
+            customerPerusahaan.customer_perusahaan_telepon = data.customer_perusahaan_telepon
+            customerPerusahaan.customer_perusahaan_fax = data.customer_perusahaan_fax
+            customerPerusahaan.customer_status_id = data.customer_status_id
+
+            await customerPerusahaan.save()
+            return response.json(customerPerusahaan)
+        } catch (error) {
+            return response.status(400).send({
+                message: 'Ops, sepertinya ada yang tidak beres!'
+            })
         }
-
-        customerPerusahaan.customer_perusahaan_pkal = data.customer_perusahaan_pkal
-        customerPerusahaan.customer_perusahaan_nama = data.customer_perusahaan_nama
-        customerPerusahaan.customer_perusahaan_alamat = data.customer_perusahaan_alamat
-        customerPerusahaan.customer_perusahaan_telepon = data.customer_perusahaan_telepon
-        customerPerusahaan.customer_perusahaan_fax = data.customer_perusahaan_fax
-        customerPerusahaan.customer_status_id = data.customer_status_id
-
-        await customerPerusahaan.save()
-        return response.json(customerPerusahaan)
     }
 
     async update({ params, response, request }) {
-        let customerPerusahaan = await CustomerPerusahaan.find(params.id)
+        try {
+            let customerPerusahaan = await CustomerPerusahaan.findOrFail(params.id)
 
-        const data = {
-            customer_perusahaan_pkal: request.input('customer_perusahaan_pkal'),
-            customer_perusahaan_nama: request.input('customer_perusahaan_nama'),
-            customer_perusahaan_alamat: request.input('customer_perusahaan_alamat'),
-            customer_perusahaan_telepon: request.input('customer_perusahaan_telepon'),
-            customer_perusahaan_fax: request.input('customer_perusahaan_fax'),
-            customer_status_id: request.input('customer_status_id')
+            const data = {
+                customer_perusahaan_pkal: request.input('customer_perusahaan_pkal'),
+                customer_perusahaan_nama: request.input('customer_perusahaan_nama'),
+                customer_perusahaan_alamat: request.input('customer_perusahaan_alamat'),
+                customer_perusahaan_telepon: request.input('customer_perusahaan_telepon'),
+                customer_perusahaan_fax: request.input('customer_perusahaan_fax'),
+                customer_status_id: request.input('customer_status_id')
+            }
+
+            if (customerPerusahaan.customer_perusahaan_pkal === data.customer_perusahaan_pkal) {
+                rules.customer_perusahaan_pkal = 'required'
+            }
+
+            const validation = await validate(request.all(), rules, vmessage)
+            if (validation.fails()) {
+                return response.status(400).send({
+                    message: validation.messages()[0].message,
+                    field: validation.messages()[0].field
+                })
+            }
+
+            customerPerusahaan.customer_perusahaan_pkal = data.customer_perusahaan_pkal
+            customerPerusahaan.customer_perusahaan_nama = data.customer_perusahaan_nama
+            customerPerusahaan.customer_perusahaan_alamat = data.customer_perusahaan_alamat
+            customerPerusahaan.customer_perusahaan_telepon = data.customer_perusahaan_telepon
+            customerPerusahaan.customer_perusahaan_fax = data.customer_perusahaan_fax
+            customerPerusahaan.customer_status_id = data.customer_status_id
+
+            await customerPerusahaan.save()
+            return response.json(customerPerusahaan)
+        } catch (error) {
+            if (error.name === 'ModelNotFoundException') {
+                return response.status(404).send({
+                    message: 'Perusahaan customer tidak ditemukan'
+                })
+            }
+
+            return response.status(400).send({
+                message: 'Ops, sepertinya ada yang tidak beres!'
+            })
         }
-
-        customerPerusahaan.customer_perusahaan_pkal = data.customer_perusahaan_pkal
-        customerPerusahaan.customer_perusahaan_nama = data.customer_perusahaan_nama
-        customerPerusahaan.customer_perusahaan_alamat = data.customer_perusahaan_alamat
-        customerPerusahaan.customer_perusahaan_telepon = data.customer_perusahaan_telepon
-        customerPerusahaan.customer_perusahaan_fax = data.customer_perusahaan_fax
-        customerPerusahaan.customer_status_id = data.customer_status_id
-
-        await customerPerusahaan.save()
-        return response.json(customerPerusahaan)
     }
 
     async delete({ params, response }) {
-        const customerPerusahaan = await CustomerPerusahaan.find(params.id)
-        customerPerusahaan.delete()
-        return response.json({ message: 'Customer perusahaan berhasil dihapus' })
+        try {
+            const customerPerusahaan = await CustomerPerusahaan.findOrFail(params.id)
+            customerPerusahaan.delete()
+
+            return response.json({ message: 'Customer perusahaan berhasil dihapus' })
+        } catch (error) {
+            if (error.name === 'ModelNotFoundException') {
+                return response.status(404).send({
+                    message: 'Perusahaan customer tidak ditemukan'
+                })
+            }
+
+            return response.status(400).send({
+                message: 'Ops, sepertinya ada yang tidak beres!'
+            })
+        }
     }
 
     async pagination({ request, response }) {
-        let pagination = request.only(['page', 'limit', 'column', 'sort'])
-        let page = pagination.page || 1;
-        let limit = pagination.limit || 10;
-        const customerPerusahaan = await CustomerPerusahaan.query()
-        .with('customerStatus')
-        .orderBy(`${pagination.column}`, `${pagination.sort}`)
-        .paginate(page, limit)
-        return response.json(customerPerusahaan)
+        try {
+            let pagination = request.only(['page', 'limit', 'column', 'sort'])
+            let page = pagination.page || 1;
+            let limit = pagination.limit || 10;
+            let column = pagination.column || 'customer_perusahaan_id';
+            let sort = pagination.sort || 'desc';
+
+            const customerPerusahaan = await CustomerPerusahaan.query()
+                .with('customerStatus')
+                .orderBy(`${column}`, `${sort}`)
+                .paginate(page, limit)
+
+            return response.json(customerPerusahaan)
+        } catch (error) {
+            return response.status(400).send({
+                message: 'Ops, sepertinya ada yang tidak beres!'
+            })
+        }
     }
 
-    async search({request, response}){
-        let search = request.only(['column', 'value'])
-        let customerPerusahaan = await CustomerPerusahaan.query()
-        .with('customerStatus')
-        .whereRaw(`${search.column} LIKE %${search.value}%`)
-        .fetch()
-        return response.json(customerPerusahaan)
+    async search({ request, response }) {
+        try {
+            let search = request.only(['column', 'value'])
+            let column = search.column || 'customer_perusahaan_nama';
+            let value = search.value.toLowerCase();
+
+            let customerPerusahaan = await CustomerPerusahaan.query()
+                .with('customerStatus')
+                .whereRaw(`LOWER(${column}) LIKE '%${value}%'`)
+                .fetch()
+
+            if(customerPerusahaan.rows.length == 0){
+                return response.status(404).send({
+                    message : 'Pencarian untuk ' + value + ' tidak ditemukan'
+                })
+            }
+
+            return response.json(customerPerusahaan)
+        } catch (error) {
+            return response.status(400).send({
+                message: 'Ops, sepertinya ada yang tidak beres!'
+            })
+        }
     }
 }
 

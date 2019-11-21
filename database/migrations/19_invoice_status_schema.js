@@ -8,8 +8,7 @@ class InvoiceStatusSchema extends Schema {
     this.create('invoice_statuses', (table) => {
       table.increments('invoice_status_id')
       table.string('invoice_status_keterangan', 100).notNullable().unique()
-      table.string('invoice_status_warna', 50).unique()
-      //table.timestamps()
+      table.string('invoice_status_warna', 50).notNullable().unique()
     })
   }
 

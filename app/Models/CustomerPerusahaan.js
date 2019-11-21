@@ -19,10 +19,7 @@ class CustomerPerusahaan extends Model {
     progresOrder(){
         return this.hasMany('App/Models/ProgresOrder')
     }
-
-    tokens () {
-        return this.hasMany('App/Models/CustomerToken')
-    }
+    
 }
 
 module.exports = CustomerPerusahaan

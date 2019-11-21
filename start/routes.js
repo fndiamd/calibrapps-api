@@ -246,6 +246,12 @@ Route.group(() => {
     Route.post('kantor-cabang', 'KantorCabangController.store')
     Route.post('user-role', 'UserRoleController.store')
     Route.post('kantor-status', 'KantorStatusController.store')
+
+    Route.post('user-customer', 'UserCustomerController.store')
+    Route.put('user-customer/:id', 'UserCustomerController.update')
+
+    Route.put('user-role/:id', 'UserRoleController.update')
+    Route.delete('user-role/:id', 'UserRoleController.delete')
     
 }).prefix('api')
 
@@ -262,13 +268,13 @@ Route.group(() => {
     Route.post('customer-role', 'CustomerRoleController.store')
 
     // Routes user role
-    Route.put('user-role/:id', 'UserRoleController.update')
-    Route.delete('user-role/:id', 'UserRoleController.delete')
+    // Route.put('user-role/:id', 'UserRoleController.update')
+    // Route.delete('user-role/:id', 'UserRoleController.delete')
 
     // Routes user customer 
-    Route.put('user-customer/:id', 'UserCustomerController.update')
+    //Route.put('user-customer/:id', 'UserCustomerController.update')
     Route.delete('user-customer/:id', 'UserCustomerController.delete')
-    Route.post('user-customer', 'UserCustomerController.store')
+    //Route.post('user-customer', 'UserCustomerController.store')
 
     // Routes user cabang
     Route.put('user-cabang/:id', 'UserCabangController.update')

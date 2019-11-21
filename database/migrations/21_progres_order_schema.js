@@ -4,19 +4,35 @@
 const Schema = use('Schema')
 
 class ProgresOrderSchema extends Schema {
-  up () {
+  up() {
     this.create('progres_orders', (table) => {
       table.increments('progres_order_id')
+      table.string('progres_order_nomor', 100).notNullable()
       table.date('progres_order_tanggal_order')
       table.date('progres_order_estimasi')
-      table.integer('customer_perusahaan_id').unsigned().references('customer_perusahaan_id').inTable('customer_perusahaans')
-      table.integer('kantor_order_id').unsigned().references('kantor_cabang_id').inTable('kantor_cabangs')
-      table.integer('order_status_id').unsigned().references('order_status_id').inTable('order_statuses')
+      table.integer('customer_perusahaan_id')
+        .unsigned()
+        .references('customer_perusahaan_id')
+        .inTable('customer_perusahaans')
+        .onUpdate('CASCADE')
+        .onDelete('SET NULL')
+      table.integer('kantor_cabang_id')
+        .unsigned()
+        .references('kantor_cabang_id')
+        .inTable('kantor_cabangs')
+        .onUpdate('CASCADE')
+        .onDelete('SET NULL')
+      table.integer('order_status_id')
+        .unsigned()
+        .references('order_status_id')
+        .inTable('order_statuses')
+        .onUpdate('CASCADE')
+        .onDelete('SET NULL')
       table.timestamps()
     })
   }
 
-  down () {
+  down() {
     this.drop('progres_orders')
   }
 }

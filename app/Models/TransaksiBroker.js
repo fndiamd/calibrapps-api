@@ -8,16 +8,20 @@ class TransaksiBroker extends Model {
         return 'transaksi_broker_id'
     }
 
+    static get dates(){
+        return super.dates.concat(['transaksi_broker_tanggal_penyerahan'])
+    }
+
     transaksiBrokerStatus(){
-        return this.hasOne('App/Models/TransaksiBrokerStatus')
+        return this.belongsTo('App/Models/TransaksiBrokerStatus')
     }
 
     barangKalibrasi(){
-        return this.hasMany('App/Models/BarangKalibrasi')
+        return this.belongsTo('App/Models/BarangKalibrasi')
     }
 
     perusahaanBroker(){
-        return this.hasOne('App/Models/PerusahaanBroker')
+        return this.belongsTo('App/Models/PerusahaanBroker')
     }
 }
 

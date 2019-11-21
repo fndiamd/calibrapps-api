@@ -4,7 +4,7 @@
 const Schema = use('Schema')
 
 class CustomerPerusahaanSchema extends Schema {
-  up () {
+  up() {
     this.create('customer_perusahaans', (table) => {
       table.increments('customer_perusahaan_id')
       table.string('customer_perusahaan_pkal', 20).notNullable().unique()
@@ -12,12 +12,17 @@ class CustomerPerusahaanSchema extends Schema {
       table.string('customer_perusahaan_alamat', 'mediumtext')
       table.string('customer_perusahaan_telepon', 20)
       table.string('customer_perusahaan_fax', 20)
-      table.integer('customer_status_id').unsigned().references('customer_status_id').inTable('customer_statuses')
+      table.integer('customer_status_id')
+        .unsigned()
+        .references('customer_status_id')
+        .inTable('customer_statuses')
+        .onUpdate('CASCADE')
+        .onDelete('SET NULL')
       table.timestamps()
     })
   }
 
-  down () {
+  down() {
     this.drop('customer_perusahaans')
   }
 }

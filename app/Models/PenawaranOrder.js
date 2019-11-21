@@ -8,8 +8,19 @@ class PenawaranOrder extends Model {
         return 'penawaran_order_id'
     }
 
+    static get dates(){
+        return super.dates.concat(['penawaran_order_tanggal_penawaran'])
+    }
+
+    static formatDates(field, value){
+        if(field === 'penawaran_order_tanggal_penawaran'){
+            return value.format('YYYY-MM-DD')
+        }
+        return super.formatDates(field, value)
+    }
+
     penawaranStatus(){
-        return this.hasOne('App/Models/PenawaranStatus')
+        return this.belongsTo('App/Models/PenawaranStatus')
     }
 
     progresOrder(){

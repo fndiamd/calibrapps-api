@@ -9,15 +9,15 @@ class DataPengamatan extends Model {
     }
 
     sensor(){
-        return this.hasOne('App/Models/Sensor')
+        return this.belongsTo('App/Models/Sensor')
     }
 
     userCabang(){
-        return this.hasMany('App/Models/UserCabang')
+        return this.belongsTo('App/Models/UserCabang')
     }
 
     statusPengamatan(){
-        return this.hasOne('App/Models/StatusPengamatan')
+        return this.belongsTo('App/Models/StatusPengamatan')
     }
 
     dataUkur(){
