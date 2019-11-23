@@ -19,7 +19,9 @@ class StatusPengamatanController {
 
     async index({ response }) {
         try {
-            let statusPengamatan = await StatusPengamatan.query().fetch()
+            let statusPengamatan = await StatusPengamatan
+                .query()
+                .fetch()
             return response.json(statusPengamatan)
         } catch (error) {
             return response.status(400).send({

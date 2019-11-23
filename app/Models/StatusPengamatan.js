@@ -4,6 +4,10 @@
 const Model = use('Model')
 
 class StatusPengamatan extends Model {
+    static get table(){
+        return 'pengamatan_statuses'
+    }
+    
     static get primaryKey(){
         return 'pengamatan_status_id'
     }
@@ -14,10 +18,6 @@ class StatusPengamatan extends Model {
 
     static get updatedAtColumn(){
         return null
-    }
-
-    dataPengamatan(){
-        return this.hasMany('App/Models/DataPengamatan')
     }
 }
 

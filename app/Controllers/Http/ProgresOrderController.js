@@ -50,6 +50,7 @@ class ProgresOrderController {
     try {
       const progresOrder = new ProgresOrder()
       const data = {
+        progres_order_nomor: request.input('progres_order_nomor'),
         progres_order_tanggal_order: request.input('posisi_ukur_posisi'),
         progres_order_estimasi: request.input('progres_order_estimasi'),
         customer_perusahaan_id: request.input('customer_perusahaan_id'),
@@ -58,6 +59,7 @@ class ProgresOrderController {
         order_status_id: request.input('order_status_id')
       }
 
+      progresOrder.progres_order_nomor = data.progres_order_nomor
       progresOrder.progres_order_tanggal_order = data.progres_order_tanggal_order
       progresOrder.progres_order_estimasi = data.progres_order_estimasi
       progresOrder.customer_perusahaan_id = data.customer_perusahaan_id
@@ -79,6 +81,7 @@ class ProgresOrderController {
       let progresOrder = await ProgresOrder.findOrFail(params.id)
 
       const data = {
+        progres_order_nomor: request.input('progres_order_nomor'),
         progres_order_tanggal_order: request.input('posisi_ukur_posisi'),
         progres_order_estimasi: request.input('progres_order_estimasi'),
         customer_perusahaan_id: request.input('customer_perusahaan_id'),
@@ -87,6 +90,7 @@ class ProgresOrderController {
         order_status_id: request.input('order_status_id')
       }
 
+      progresOrder.progres_order_nomor = data.progres_order_nomor
       progresOrder.progres_order_tanggal_order = data.progres_order_tanggal_order
       progresOrder.progres_order_estimasi = data.progres_order_estimasi
       progresOrder.customer_perusahaan_id = data.customer_perusahaan_id

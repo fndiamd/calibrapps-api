@@ -12,13 +12,6 @@ class ProgresOrder extends Model {
         return super.dates.concat(['progres_order_tanggal_order', 'progres_order_estimasi'])
     }
 
-    static formatDates(field, value) {
-        if (field === 'progres_order_tanggal_order' || field === 'progres_order_estimasi') {
-            return value.format('YYYY-MM-DD')
-        }
-        return super.formatDates(field, value)
-    }
-
     orderStatus() {
         return this.belongsTo('App/Models/OrderStatus')
     }

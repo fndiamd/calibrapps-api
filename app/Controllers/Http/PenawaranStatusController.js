@@ -1,6 +1,7 @@
 'use strict'
 
 const PenawaranStatus = use('App/Models/PenawaranStatus')
+const { validate } = use('Validator')
 
 let rules = {
     penawaran_status_keterangan: 'required|unique:penawaran_statuses,penawaran_status_keterangan',

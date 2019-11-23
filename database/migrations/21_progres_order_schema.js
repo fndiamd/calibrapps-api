@@ -28,6 +28,12 @@ class ProgresOrderSchema extends Schema {
         .inTable('order_statuses')
         .onUpdate('CASCADE')
         .onDelete('SET NULL')
+      table.integer('penawaran_order_id')
+        .unsigned()
+        .references('penawaran_order_id')
+        .inTable('penawaran_orders')
+        .onUpdate('CASCADE')
+        .onDelete('SET NULL')
       table.timestamps()
     })
   }
