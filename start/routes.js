@@ -174,6 +174,12 @@ Route.group(() => {
     Route.get('sensor/:id', 'SensorController.view')
     Route.get('sensor-pagination', 'SensorController.pagination')
     Route.get('sensor-search', 'SensorController.search')
+
+    // Routes sertifikat
+    Route.get('sertifikat', 'SertifikatController.index')
+    Route.get('sertifikat/:id', 'SertifikatController.view')
+    Route.get('sertifikat-pagination', 'SertifikatController.pagination')
+    Route.get('sertifikat-search', 'SertifikatController.search')
     
     // Routes Seq Data Ukur
     Route.get('seq-data-ukur', 'SeqDataUkurController.index')
@@ -395,6 +401,11 @@ Route.group(() => {
     Route.put('sensor/:id', 'SensorController.update')
     Route.delete('sensor/:id', 'SensorController.delete')
     Route.post('sensor', 'SensorController.store')
+
+    // Routes sertifikat
+    Route.put('sertifikat/:id', 'SertifikatController.update')
+    Route.delete('sertifikat/:id', 'SertifikatController.delete')
+    Route.post('sertifikat', 'SertifikatController.store')
 
     // Routes seq data ukur
     Route.put('seq-data-ukur/:id', 'SeqDataUkurController.update')
