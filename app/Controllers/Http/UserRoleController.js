@@ -58,7 +58,7 @@ class UserRoleController {
     async search({request, response}){
         let search = request.only(['column', 'value'])
         let userRole = await UserRole.query()
-        .whereRaw(`${search.column} LIKE '%${search.value.toLowerCase()}%'`)
+        .whereRaw(`LOWER(${search.column}) LIKE '%${search.value.toLowerCase()}%'`)
         .fetch()
         return response.json(userRole)
     }

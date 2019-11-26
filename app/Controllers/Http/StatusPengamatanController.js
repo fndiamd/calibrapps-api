@@ -63,7 +63,7 @@ class StatusPengamatanController {
         let search = request.only(['column', 'value'])
 
         let statusPengamatan = await StatusPengamatan.query()
-        .whereRaw(`${search.column} LIKE '%${search.value.toLowerCase()}%'`)
+        .whereRaw(`LOWER(${search.column}) LIKE '%${search.value.toLowerCase()}%'`)
         .fetch()
         return response.json(statusPengamatan)
     }

@@ -93,10 +93,11 @@ class UserCabangController {
         let userCabang = await UserCabang.query()
         .with('kantorCabang')
         .with('userRole')
-        .whereRaw(`${search.column} LIKE '%${search.value.toLowerCase()}%'`)
+        .whereRaw(`LOWER(${search.column}) LIKE '%${search.value.toLowerCase()}%'`)
         .fetch()
         return response.json(userCabang)
     }
+
 }
 
 module.exports = UserCabangController

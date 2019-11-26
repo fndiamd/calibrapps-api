@@ -76,7 +76,7 @@ class SatuanSensorController {
     let search = request.only(['column', 'value'])
     let satuanSensor = await SatuanSensor.query()
     .with('sensor')
-    .whereRaw(`${search.column} LIKE %${search.value}%`)
+    .whereRaw(`LOWER(${search.column}) LIKE '%${search.value.toLowerCase()}%'`)
     .fetch()
     return response.json(satuanSensor)
   }

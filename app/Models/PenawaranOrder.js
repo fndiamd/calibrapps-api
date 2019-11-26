@@ -9,11 +9,11 @@ class PenawaranOrder extends Model {
     }
 
     penawaranStatus(){
-        return this.hasOne('App/Models/PenawaranStatus')
+        return this.belongsTo('App/Models/PenawaranStatus')
     }
 
     progresOrder(){
-        return this.hasOne('App/Models/ProgresOrder')
+        return this.belongsTo('App/Models/ProgresOrder')
     }
 }
 

@@ -23,6 +23,7 @@ class UserCustomerController {
             user_customer_password: request.input('user_customer_password'),
             user_customer_telepon: request.input('user_customer_telepon'),
             user_customer_alamat: request.input('user_customer_alamat'),
+            user_customer_status: request.input('user_customer_status'),
             customer_perusahaan_id: request.input('customer_perusahaan_id'),
             customer_role_id: request.input('customer_role_id')
         }
@@ -32,6 +33,7 @@ class UserCustomerController {
         userCustomer.user_customer_password = data.user_customer_password
         userCustomer.user_customer_telepon = data.user_customer_telepon
         userCustomer.user_customer_alamat = data.user_customer_alamat
+        userCustomer.user_customer_status  = data.user_customer_status
         userCustomer.customer_perusahaan_id = data.customer_perusahaan_id
         userCustomer.customer_role_id = data.customer_role_id
 
@@ -48,6 +50,7 @@ class UserCustomerController {
             user_customer_password: request.input('user_customer_password'),
             user_customer_telepon: request.input('user_customer_telepon'),
             user_customer_alamat: request.input('user_customer_alamat'),
+            user_customer_status: request.input('user_customer_status'),
             customer_perusahaan_id: request.input('customer_perusahaan_id'),
             customer_role_id: request.input('customer_role_id')
         }
@@ -57,6 +60,7 @@ class UserCustomerController {
         userCustomer.user_customer_password = data.user_customer_password
         userCustomer.user_customer_telepon = data.user_customer_telepon
         userCustomer.user_customer_alamat = data.user_customer_alamat
+        userCustomer.user_customer_status  = data.user_customer_status
         userCustomer.customer_perusahaan_id = data.customer_perusahaan_id
         userCustomer.customer_role_id = data.customer_role_id
 
@@ -88,7 +92,7 @@ class UserCustomerController {
         let userCustomer = await UserCustomer.query()
         .with('customerPerusahaan')
         .with('customerRole')
-        .whereRaw(`${search.column} LIKE '%${search.value.toLowerCase()}%'`)
+        .whereRaw(`LOWER(${search.column}) LIKE '%${search.value.toLowerCase()}%'`)
         .fetch()
         return response.json(userCustomer)
     }

@@ -77,7 +77,7 @@ class DataPengamatanController {
         .with('sensor')
         .with('statusPengamatan')
         .with('userCabang')
-        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .whereRaw(`LOWER(${search.column}) LIKE '%${search.value.toLowerCase()}%'`)
         .fetch()
         return response.json(dataPengamatan)
     }

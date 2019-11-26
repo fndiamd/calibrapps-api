@@ -9,7 +9,7 @@ class TransaksiBroker extends Model {
     }
 
     transaksiBrokerStatus(){
-        return this.hasOne('App/Models/TransaksiBrokerStatus')
+        return this.belongsTo('App/Models/TransaksiBrokerStatus')
     }
 
     barangKalibrasi(){
@@ -17,7 +17,7 @@ class TransaksiBroker extends Model {
     }
 
     perusahaanBroker(){
-        return this.hasOne('App/Models/PerusahaanBroker')
+        return this.belongsTo('App/Models/PerusahaanBroker')
     }
 }
 

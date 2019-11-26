@@ -59,7 +59,7 @@ class TipePengerjaanController {
         let search = request.only(['column', 'value'])
 
         let tipePengerjaan = await TipePengerjaan.query()
-        .whereRaw(`${search.column} LIKE '%${search.value.toLowerCase()}%'`)
+        .whereRaw(`LOWER(${search.column}) LIKE '%${search.value.toLowerCase()}%'`)
         .fetch()
         return response.json(tipePengerjaan)
     }

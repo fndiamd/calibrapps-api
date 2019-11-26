@@ -76,7 +76,7 @@ class SeqDataUkurController {
         let seqDataUkur = await SeqDataUkur.query()
         .with('dataUkur')
         .with('posisiUkur')
-        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .whereRaw(`LOWER(${search.column}) LIKE '%${search.value.toLowerCase()}%'`)
         .fetch()
         return response.json(seqDataUkur)
     }

@@ -8,16 +8,21 @@ class ProgresOrder extends Model {
         return 'progres_order_id'
     }
 
+    static get dates () {
+        return super.dates.concat(['progres_order_tanggal_order', 'progres_order_estimasi'])
+    }
+
+
     orderStatus(){
-        return this.hasOne('App/Models/OrderStatus')
+        return this.belongsTo('App/Models/OrderStatus')
     }
 
     penawaranOrder(){
-        return this.hasOne('App/Models/PenawaranOrder')
+        return this.belongsTo('App/Models/PenawaranOrder')
     }
 
     invoiceOrder(){
-        return this.hasOne('App/Models/InvoiceOrder')
+        return this.belongsTo('App/Models/InvoiceOrder')
     }
 
     unsurKajiUlang(){
@@ -25,11 +30,11 @@ class ProgresOrder extends Model {
     }
 
     kantorCabang(){
-        return this.hasOne('App/Models/KantorCabang')
+        return this.belongsTo('App/Models/KantorCabang')
     }
 
     customerPerusahaan(){
-        return this.hasOne('App/Models/CustomerPerusahaan')
+        return this.belongsTo('App/Models/CustomerPerusahaan')
     }
 
     orderDetail(){

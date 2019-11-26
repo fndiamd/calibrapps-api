@@ -9,11 +9,11 @@ class InvoiceOrder extends Model {
     }
 
     invoiceStatus(){
-        return this.hasOne('App/Models/InvoiceStatus')
+        return this.belongsTo('App/Models/InvoiceStatus')
     }
 
     progresOrder(){
-        return this.hasOne('App/Models/ProgresOrder')
+        return this.belongsTo('App/Models/ProgresOrder')
     }
 }
 

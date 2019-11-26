@@ -57,9 +57,8 @@ class UnsurKalibrasiController {
 
     async search({request, response}){
         let search = request.only(['column', 'value'])
-
         let unsurKalibrasi = await UnsurKalibrasi.query()
-        .whereRaw(`${search.column} LIKE '%${search.value.toLowerCase()}%'`)
+        .whereRaw(`LOWER(${search.column}) LIKE '%${search.value.toLowerCase()}%'`)
         .fetch()
         return response.json(unsurKalibrasi)
     }

@@ -45,14 +45,14 @@ class PenawaranOrderController {
           penawaran_order_nomor : request.input('penawaran_order_nomor'),
           penawaran_order_perusahaan : request.input('penawaran_order_perusahaan'),
           penawaran_order_tanggal_penawaran : request.input('penawaran_order_tanggal_penawaran'),
-          penawaran_order_order_file : request.input('penawaran_order_order_file'),
+          penawaran_order_file : request.input('penawaran_order_file'),
           penawaran_status_id : request.input('penawaran_status_id')
         }
 
         penawaranOrder.penawaran_order_nomor = data.penawaran_order_nomor
         penawaranOrder.penawaran_order_perusahaan = data.penawaran_order_perusahaan
         penawaranOrder.penawaran_order_tanggal_penawaran = data.penawaran_order_tanggal_penawaran
-        penawaranOrder.penawaran_order_order_file = data.penawaran_order_order_file
+        penawaranOrder.penawaran_order_file = data.penawaran_order_file
         penawaranOrder.penawaran_status_id = data.penawaran_status_id
 
         await penawaranOrder.save()
@@ -80,7 +80,7 @@ class PenawaranOrderController {
         let search = request.only(['column', 'value'])
         let penawaranOrder = await PenawaranOrder.query()
         .with('statusPenawaran')
-        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .whereRaw(`LOWER(${search.column}) LIKE '%${search.value.toLowerCase()}%'`)
         .fetch()
         return response.json(penawaranOrder)
     }

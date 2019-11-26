@@ -9,11 +9,11 @@ class OrderDetail extends Model {
     }
 
     progresOrder(){
-        return this.hasOne('App/Models/ProgresOrder')
+        return this.belongsTo('App/Models/ProgresOrder')
     }
 
     barangKalibrasi(){
-        return this.hasOne('App/Models/BarangKalibrasi')
+        return this.belongsTo('App/Models/BarangKalibrasi')
     }
 }
 

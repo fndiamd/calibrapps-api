@@ -27,7 +27,7 @@ class ProgresOrderController {
     async store({response, request}){
         const progresOrder = new ProgresOrder()
         const data = {
-            progres_order_tanggal_order : request.input('posisi_ukur_posisi'),
+            progres_order_tanggal_order : request.input('progres_order_tanggal_order'),
             progres_order_estimasi : request.input('progres_order_estimasi'),
             customer_perusahaan_id : request.input('customer_perusahaan_id'),
             penawaran_order_id : request.input('penawaran_order_id'),
@@ -96,7 +96,7 @@ class ProgresOrderController {
       .with('penawaranOrder')
       .with('kantorCabang')
       .with('orderStatus')
-      .whereRaw(`${search.column} LIKE %${search.value}%`)
+      .whereRaw(`LOWER(${search.column}) LIKE '%${search.value.toLowerCase()}%'`)
       .fetch()
       return response.json(progresOrder)
     }

@@ -31,6 +31,11 @@ Route.group(() => {
 }).prefix('api/auth')
 
 Route.group(() => {
+    // Routes Dashboard
+    Route.get('pelanggan', 'DashboardController.jumlahPelanggan')
+    Route.get('pemesanan', 'DashboardController.jumlahPemesanan')
+    Route.get('pendapatan', 'DashboardController.jumlahPendapatan')
+
     // Routes Barang Kalibrasi
     Route.get('barang-kalibrasi', 'BarangKalibrasiController.index')
     Route.get('barang-kalibrasi/:id', 'BarangKalibrasiController.view')

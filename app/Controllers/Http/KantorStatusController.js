@@ -62,7 +62,7 @@ class KantorStatusController {
     async search({request, response}){
         let search = request.only(['column', 'value'])
         let kantorStatus = await KantorStatus.query()
-        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .whereRaw(`LOWER(${search.column}) LIKE '%${search.value.toLowerCase()}%'`)
         .fetch()
         return response.json(kantorStatus)
     }

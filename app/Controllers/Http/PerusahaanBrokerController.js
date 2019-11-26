@@ -84,7 +84,7 @@ class PerusahaanBrokerController {
         let search = request.only(['column', 'value'])
         let perusahaanBroker = await PerusahaanBroker.query()
         .with('brokerStatus')
-        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .whereRaw(`LOWER(${search.column}) LIKE '%${search.value.toLowerCase()}%'`)
         .fetch()
         return response.json(perusahaanBroker)
     }

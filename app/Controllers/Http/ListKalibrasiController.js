@@ -88,7 +88,7 @@ class ListKalibrasiController {
         .with('ruangLingkup')
         .with('standarKalibrasi')
         .with('tipePengerjaan')
-        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .whereRaw(`LOWER(${search.column}) LIKE '%${search.value.toLowerCase()}%'`)
         .fetch()
         return response.json(listKalibrasi)
     }

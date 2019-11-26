@@ -13,7 +13,7 @@ class Sensor extends Model {
     }
 
     satuanSensor(){
-        return this.hasOne('App/Models/SatuanSensor')
+        return this.belongsTo('App/Models/SatuanSensor')
     }
 }
 

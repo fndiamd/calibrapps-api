@@ -72,10 +72,10 @@ class OrderDetailController {
     let orderDetail = await OrderDetail.query()
     .with('progresOrder')
     .with('barangKalibrasi')
-    .whereRaw(`${search.column} LIKE %${search.value}%`)
+    .whereRaw(`LOWER(${search.column}) LIKE '%${search.value.toLowerCase()}%'`)
     .fetch()
     return response.json(orderDetail)
-}
+  }
 }
 
 module.exports = OrderDetailController

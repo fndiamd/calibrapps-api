@@ -9,7 +9,7 @@ class PerusahaanBroker extends Model {
     }
 
     broker_status(){
-        return this.hasOne('App/Models/BrokerStatus')
+        return this.belongsTo('App/Models/BrokerStatus')
     }
 }
 

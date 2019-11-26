@@ -84,7 +84,7 @@ class KantorCabangController {
         let search = request.only(['column', 'value'])
         let kantorCabang = await KantorCabang.query()
         .with('kantorStatus')
-        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .whereRaw(`LOWER(${search.column}) LIKE '%${search.value.toLowerCase()}%'`)
         .fetch()
         return response.json(kantorCabang)
     }

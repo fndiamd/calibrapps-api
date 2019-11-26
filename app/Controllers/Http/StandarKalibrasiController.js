@@ -59,7 +59,7 @@ class StandarKalibrasiController {
         let search = request.only(['column', 'value'])
 
         let standarKalibrasi = await StandarKalibrasi.query()
-        .whereRaw(`${search.column} LIKE '%${search.value.toLowerCase()}%'`)
+        .whereRaw(`LOWER(${search.column}) LIKE '%${search.value.toLowerCase()}%'`)
         .fetch()
         return response.json(standarKalibrasi)
     }

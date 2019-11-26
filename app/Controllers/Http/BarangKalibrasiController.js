@@ -89,7 +89,7 @@ class BarangKalibrasiController {
         .with('merkBarang')
         .with('barangStatus')
         .with('listKalibrasi')
-        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .whereRaw(`LOWER(${search.column}) LIKE '%${search.value.toLowerCase()}%'`)
         .fetch()
         return response.json(barangKalibrasi)
     }

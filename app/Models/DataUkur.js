@@ -17,7 +17,7 @@ class DataUkur extends Model {
     }
 
     seqDataUkur(){
-        return this.hasOne('App/Models/SeqDataUkur')
+        return this.belongsTo('App/Models/SeqDataUkur')
     }
 }
 

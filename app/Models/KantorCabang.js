@@ -14,7 +14,7 @@ class KantorCabang extends Model {
     }
 
     kantorStatus(){
-        return this.hasOne('App/Models/KantorStatus')
+        return this.belongsTo('App/Models/KantorStatus')
     }
 
     progresOrder(){

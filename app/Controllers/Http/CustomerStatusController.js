@@ -62,7 +62,7 @@ class CustomerStatusController {
     async search({request, response}){
         let search = request.only(['column', 'value'])
         let customerStatus = await CustomerStatus.query()
-        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .whereRaw(`LOWER(${search.column}) LIKE '%${search.value.toLowerCase()}%'`)
         .fetch()
         return response.json(customerStatus)
     }

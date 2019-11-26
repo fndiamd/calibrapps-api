@@ -62,7 +62,7 @@ class BrokerStatusController {
     async search({request, response}){
         let search = request.only(['column', 'value'])
         let brokerStatus = await BrokerStatus.query()
-        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .whereRaw(`LOWER(${search.column}) LIKE '%${search.value.toLowerCase()}%'`)
         .fetch()
         return response.json(brokerStatus)
     }

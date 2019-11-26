@@ -58,7 +58,7 @@ class PosisiUkurController {
     async search({request, response}){
         let search = request.only(['column', 'value'])
         let posisiUkur = await PosisiUkur.query()
-        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .whereRaw(`LOWER(${search.column}) LIKE '%${search.value.toLowerCase()}%'`)
         .fetch()
         return response.json(posisiUkur)
     }

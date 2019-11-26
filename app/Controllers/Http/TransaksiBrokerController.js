@@ -85,7 +85,7 @@ class TransaksiBrokerController {
         .with('perusahaanBroker')
         .with('barangKalibrasi')
         .with('transaksiBrokerStatus')
-        .whereRaw(`${search.column} LIKE '%${search.value.toLowerCase()}%'`)
+        .whereRaw(`LOWER(${search.column}) LIKE '%${search.value.toLowerCase()}%'`)
         .fetch()
         return response.json(transaksiBroker)
     }

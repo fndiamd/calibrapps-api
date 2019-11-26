@@ -76,7 +76,7 @@ class DataUkurController {
         let dataUkur = await DataUkur.query()
         .with('dataPengamatan')
         .with('barangKalibrasi')
-        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .whereRaw(`LOWER(${search.column}) LIKE '%${search.value.toLowerCase()}%'`)
         .fetch()
         return response.json(dataUkur)
     }

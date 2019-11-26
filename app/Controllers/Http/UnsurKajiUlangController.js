@@ -68,7 +68,7 @@ class UnsurKajiUlangController {
         let unsurKajiUlang = await UnsurKajiUlang.query()
         .with('unsurKalibrasi')
         .with('progresOrder')
-        .whereRaw(`${search.column} LIKE '%${search.value.toLowerCase()}%'`)
+        .whereRaw(`LOWER(${search.column}) LIKE '%${search.value.toLowerCase()}%'`)
         .fetch()
         return response.json(unsurKajiUlang)
     }

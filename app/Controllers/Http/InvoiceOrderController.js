@@ -80,7 +80,7 @@ class InvoiceOrderController {
         let invoiceOrder = await InvoiceOrder.query()
         .with('progresOrder')
         .with('invoiceStatus')
-        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .whereRaw(`LOWER(${search.column}) LIKE '%${search.value.toLowerCase()}%'`)
         .fetch()
         return response.json(invoiceOrder)
     }

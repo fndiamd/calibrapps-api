@@ -62,7 +62,7 @@ class PenawaranStatusController {
     async search({request, response}){
         let search = request.only(['column', 'value'])
         let penawaranStatus = await PenawaranStatus.query()
-        .whereRaw(`${search.column} LIKE %${search.value}%`)
+        .whereRaw(`LOWER(${search.column}) LIKE '%${search.value.toLowerCase()}%'`)
         .fetch()
         return response.json(penawaranStatus)
     }

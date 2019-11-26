@@ -10,7 +10,7 @@ class ProgresOrderSchema extends Schema {
       table.date('progres_order_tanggal_order')
       table.date('progres_order_estimasi')
       table.integer('customer_perusahaan_id').unsigned().references('customer_perusahaan_id').inTable('customer_perusahaans')
-      table.integer('kantor_order_id').unsigned().references('kantor_cabang_id').inTable('kantor_cabangs')
+      table.integer('kantor_cabang_id').unsigned().references('kantor_cabang_id').inTable('kantor_cabangs')
       table.integer('order_status_id').unsigned().references('order_status_id').inTable('order_statuses')
       table.timestamps()
     })

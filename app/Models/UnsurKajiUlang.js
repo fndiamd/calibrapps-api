@@ -5,11 +5,11 @@ const Model = use('Model')
 
 class UnsurKajiUlang extends Model {
     unsurKalibrasi(){
-        return this.hasOne('App/Models/UnsurKalibrasi')
+        return this.belongsTo('App/Models/UnsurKalibrasi')
     }
 
     progresOrder(){
-        return this.hasOne('App/Models/ProgresOrder')
+        return this.belongsTo('App/Models/ProgresOrder')
     }
 }
 
