@@ -11,6 +11,7 @@ class TipePengerjaan extends Model {
     list_kalibrasi(){
         return this.hasMany('App/Models/ListKalibrasi')
     }
+    
 }
 
 module.exports = TipePengerjaan

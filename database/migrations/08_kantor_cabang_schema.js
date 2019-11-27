@@ -12,8 +12,7 @@ class KantorCabangSchema extends Schema {
       table.string('kantor_cabang_telepon', 20).notNullable()
       table.string('kantor_cabang_fax', 20)
       table.string('kantor_cabang_email', 100).notNullable().unique()
-      table
-        .integer('kantor_status_id')
+      table.integer('kantor_status_id')
         .unsigned()
         .references('kantor_status_id')
         .inTable('kantor_statuses')

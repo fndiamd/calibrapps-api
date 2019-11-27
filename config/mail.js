@@ -34,7 +34,10 @@ module.exports = {
     },
     maxConnections: 5,
     maxMessages: 100,
-    rateLimit: 10
+    rateLimit: 10,
+    tls: {
+      rejectUnauthorized: false
+    }
   },
 
   /*

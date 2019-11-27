@@ -4,7 +4,7 @@
 const Schema = use('Schema')
 
 class PerusahaanBrokerSchema extends Schema {
-  up () {
+  up() {
     this.create('perusahaan_brokers', (table) => {
       table.increments('perusahaan_broker_id')
       table.string('perusahaan_broker_nama', 100).notNullable()
@@ -12,12 +12,17 @@ class PerusahaanBrokerSchema extends Schema {
       table.string('perusahaan_broker_telepon', 20).notNullable()
       table.string('perusahaan_broker_fax', 20)
       table.string('perusahaan_broker_email', 100).notNullable().unique()
-      table.integer('broker_status_id').unsigned().references('broker_status_id').inTable('broker_statuses')
+      table.integer('broker_status_id')
+        .unsigned()
+        .references('broker_status_id')
+        .inTable('broker_statuses')
+        .onUpdate('CASCADE')
+        .onDelete('SET NULL')
       table.timestamps()
     })
   }
 
-  down () {
+  down() {
     this.drop('perusahaan_brokers')
   }
 }

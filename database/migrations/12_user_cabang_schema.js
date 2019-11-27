@@ -4,7 +4,7 @@
 const Schema = use('Schema')
 
 class UserCabangSchema extends Schema {
-  up () {
+  up() {
     this.create('user_cabangs', (table) => {
       table.increments('user_cabang_id')
       table.string('user_cabang_nama', 150).notNullable()
@@ -12,13 +12,23 @@ class UserCabangSchema extends Schema {
       table.string('user_cabang_password', 150).notNullable()
       table.string('user_cabang_telepon', 20)
       table.text('user_cabang_alamat', 'mediumtext')
-      table.integer('kantor_cabang_id').unsigned().references('kantor_cabang_id').inTable('kantor_cabangs')
-      table.integer('user_role_id').unsigned().references('user_role_id').inTable('user_roles')
+      table.integer('kantor_cabang_id')
+        .unsigned()
+        .references('kantor_cabang_id')
+        .inTable('kantor_cabangs')
+        .onUpdate('CASCADE')
+        .onDelete('SET NULL')
+      table.integer('user_role_id')
+        .unsigned()
+        .references('user_role_id')
+        .inTable('user_roles')
+        .onUpdate('CASCADE')
+        .onDelete('SET NULL')
       table.timestamps()
     })
   }
 
-  down () {
+  down() {
     this.drop('user_cabangs')
   }
 }

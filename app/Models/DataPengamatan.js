@@ -13,7 +13,7 @@ class DataPengamatan extends Model {
     }
 
     userCabang(){
-        return this.hasMany('App/Models/UserCabang')
+        return this.belongsTo('App/Models/UserCabang')
     }
 
     statusPengamatan(){

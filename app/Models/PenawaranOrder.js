@@ -8,6 +8,10 @@ class PenawaranOrder extends Model {
         return 'penawaran_order_id'
     }
 
+    static get dates(){
+        return super.dates.concat(['penawaran_order_tanggal_penawaran'])
+    }
+
     penawaranStatus(){
         return this.belongsTo('App/Models/PenawaranStatus')
     }

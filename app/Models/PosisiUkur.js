@@ -9,7 +9,7 @@ class PosisiUkur extends Model {
     }
 
     seqDataUkur(){
-        return this.belongsTo('App/Models/SeqDataUkur')
+        return this.hasMany('App/Models/SeqDataUkur')
     }
 }
 

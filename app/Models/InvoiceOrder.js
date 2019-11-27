@@ -4,15 +4,26 @@
 const Model = use('Model')
 
 class InvoiceOrder extends Model {
-    static get primaryKey(){
+    static get primaryKey() {
         return 'invoice_order_id'
     }
 
-    invoiceStatus(){
+    static get dates() {
+        return super.dates.concat(['invoice_order_tanggal'])
+    }
+
+    static formatDates(field, value) {
+        if (field === 'invoice_order_tanggal') {
+            return value.format('YYYY-MM-DD')
+        }
+        return super.formatDates(field, value)
+    }
+
+    invoiceStatus() {
         return this.belongsTo('App/Models/InvoiceStatus')
     }
 
-    progresOrder(){
+    progresOrder() {
         return this.belongsTo('App/Models/ProgresOrder')
     }
 }

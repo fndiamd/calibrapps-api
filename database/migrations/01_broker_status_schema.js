@@ -7,9 +7,8 @@ class BrokerStatusSchema extends Schema {
   up () {
     this.create('broker_statuses', (table) => {
       table.increments('broker_status_id')
-      table.text('broker_status_keterangan', 'mediumtext').notNullable().unique()
-      table.string('broker_status_warna', 50).unique()
-      //table.timestamps()
+      table.string('broker_status_keterangan', 100).notNullable().unique()
+      table.string('broker_status_warna', 50).notNullable().unique()
     })
   }
 

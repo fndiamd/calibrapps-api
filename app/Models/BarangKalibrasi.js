@@ -21,7 +21,7 @@ class BarangKalibrasi extends Model {
     }
 
     transaksiBroker(){
-        return this.belongsTo('App/Models/TransaksiBroker')
+        return this.hasMany('App/Models/TransaksiBroker')
     }
 
     dataUkur(){
@@ -30,6 +30,10 @@ class BarangKalibrasi extends Model {
 
     listKalibrasi(){
         return this.belongsTo('App/Models/ListKalibrasi')
+    }
+
+    sertifikat(){
+        return this.hasOne('App/Models/Sertifikat')
     }
 }
 
