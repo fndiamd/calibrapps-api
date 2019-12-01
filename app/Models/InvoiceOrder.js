@@ -12,13 +12,6 @@ class InvoiceOrder extends Model {
         return super.dates.concat(['invoice_order_tanggal'])
     }
 
-    static formatDates(field, value) {
-        if (field === 'invoice_order_tanggal') {
-            return value.format('YYYY-MM-DD')
-        }
-        return super.formatDates(field, value)
-    }
-
     invoiceStatus() {
         return this.belongsTo('App/Models/InvoiceStatus')
     }

@@ -8,7 +8,7 @@ class ListKalibrasiSchema extends Schema {
     this.create('list_kalibrasis', (table) => {
       table.increments('list_kalibrasi_id')
       table.string('list_kalibrasi_nama_alat', 100).notNullable().unique()
-      table.decimal('list_kalibrasi_harga').notNullable()
+      table.integer('list_kalibrasi_harga').notNullable()
       table.integer('ruang_lingkup_id')
         .unsigned()
         .references('ruang_lingkup_id')

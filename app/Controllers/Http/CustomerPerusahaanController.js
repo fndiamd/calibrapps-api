@@ -61,6 +61,7 @@ class CustomerPerusahaanController {
             const validation = await validate(request.all(), rules, vmessage)
 
             const data = {
+                customer_perusahaan_npwp: request.input('customer_perusahaan_npwp'),
                 customer_perusahaan_pkal: request.input('customer_perusahaan_pkal'),
                 customer_perusahaan_nama: request.input('customer_perusahaan_nama'),
                 customer_perusahaan_alamat: request.input('customer_perusahaan_alamat'),
@@ -76,6 +77,7 @@ class CustomerPerusahaanController {
                 })
             }
 
+            customerPerusahaan.customer_perusahaan_npwp = data.customer_perusahaan_npwp
             customerPerusahaan.customer_perusahaan_pkal = data.customer_perusahaan_pkal
             customerPerusahaan.customer_perusahaan_nama = data.customer_perusahaan_nama
             customerPerusahaan.customer_perusahaan_alamat = data.customer_perusahaan_alamat
@@ -97,11 +99,13 @@ class CustomerPerusahaanController {
             let customerPerusahaan = await CustomerPerusahaan.findOrFail(params.id)
 
             const data = {
+                customer_perusahaan_npwp: request.input('customer_perusahaan_npwp'),
                 customer_perusahaan_pkal: request.input('customer_perusahaan_pkal'),
                 customer_perusahaan_nama: request.input('customer_perusahaan_nama'),
                 customer_perusahaan_alamat: request.input('customer_perusahaan_alamat'),
                 customer_perusahaan_telepon: request.input('customer_perusahaan_telepon'),
                 customer_perusahaan_fax: request.input('customer_perusahaan_fax'),
+                customer_perusahaan_verif: request.input('customer_perusahaan_verif'),
                 customer_status_id: request.input('customer_status_id')
             }
 
@@ -117,11 +121,13 @@ class CustomerPerusahaanController {
                 })
             }
 
+            customerPerusahaan.customer_perusahaan_npwp = data.customer_perusahaan_npwp
             customerPerusahaan.customer_perusahaan_pkal = data.customer_perusahaan_pkal
             customerPerusahaan.customer_perusahaan_nama = data.customer_perusahaan_nama
             customerPerusahaan.customer_perusahaan_alamat = data.customer_perusahaan_alamat
             customerPerusahaan.customer_perusahaan_telepon = data.customer_perusahaan_telepon
             customerPerusahaan.customer_perusahaan_fax = data.customer_perusahaan_fax
+            customerPerusahaan.customer_perusahaan_verif = data.customer_perusahaan_verif
             customerPerusahaan.customer_status_id = data.customer_status_id
 
             await customerPerusahaan.save()
@@ -182,8 +188,8 @@ class CustomerPerusahaanController {
     async search({ request, response }) {
         try {
             let search = request.only(['column', 'value'])
-            let column = search.column || 'customer_perusahaan_nama';
-            let value = search.value.toLowerCase();
+            let column = search.column || 'customer_perusahaan_nama'
+            let value = search.value.toLowerCase()
 
             let customerPerusahaan = await CustomerPerusahaan.query()
                 .with('customerStatus')

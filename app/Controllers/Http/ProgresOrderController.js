@@ -31,7 +31,7 @@ class ProgresOrderController {
         .with('kantorCabang')
         .with('orderStatus')
         .first()
-        
+
       return progresOrder
     } catch (error) {
       if (error.name === 'ModelNotFoundException') {
@@ -51,19 +51,19 @@ class ProgresOrderController {
       const progresOrder = new ProgresOrder()
       const data = {
         progres_order_nomor: request.input('progres_order_nomor'),
+        progres_order_nomor_onf: request.input('progres_order_nomor_onf'),
         progres_order_tanggal_order: request.input('posisi_ukur_posisi'),
         progres_order_estimasi: request.input('progres_order_estimasi'),
         customer_perusahaan_id: request.input('customer_perusahaan_id'),
-        penawaran_order_id: request.input('penawaran_order_id'),
         kantor_cabang_id: request.input('kantor_cabang_id'),
         order_status_id: request.input('order_status_id')
       }
 
       progresOrder.progres_order_nomor = data.progres_order_nomor
+      progresOrder.progres_order_nomor_onf = data.progres_order_nomor_onf
       progresOrder.progres_order_tanggal_order = data.progres_order_tanggal_order
       progresOrder.progres_order_estimasi = data.progres_order_estimasi
       progresOrder.customer_perusahaan_id = data.customer_perusahaan_id
-      progresOrder.penawaran_order_id = data.penawaran_order_id
       progresOrder.kantor_cabang_id = data.kantor_cabang_id
       progresOrder.order_status_id = data.order_status_id
 
@@ -82,19 +82,21 @@ class ProgresOrderController {
 
       const data = {
         progres_order_nomor: request.input('progres_order_nomor'),
+        progres_order_nomor_onf: request.input('progres_order_nomor_onf'),
         progres_order_tanggal_order: request.input('posisi_ukur_posisi'),
         progres_order_estimasi: request.input('progres_order_estimasi'),
+        progres_order_verif: request.input('progres_order_verif'),
         customer_perusahaan_id: request.input('customer_perusahaan_id'),
-        penawaran_order_id: request.input('penawaran_order_id'),
         kantor_cabang_id: request.input('kantor_cabang_id'),
         order_status_id: request.input('order_status_id')
       }
 
       progresOrder.progres_order_nomor = data.progres_order_nomor
+      progresOrder.progres_order_nomor_onf = data.progres_order_nomor_onf
       progresOrder.progres_order_tanggal_order = data.progres_order_tanggal_order
       progresOrder.progres_order_estimasi = data.progres_order_estimasi
+      progresOrder.progres_order_verif = data.progres_order_verif
       progresOrder.customer_perusahaan_id = data.customer_perusahaan_id
-      progresOrder.penawaran_order_id = data.penawaran_order_id
       progresOrder.kantor_cabang_id = data.kantor_cabang_id
       progresOrder.order_status_id = data.order_status_id
 
@@ -183,6 +185,7 @@ class ProgresOrderController {
       })
     }
   }
+  
 }
 
 module.exports = ProgresOrderController

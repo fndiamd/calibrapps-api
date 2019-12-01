@@ -8,7 +8,7 @@ class InvoiceOrderSchema extends Schema {
     this.create('invoice_orders', (table) => {
       table.increments('invoice_order_id')
       table.date('invoice_order_tanggal')
-      table.decimal('invoice_order_total', 20, 2)
+      table.integer('invoice_order_total')
       table.integer('progres_order_id')
         .unsigned()
         .references('progres_order_id')

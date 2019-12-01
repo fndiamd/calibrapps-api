@@ -1,18 +1,17 @@
 'use strict'
 
-const UnsurKajiUlang = use('App/Models/UnsurKajiUlang')
+const TransaksiPenawaran = use('App/Models/TransaksiPenawaran')
 
-class UnsurKajiUlangController {
-
+class TransaksiPenawaranController {
     async index({ response }) {
         try {
-            let unsurKajiUlang = await UnsurKajiUlang
+            let transaksiPenawaran = await TransaksiPenawaran
                 .query()
-                .with('unsurKalibrasi')
+                .with('penawaranOrder')
                 .with('progresOrder')
                 .fetch()
 
-            return response.json(unsurKajiUlang)
+            return response.json(transaksiPenawaran)
         } catch (error) {
             return response.status(400).send({
                 message: 'Ops, kelihatannya ada yang tidak beres!'
@@ -23,20 +22,21 @@ class UnsurKajiUlangController {
 
     async view({ params, response }) {
         try {
-            
-            const unsurKajiUlang = await UnsurKajiUlang
+
+            const transaksiPenawaran = await TransaksiPenawaran
                 .query()
                 .where('progres_order_id', params.id)
-                .with('unsurKalibrasi')
+                .with('penawaranOrder')
+                .with('progresOrder')
                 .fetch()
 
-            if(unsurKajiUlang.rows.length == 0 ){
+            if (transaksiPenawaran.rows.length == 0) {
                 return response.status(404).send({
-                    message: 'Unsur kaji ulang tidak ditemukan'
+                    message: 'Transaksi penawaran tidak ditemukan'
                 })
             }
 
-            return unsurKajiUlang
+            return transaksiPenawaran
         } catch (error) {
             return response.status(400).send({
                 message: 'Ops, kelihatannya ada yang tidak beres!'
@@ -46,17 +46,17 @@ class UnsurKajiUlangController {
 
     async store({ response, request }) {
         try {
-            const unsurKajiUlang = new UnsurKajiUlang()
+            const transaksiPenawaran = new TransaksiPenawaran()
             const data = {
-                unsur_kalibrasi_id: request.input('unsur_kalibrasi_id'),
+                penawaran_order_id: request.input('penawaran_order_id'),
                 progres_order_id: request.input('progres_order_id')
             }
 
-            unsurKajiUlang.unsur_kalibrasi_id = data.unsur_kalibrasi_id
-            unsurKajiUlang.progres_order_id = data.progres_order_id
+            transaksiPenawaran.penawaran_order_id = data.penawaran_order_id
+            transaksiPenawaran.progres_order_id = data.progres_order_id
 
-            await unsurKajiUlang.save()
-            return response.json(unsurKajiUlang)
+            await transaksiPenawaran.save()
+            return response.json(transaksiPenawaran)
         } catch (error) {
             return response.status(400).send({
                 message: 'Ops, kelihatannya ada yang tidak beres!'
@@ -67,18 +67,18 @@ class UnsurKajiUlangController {
 
     async update({ params, response, request }) {
         try {
-            let unsurKajiUlang = await UnsurKajiUlang.findOrFail(params.id)
+            let transaksiPenawaran = await TransaksiPenawaran.findOrFail(params.id)
 
             const data = {
-                unsur_kalibrasi_id: request.input('unsur_kalibrasi_id'),
+                penawaran_order_id: request.input('penawaran_order_id'),
                 progres_order_id: request.input('progres_order_id')
             }
 
-            unsurKajiUlang.unsur_kalibrasi_id = data.unsur_kalibrasi_id
-            unsurKajiUlang.progres_order_id = data.progres_order_id
+            transaksiPenawaran.penawaran_order_id = data.penawaran_order_id
+            transaksiPenawaran.progres_order_id = data.progres_order_id
 
-            await unsurKajiUlang.save()
-            return response.json(unsurKajiUlang)
+            await transaksiPenawaran.save()
+            return response.json(transaksiPenawaran)
         } catch (error) {
             if (error.name === 'ModelNotFoundException') {
                 return response.status(404).send({
@@ -94,17 +94,20 @@ class UnsurKajiUlangController {
 
     async delete({ params, response }) {
         try {
-            const unsurKajiUlang = await UnsurKajiUlang.findOrFail(params.id)
-            unsurKajiUlang.delete()
+            const transaksiPenawaran = await transaksiPenawaran
+                .query()
+                .where('progres_order_id', params.id)
 
-            return response.json({ message: 'Unsur kaji ulang berhasil dihapus' })
-        } catch (error) {
-            if (error.name === 'ModelNotFoundException') {
+            if (transaksiPenawaran.rows.length == 0) {
                 return response.status(404).send({
-                    message: 'Unsur kaji ulang tidak ditemukan'
+                    message: 'Transaksi penawaran tidak ditemukan'
                 })
             }
 
+            transaksiPenawaran.delete()
+
+            return response.json({ message: 'Transaksi penawaran berhasil dihapus' })
+        } catch (error) {
             return response.status(400).send({
                 message: 'Ops, kelihatannya ada yang tidak beres!'
             })
@@ -116,16 +119,16 @@ class UnsurKajiUlangController {
             let pagination = request.only(['page', 'limit', 'column', 'sort'])
             let page = pagination.page || 1;
             let limit = pagination.limit || 10;
-            let column = pagination.column || 'unsur_kalibrasi_id';
+            let column = pagination.column || 'penawaran_order_id';
             let sort = pagination.sort || 'desc';
 
-            const unsurKajiUlang = await UnsurKajiUlang.query()
-                .with('unsurKalibrasi')
+            const transaksiPenawaran = await transaksiPenawaran.query()
+                .with('penawaranOrder')
                 .with('progresOrder')
                 .orderBy(`${column}`, `${sort}`)
                 .paginate(page, limit)
 
-            return response.json(unsurKajiUlang)
+            return response.json(transaksiPenawaran)
         } catch (error) {
             return response.status(400).send({
                 message: 'Ops, kelihatannya ada yang tidak beres!'
@@ -136,22 +139,22 @@ class UnsurKajiUlangController {
     async search({ request, response }) {
         try {
             let search = request.only(['column', 'value'])
-            let column = search.column || 'unsur_kalibrasi_id';
+            let column = search.column || 'penawaran_order_id';
             let value = search.value;
 
-            let unsurKajiUlang = await UnsurKajiUlang.query()
-                .with('unsurKalibrasi')
+            let transaksiPenawaran = await transaksiPenawaran.query()
+                .with('penawaranOrder')
                 .with('progresOrder')
                 .whereRaw(`${column} = '${value}'`)
                 .fetch()
 
-            if (unsurKajiUlang.rows.length == 0) {
+            if (transaksiPenawaran.rows.length == 0) {
                 return response.status(404).send({
                     message: 'Pencarian untuk ' + value + ' tidak ditemukan'
                 })
             }
 
-            return response.json(unsurKajiUlang)
+            return response.json(transaksiPenawaran)
         } catch (error) {
             return response.status(400).send({
                 message: 'Ops, kelihatannya ada yang tidak beres!'
@@ -160,4 +163,4 @@ class UnsurKajiUlangController {
     }
 }
 
-module.exports = UnsurKajiUlangController
+module.exports = TransaksiPenawaranController

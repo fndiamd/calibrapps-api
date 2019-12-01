@@ -8,6 +8,10 @@ class DataPengamatan extends Model {
         return 'data_pengamatan_id'
     }
 
+    static get dates(){
+        return super.dates.concat(['data_pengamatan_tanggal_kalibrasi'])
+    }
+
     sensor(){
         return this.belongsTo('App/Models/Sensor')
     }

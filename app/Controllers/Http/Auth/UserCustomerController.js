@@ -17,7 +17,7 @@ class UserCustomerController {
             .attempt(user_email, user_password)
         let dataUser = await UserCustomer
             .findBy('user_customer_email', user_email)
-            
+
         return {
             auth: auth_data,
             customer: dataUser
@@ -45,7 +45,7 @@ class UserCustomerController {
         userCustomer.user_customer_telepon = data.user_customer_telepon
         userCustomer.user_customer_alamat = data.user_customer_alamat
         user_customer_status: request.input('user_customer_status') || 0,
-        userCustomer.customer_perusahaan_id = data.customer_perusahaan_id
+            userCustomer.customer_perusahaan_id = data.customer_perusahaan_id
         userCustomer.customer_role_id = data.customer_role_id
 
         userCustomer = await userCustomer.save()
@@ -70,7 +70,14 @@ class UserCustomerController {
 
     async accountVerification({ params, response }) {
         let dataToken = await CustomerToken.query().where('token', params.token).first()
-        let confirm = await UserCustomer.query().where('user_customer_id', dataToken.user_customer_id).update({ user_customer_status: 1 })
+        let confirm = await UserCustomer
+            .query()
+            .where('user_customer_id', dataToken.user_customer_id)
+            .update({ user_customer_status: 1 })
+
+        dataToken.is_revoked = true
+        await dataToken.save()
+
         if (confirm) {
             return response.json({ message: "berhasil verifikasi" })
         } else {
@@ -78,6 +85,56 @@ class UserCustomerController {
         }
     }
 
+    async forgotPassword({ auth, request, response }) {
+        let tokenCustomer = new CustomerToken()
+        let thisCustomer = await UserCustomer.findBy('user_customer_email', request.input('user_customer_email'))
+        let accessToken = await auth.authenticator('customer').generate(thisCustomer)
+
+        tokenCustomer.user_customer_id = thisCustomer.user_customer_id
+        tokenCustomer.token = accessToken.token
+        tokenCustomer.type = "forgot-password"
+        tokenCustomer.is_revoked = false
+
+        await tokenCustomer.save()
+
+        await Mail.send('forgot-password', { thisCustomer, accessToken }, (message) => {
+            message
+                .to(thisCustomer.user_customer_email)
+                .from('support@calibrapps-lab.site')
+                .subject('[Reset Password] Account ' + thisCustomer.user_customer_nama + ' Calibrapps Lab')
+        })
+
+        return response.json({ "customer": thisCustomer, "access_token": accessToken })
+    }
+
+    async changePassword({ params, request, response }) {
+        try {
+            let dataToken = await CustomerToken
+                .query()
+                .where('token', params.token)
+                .first()
+
+            let id_user_customer = dataToken.user_customer_id
+            let thisCustomer = await UserCustomer.findOrFail(id_user_customer)
+
+            let data = {
+                new_password: request.input('new_password'),
+                new_password_verification: request.input('new_password_verification')
+            }
+
+            dataToken.is_revoked = true
+            thisCustomer.user_customer_password = data.new_password
+            await thisCustomer.save()
+            await dataToken.save()
+            return response.send("Reset password successfully")
+        } catch (error) {
+            if (error.name === 'ModelNotFoundException') {
+                return response.status(404).send({
+                    message: 'User tidak dapat ditemukan'
+                })
+            }
+        }
+    }
 
     async logout({ auth, response }) {
         let apiToken = auth.getAuthHeader()

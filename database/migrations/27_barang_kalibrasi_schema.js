@@ -9,6 +9,7 @@ class BarangKalibrasiSchema extends Schema {
       table.increments('barang_kalibrasi_id')
       table.string('barang_kalibrasi_kode', 20).notNullable().unique()
       table.string('barang_kalibrasi_sn', 100).notNullable()
+      table.string('barang_kalibrasi_tipe', 100)
       table.integer('list_kalibrasi_id')
         .unsigned()
         .references('list_kalibrasi_id')

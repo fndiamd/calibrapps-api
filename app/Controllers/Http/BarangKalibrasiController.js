@@ -57,6 +57,7 @@ class BarangKalibrasiController {
             const data = {
                 barang_kalibrasi_kode: request.input('barang_kalibrasi_kode'),
                 barang_kalibrasi_sn: request.input('barang_kalibrasi_sn'),
+                barang_kalibrasi_tipe: request.input('barang_kalibrasi_tipe'),
                 list_kalibrasi_id: request.input('list_kalibrasi_id'),
                 barang_status_id: request.input('barang_status_id'),
                 merk_barang_id: request.input('merk_barang_id')
@@ -64,6 +65,7 @@ class BarangKalibrasiController {
 
             barangKalibrasi.barang_kalibrasi_kode = data.barang_kalibrasi_kode
             barangKalibrasi.barang_kalibrasi_sn = data.barang_kalibrasi_sn
+            barangKalibrasi.barang_kalibrasi_tipe = data.barang_kalibrasi_tipe
             barangKalibrasi.list_kalibrasi_id = data.list_kalibrasi_id
             barangKalibrasi.barang_status_id = data.barang_status_id
             barangKalibrasi.merk_barang_id = data.merk_barang_id
@@ -80,10 +82,11 @@ class BarangKalibrasiController {
     async update({ params, response, request }) {
         try {
             let barangKalibrasi = await BarangKalibrasi.findOrFail(params.id)
-
+            
             const data = {
                 barang_kalibrasi_kode: request.input('barang_kalibrasi_kode'),
                 barang_kalibrasi_sn: request.input('barang_kalibrasi_sn'),
+                barang_kalibrasi_tipe: request.input('barang_kalibrasi_tipe'),
                 list_kalibrasi_id: request.input('list_kalibrasi_id'),
                 barang_status_id: request.input('barang_status_id'),
                 merk_barang_id: request.input('merk_barang_id')
@@ -91,6 +94,7 @@ class BarangKalibrasiController {
 
             barangKalibrasi.barang_kalibrasi_kode = data.barang_kalibrasi_kode
             barangKalibrasi.barang_kalibrasi_sn = data.barang_kalibrasi_sn
+            barangKalibrasi.barang_kalibrasi_tipe = data.barang_kalibrasi_tipe
             barangKalibrasi.list_kalibrasi_id = data.list_kalibrasi_id
             barangKalibrasi.barang_status_id = data.barang_status_id
             barangKalibrasi.merk_barang_id = data.merk_barang_id
@@ -98,14 +102,14 @@ class BarangKalibrasiController {
             await barangKalibrasi.save()
             return response.json(barangKalibrasi)
         } catch (error) {
-            if(error.name === 'ModelNotFoundException'){
+            if (error.name === 'ModelNotFoundException') {
                 return response.status(404).send({
-                    message : 'Barang kalibrasi tidak ditemukan'
+                    message: 'Barang kalibrasi tidak ditemukan'
                 })
             }
 
             return response.status(400).send({
-                message : 'Ops, kelihatannya ada yang tidak beres!'
+                message: 'Ops, kelihatannya ada yang tidak beres!'
             })
         }
 
@@ -115,7 +119,7 @@ class BarangKalibrasiController {
         try {
             const barangKalibrasi = await BarangKalibrasi.findOrFail(params.id)
             barangKalibrasi.delete()
-            
+
             return response.json({ message: 'Barang kalibrasi berhasil dihapus' })
         } catch (error) {
             if (error.name === 'ModelNotFoundException') {
@@ -166,9 +170,9 @@ class BarangKalibrasiController {
                 .whereRaw(`LOWER(${column}) LIKE '%${value}%'`)
                 .fetch()
 
-            if(barangKalibrasi.rows.length == 0){
+            if (barangKalibrasi.rows.length == 0) {
                 return response.status(404).send({
-                    message : 'Pencarian untuk ' + value + ' tidak ditemukan'
+                    message: 'Pencarian untuk ' + value + ' tidak ditemukan'
                 })
             }
 

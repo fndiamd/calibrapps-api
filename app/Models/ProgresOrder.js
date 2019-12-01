@@ -15,11 +15,7 @@ class ProgresOrder extends Model {
     orderStatus() {
         return this.belongsTo('App/Models/OrderStatus')
     }
-
-    penawaranOrder() {
-        return this.belongsTo('App/Models/PenawaranOrder')
-    }
-
+    
     invoiceOrder() {
         return this.hasOne('App/Models/InvoiceOrder')
     }
@@ -39,7 +35,6 @@ class ProgresOrder extends Model {
     orderDetail() {
         return this.hasMany('App/Models/OrderDetail')
     }
-
 
 }
 

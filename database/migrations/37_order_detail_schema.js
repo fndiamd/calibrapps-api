@@ -7,6 +7,8 @@ class OrderDetailSchema extends Schema {
   up() {
     this.create('order_details', (table) => {
       table.increments('order_detail_id')
+      table.integer('order_detail_harga')
+      table.string('order_detail_keterangan', 100)
       table.integer('progres_order_id')
         .unsigned()
         .references('progres_order_id')

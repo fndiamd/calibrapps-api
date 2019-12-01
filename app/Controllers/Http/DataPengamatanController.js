@@ -63,6 +63,13 @@ class DataPengamatanController {
             const validation = await validate(request.all(), rules, vmessage)
 
             const data = {
+                data_pengamatan_tanggal_kalibrasi: request.input('data_pengamatan_tanggal_kalibrasi'),
+                data_pengamatan_tempat_kalibrasi: request.input('data_pengamatan_tempat_kalibrasi'),
+                data_pengamatan_kondisi_ruangan: request.input('data_pengamatan_kondisi_ruangan'),
+                data_pengamatan_suhu_terkoreksi: request.input('data_pengamatan_suhu_terkoreksi'),
+                data_pengamatan_kelembaban_terkoreksi: request.input('data_pengamatan_kelembaban_terkoreksi'),
+                data_pengamatan_no_id_standar: request.input('data_pengamatan_no_id_standar'),
+                data_pengamatan_standar_telusur: request.input('data_pengamatan_standar_telusur'),
                 sensor_id: request.input('sensor_id'),
                 status_pengamatan_id: request.input('pengamatan_status_id'),
                 user_cabang_id: request.input('user_cabang_id')
@@ -75,6 +82,12 @@ class DataPengamatanController {
                 })
             }
 
+            dataPengamatan.data_pengamatan_tanggal_kalibrasi = data.data_pengamatan_tanggal_kalibrasi
+            dataPengamatan.data_pengamatan_tempat_kalibrasi = data.data_pengamatan_tempat_kalibrasi
+            dataPengamatan.data_pengamatan_kondisi_ruangan = data.data_pengamatan_kondisi_ruangan
+            dataPengamatan.data_pengamatan_suhu_terkoreksi = data.data_pengamatan_suhu_terkoreksi
+            dataPengamatan.data_pengamatan_no_id_standar = data.data_pengamatan_no_id_standar
+            dataPengamatan.data_pengamatan_standar_telusur = data.data_pengamatan_standar_telusur
             dataPengamatan.sensor_id = data.sensor_id
             dataPengamatan.pengamatan_status_id = data.status_pengamatan_id
             dataPengamatan.user_cabang_id = data.user_cabang_id
@@ -94,6 +107,13 @@ class DataPengamatanController {
             const validation = await validate(request.all(), rules, vmessage)
 
             const data = {
+                data_pengamatan_tanggal_kalibrasi: request.input('data_pengamatan_tanggal_kalibrasi'),
+                data_pengamatan_tempat_kalibrasi: request.input('data_pengamatan_tempat_kalibrasi'),
+                data_pengamatan_kondisi_ruangan: request.input('data_pengamatan_kondisi_ruangan'),
+                data_pengamatan_suhu_terkoreksi: request.input('data_pengamatan_suhu_terkoreksi'),
+                data_pengamatan_kelembaban_terkoreksi: request.input('data_pengamatan_kelembaban_terkoreksi'),
+                data_pengamatan_no_id_standar: request.input('data_pengamatan_no_id_standar'),
+                data_pengamatan_standar_telusur: request.input('data_pengamatan_standar_telusur'),
                 sensor_id: request.input('sensor_id'),
                 status_pengamatan_id: request.input('pengamatan_status_id'),
                 user_cabang_id: request.input('user_cabang_id')
@@ -106,6 +126,12 @@ class DataPengamatanController {
                 })
             }
 
+            dataPengamatan.data_pengamatan_tanggal_kalibrasi = data.data_pengamatan_tanggal_kalibrasi
+            dataPengamatan.data_pengamatan_tempat_kalibrasi = data.data_pengamatan_tempat_kalibrasi
+            dataPengamatan.data_pengamatan_kondisi_ruangan = data.data_pengamatan_kondisi_ruangan
+            dataPengamatan.data_pengamatan_suhu_terkoreksi = data.data_pengamatan_suhu_terkoreksi
+            dataPengamatan.data_pengamatan_no_id_standar = data.data_pengamatan_no_id_standar
+            dataPengamatan.data_pengamatan_standar_telusur = data.data_pengamatan_standar_telusur
             dataPengamatan.sensor_id = data.sensor_id
             dataPengamatan.pengamatan_status_id = data.status_pengamatan_id
             dataPengamatan.user_cabang_id = data.user_cabang_id
@@ -171,12 +197,12 @@ class DataPengamatanController {
                 .with('sensor')
                 .with('statusPengamatan')
                 .with('userCabang')
-                .whereRaw(`${column} LIKE '%${value}%'`)
+                .whereRaw(`${column} = '${value}'`)
                 .fetch()
 
-            if(dataPengamatan.rows.length == 0){
+            if (dataPengamatan.rows.length == 0) {
                 return response.status(404).send({
-                    message : 'Pencarian untuk ' + value + ' tidak ditemukan'
+                    message: 'Pencarian untuk ' + value + ' tidak ditemukan'
                 })
             }
 

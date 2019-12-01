@@ -125,7 +125,7 @@ class TransaksiBrokerStatusController {
 
             if(transaksiBrokerStatus.rows.length == 0){
                 return response.status(404).send({
-                    message : 'Pencarian untuk ' + value + ' tidak ditemukan'
+                    message : 'Pencarian untuk ' + value + ' tidak ditemukannsa'
                 })
             }
 

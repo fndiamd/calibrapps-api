@@ -1,6 +1,7 @@
 'use strict'
 
 const OrderDetail = use('App/Models/OrderDetail')
+const BarangKalibrasi = use('App/Models/BarangKalibrasi')
 
 class OrderDetailController {
 
@@ -48,10 +49,14 @@ class OrderDetailController {
       const orderDetail = new OrderDetail()
 
       const data = {
+        order_detail_harga: request.input('order_detail_harga'),
+        order_detail_keterangan: request.input('order_detail_keterangan'),
         progres_order_id: request.input('progres_order_id'),
         barang_kalibrasi_id: request.input('barang_kalibrasi_id')
       }
 
+      orderDetail.order_detail_harga = data.order_detail_harga
+      orderDetail.order_detail_keterangan = data.order_detail_keterangan
       orderDetail.progres_order_id = data.progres_order_id
       orderDetail.barang_kalibrasi_id = data.barang_kalibrasi_id
 
@@ -69,10 +74,14 @@ class OrderDetailController {
       let orderDetail = await OrderDetail.findOrFail(params.id)
 
       const data = {
+        order_detail_harga: request.input('order_detail_harga'),
+        order_detail_keterangan: request.input('order_detail_keterangan'),
         progres_order_id: request.input('progres_order_id'),
         barang_kalibrasi_id: request.input('barang_kalibrasi_id')
       }
 
+      orderDetail.order_detail_harga = data.order_detail_harga
+      orderDetail.order_detail_keterangan = data.order_detail_keterangan
       orderDetail.progres_order_id = data.progres_order_id
       orderDetail.barang_kalibrasi_id = data.barang_kalibrasi_id
 
@@ -139,10 +148,26 @@ class OrderDetailController {
       let value = search.value;
 
       let orderDetail = await OrderDetail.query()
-        .with('progresOrder')
-        .with('barangKalibrasi')
-        .whereRaw(`${column} LIKE '%${value}%'`)
+        .whereRaw(`${column} = '${value}'`)
         .fetch()
+
+      let barang = [];
+
+      for(let i in orderDetail.rows){
+        let detailBarang = await BarangKalibrasi
+        .query()
+        .where('barang_kalibrasi_id', orderDetail.rows[i].barang_kalibrasi_id)
+        .with('merkBarang')
+        .with('listKalibrasi')
+        .with('barangStatus')
+        .first()
+        barang.push(detailBarang)
+      }
+
+      let detail = {
+        detail_order : orderDetail,
+        detail_barang : barang
+      }
 
       if(orderDetail.rows.length == 0){
         return response.status(404).send({
@@ -150,10 +175,10 @@ class OrderDetailController {
         })
       }
 
-      return response.json(orderDetail)
+      return response.json(detail)
     } catch (error) {
       return response.status(400).send({
-        message: 'Ops, sepertinya ada yang tidak beres!'
+        message: error.message//'Ops, sepertinya ada yang tidak beres!'
       })
     }
   }
