@@ -17,7 +17,7 @@ class PenawaranOrder extends Model {
     }
 
     progresOrder(){
-        return this.hasOne('App/Models/ProgresOrder')
+        return this.belongsTo('App/Models/ProgresOrder')
     }
 }
 

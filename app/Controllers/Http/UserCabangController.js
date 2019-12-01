@@ -207,6 +207,7 @@ class UserCabangController {
             })
         }
     }
+
 }
 
 module.exports = UserCabangController

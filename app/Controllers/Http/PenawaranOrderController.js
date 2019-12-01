@@ -54,7 +54,7 @@ class PenawaranOrderController {
             penawaranOrder.penawaran_order_nomor = data.penawaran_order_nomor
             penawaranOrder.penawaran_order_perusahaan = data.penawaran_order_perusahaan
             penawaranOrder.penawaran_order_tanggal_penawaran = data.penawaran_order_tanggal_penawaran
-            penawaranOrder.penawaran_order_order_file = data.penawaran_order_order_file
+            penawaranOrder.penawaran_order_file = data.penawaran_order_file
             penawaranOrder.penawaran_status_id = data.penawaran_status_id
 
             await penawaranOrder.save()

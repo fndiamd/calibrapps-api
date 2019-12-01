@@ -25,7 +25,7 @@ class DataPengamatan extends Model {
     }
 
     dataUkur(){
-        return this.hasOne('App/Models/DataUkur')
+        return this.belongsTo('App/Models/DataUkur')
     }
 }
 

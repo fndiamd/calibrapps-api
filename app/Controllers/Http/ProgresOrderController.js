@@ -71,7 +71,7 @@ class ProgresOrderController {
       return response.json(progresOrder)
     } catch (error) {
       return response.status(400).send({
-        message: 'Ops, sepertinya ada yang tidak beres!'
+        message: error.message //'Ops, sepertinya ada yang tidak beres!'
       })
     }
   }
