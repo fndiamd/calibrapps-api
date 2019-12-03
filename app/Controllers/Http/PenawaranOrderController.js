@@ -27,7 +27,7 @@ class PenawaranOrderController {
                 .with('penawaranStatus')
                 .first()
             return penawaranOrder
-        } catch (error) {
+        } catch (error) {e
             if (error.name === 'ModelNotFoundException') {
                 return response.status(404).send({
                     message: 'Penawaran order tidak ditemukan'

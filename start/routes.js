@@ -24,6 +24,8 @@ Route.group(() => {
 }).prefix('api/auth')
 
 Route.group(() => {
+    Route.post('upload', 'SertifikatController.uploads')
+    
     // Routes Dashboard
     Route.get('pelanggan', 'DashboardController.jumlahPelanggan')
     Route.get('pemesanan', 'DashboardController.jumlahPemesanan')
@@ -269,7 +271,7 @@ Route.group(() => {
     // Routes with Middleware
     // Routes barang kalibrasi
     Route.put('barang-kalibrasi/:id', 'BarangKalibrasiController.update')
-    Route.delete('barang-kalibrasi/;id', 'BarangKalibrasiController.delete')
+    Route.delete('barang-kalibrasi/:id', 'BarangKalibrasiController.delete')
     Route.post('barang-kalibrasi', 'BarangKalibrasiController.store')
 
     // Routes customer role

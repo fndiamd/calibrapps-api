@@ -63,6 +63,14 @@ class DataUkurController {
 
             const data = {
                 data_ukur_setting_point: request.input('data_ukur_setting_point'),
+                data_ukur_lebar_pintu: request.input('data_ukur_lebar_pintu'),
+                data_ukur_letak_sensor: request.input('data_ukur_letak_sensor'),
+                data_ukur_panjang_benda: request.input('data_ukur_panjang_benda'),
+                data_ukur_lebar_benda: request.input('data_ukur_lebar_benda'),
+                data_ukur_tinggi_benda: request.input('data_ukur_tinggi_benda'),
+                data_ukur_posisi_1: request.input('data_ukur_posisi_1'),
+                data_ukur_posisi_2_3: request.input('data_ukur_posisi_2_3'),
+                data_ukur_posisi_3: request.input('data_ukur_posisi_3'),
                 data_pengamatan_id: request.input('data_pengamatan_id'),
                 barang_kalibrasi_id: request.input('barang_kalibrasi_id')
             }
@@ -75,6 +83,14 @@ class DataUkurController {
             }
 
             dataUkur.data_ukur_setting_point = data.data_ukur_setting_point
+            dataUkur.data_ukur_lebar_pintu = data.data_ukur_lebar_pintu
+            dataUkur.data_ukur_letak_sensor = data.data_ukur_letak_sensor
+            dataUkur.data_ukur_panjang_benda = data.data_ukur_panjang_benda
+            dataUkur.data_ukur_lebar_benda = data.data_ukur_lebar_benda
+            dataUkur.data_ukur_tinggi_benda = data.data_ukur_tinggi_benda
+            dataUkur.data_ukur_posisi_1 = data.data_ukur_posisi_1
+            dataUkur.data_ukur_posisi_2_3 = data.data_ukur_posisi_2_3
+            dataUkur.data_ukur_posisi_3 = data.data_ukur_posisi_3
             dataUkur.data_pengamatan_id = data.data_pengamatan_id
             dataUkur.barang_kalibrasi_id = data.barang_kalibrasi_id
 
@@ -94,6 +110,14 @@ class DataUkurController {
 
             const data = {
                 data_ukur_setting_point: request.input('data_ukur_setting_point'),
+                data_ukur_lebar_pintu: request.input('data_ukur_lebar_pintu'),
+                data_ukur_letak_sensor: request.input('data_ukur_letak_sensor'),
+                data_ukur_panjang_benda: request.input('data_ukur_panjang_benda'),
+                data_ukur_lebar_benda: request.input('data_ukur_lebar_benda'),
+                data_ukur_tinggi_benda: request.input('data_ukur_tinggi_benda'),
+                data_ukur_posisi_1: request.input('data_ukur_posisi_1'),
+                data_ukur_posisi_2_3: request.input('data_ukur_posisi_2_3'),
+                data_ukur_posisi_3: request.input('data_ukur_posisi_3'),
                 data_pengamatan_id: request.input('data_pengamatan_id'),
                 barang_kalibrasi_id: request.input('barang_kalibrasi_id')
             }
@@ -106,6 +130,14 @@ class DataUkurController {
             }
 
             dataUkur.data_ukur_setting_point = data.data_ukur_setting_point
+            dataUkur.data_ukur_lebar_pintu = data.data_ukur_lebar_pintu
+            dataUkur.data_ukur_letak_sensor = data.data_ukur_letak_sensor
+            dataUkur.data_ukur_panjang_benda = data.data_ukur_panjang_benda
+            dataUkur.data_ukur_lebar_benda = data.data_ukur_lebar_benda
+            dataUkur.data_ukur_tinggi_benda = data.data_ukur_tinggi_benda
+            dataUkur.data_ukur_posisi_1 = data.data_ukur_posisi_1
+            dataUkur.data_ukur_posisi_2_3 = data.data_ukur_posisi_2_3
+            dataUkur.data_ukur_posisi_3 = data.data_ukur_posisi_3
             dataUkur.data_pengamatan_id = data.data_pengamatan_id
             dataUkur.barang_kalibrasi_id = data.barang_kalibrasi_id
 
@@ -182,7 +214,7 @@ class DataUkurController {
                     message: 'Pencarian untuk ' + value + ' tidak ditemukan'
                 })
             }
-            
+
             return response.json(dataUkur)
         } catch (error) {
             return response.status(400).send({

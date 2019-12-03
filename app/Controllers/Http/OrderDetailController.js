@@ -103,6 +103,10 @@ class OrderDetailController {
   async delete({ params, response }) {
     try {
       const orderDetail = await OrderDetail.findOrFail(params.id)
+      let barang_id = orderDetail.barang_kalibrasi_id
+      let barangKalibrasi = await BarangKalibrasi.findOrFail(barang_id)
+      
+      barangKalibrasi.delete()
       orderDetail.delete()
 
       return response.json({ message: 'Order detail berhasil dihapus' })

@@ -140,7 +140,7 @@ class BarangKalibrasiController {
             let page = pagination.page || 1;
             let limit = pagination.limit || 10;
             let column = pagination.column || 'barang_kalibrasi_id';
-            let column = pagination.sort || 'desc';
+            let sort = pagination.sort || 'desc';
 
             const barangKalibrasi = await BarangKalibrasi.query()
                 .with('merkBarang')
@@ -170,13 +170,12 @@ class BarangKalibrasiController {
                 .whereRaw(`LOWER(${column}) LIKE '%${value}%'`)
                 .fetch()
 
-            if (barangKalibrasi.rows.length == 0) {
-                return response.status(404).send({
-                    message: 'Pencarian untuk ' + value + ' tidak ditemukan'
-                })
+            let data = {
+                barang_kalibrasi: barangKalibrasi,
+                total: barangKalibrasi.rows.length
             }
 
-            return response.json(barangKalibrasi)
+            return response.json(data)
         } catch (error) {
             return response.status(400).send({
                 message: 'Ops, kelihatannya ada yang tidak beres!'

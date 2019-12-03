@@ -201,15 +201,25 @@ class UserCustomerController {
 
     async search({ request, response }) {
         try {
-            let search = request.only(['column', 'value'])
+            let search = request.only(['column', 'operator', 'value'])
             let column = search.column || 'user_customer_nama';
-            let value = search.value.toLowerCase();
+            let operator = search.operator || '='
+            let value = search.value
 
-            let userCustomer = await UserCustomer.query()
+            if (operator == 'LIKE') {
+                let userCustomer = await UserCustomer.query()
+                    .with('customerPerusahaan')
+                    .with('customerRole')
+                    .whereRaw(`LOWER(${column}) LIKE '%${value}%'`)
+                    .fetch()
+            }else{
+                let userCustomer = await UserCustomer.query()
                 .with('customerPerusahaan')
                 .with('customerRole')
-                .whereRaw(`LOWER(${column}) LIKE '%${value}%'`)
+                .whereRaw(`${column} ${operator} ${value}`)
                 .fetch()
+            }
+
 
             if (userCustomer.rows.length == 0) {
                 return response.status(404).send({

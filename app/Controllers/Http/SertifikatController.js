@@ -1,6 +1,7 @@
 'use strict'
 
 const Sertifikat = use('App/Models/Sertifikat')
+const Helpers = use('Helpers')
 
 class SertifikatController {
 
@@ -41,13 +42,50 @@ class SertifikatController {
         }
     }
 
+    async uploads({ response, request }) {
+        const sertifikatFile = request.file('sertifikat_file', {
+            types: ['images', 'jpg', 'jpeg'],
+            size: '5mb'
+        })
+
+
+        let nameSertifikat = 'cobacoba' + '.jpg'
+
+        await sertifikatFile.move(Helpers.resourcesPath('uploads/sertifikat'), {
+            name: nameSertifikat,
+            overwrite: true
+        })
+
+        if(!sertifikatFile.moved()){
+            return sertifikatFile.error()
+        }
+
+        return 'berhasil uploads'
+    }
+
     async store({ response, request }) {
         try {
             const sertifikat = new Sertifikat()
+            const sertifikatFile = request.file('sertifikat_file', {
+                types: ['images', 'jpg', 'jpeg', 'png', 'pdf'],
+                size: '5mb'
+            })
+
+
+            let nameSertifikat = request.input('sertifikat_nomor') + '-' + request.input('sertifikat_tanggal_terbit') + '.jpg'
+
+            await sertifikatFile.move(Helpers.resourcesPath('uploads/sertifikat'), {
+                name: nameSertifikat,
+                overwrite: true
+            })
+
+            if (!sertifikatFile.moved()) {
+                return sertifikatFile.error()
+            }
+
             const data = {
                 sertifikat_nomor: request.input('sertifikat_nomor'),
                 sertifikat_nomor_seri: request.input('sertifikat_nomor_seri'),
-                sertifikat_file: request.input('sertifikat_file'),
                 sertifikat_status: request.input('sertifikat_status'),
                 sertifikat_tanggal_terbit: request.input('sertifikat_tanggal_terbit'),
                 sertifikat_tanggal_berakhir: request.input('sertifikat_tanggal_berakhir'),
@@ -56,7 +94,7 @@ class SertifikatController {
 
             sertifikat.sertifikat_nomor = data.sertifikat_nomor
             sertifikat.sertifikat_nomor_seri = data.sertifikat_nomor_seri
-            sertifikat.sertifikat_file = data.sertifikat_file
+            sertifikat.sertifikat_file = nameSertifikat
             sertifikat.sertifikat_status = data.sertifikat_status
             sertifikat.sertifikat_tanggal_terbit = data.sertifikat_tanggal_terbit
             sertifikat.sertifikat_tanggal_berakhir = data.sertifikat_tanggal_berakhir

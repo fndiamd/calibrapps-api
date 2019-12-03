@@ -11,6 +11,10 @@ class PosisiUkur extends Model {
     seqDataUkur(){
         return this.hasMany('App/Models/SeqDataUkur')
     }
+
+    dataUkur(){
+        return this.belongsTo('App/Models/DataUkur')
+    }
 }
 
 module.exports = PosisiUkur

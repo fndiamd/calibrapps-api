@@ -7,17 +7,19 @@ class UnsurKajiUlangSchema extends Schema {
   up() {
     this.create('unsur_kaji_ulangs', (table) => {
       table.integer('unsur_kalibrasi_id')
+        .notNullable()
         .unsigned()
         .references('unsur_kalibrasi_id')
         .inTable('unsur_kalibrasis')
         .onUpdate('CASCADE')
-        .onDelete('SET NULL')
+        .onDelete('CASCADE')
       table.integer('progres_order_id')
+        .notNullable()
         .unsigned()
         .references('progres_order_id')
         .inTable('progres_orders')
         .onUpdate('CASCADE')
-        .onDelete('SET NULL')
+        .onDelete('CASCADE')
       table.timestamps()
     })
   }

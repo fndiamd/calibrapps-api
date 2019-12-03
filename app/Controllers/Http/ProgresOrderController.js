@@ -8,8 +8,7 @@ class ProgresOrderController {
     try {
       let progresOrder = await ProgresOrder.query()
         .with('customerPerusahaan')
-        .with('penawaranOrder')
-        .with('kantorCStatusabang')
+        .with('kantorCabang')
         .with('orderStatus')
         .fetch()
       return response.json(progresOrder)
@@ -27,7 +26,6 @@ class ProgresOrderController {
         .query()
         .where('progres_order_id', params.id)
         .with('customerPerusahaan')
-        .with('penawaranOrder')
         .with('kantorCabang')
         .with('orderStatus')
         .first()
@@ -52,7 +50,7 @@ class ProgresOrderController {
       const data = {
         progres_order_nomor: request.input('progres_order_nomor'),
         progres_order_nomor_onf: request.input('progres_order_nomor_onf'),
-        progres_order_tanggal_order: request.input('posisi_ukur_posisi'),
+        progres_order_tanggal_order: request.input('progres_order_tanggal_order'),
         progres_order_estimasi: request.input('progres_order_estimasi'),
         customer_perusahaan_id: request.input('customer_perusahaan_id'),
         kantor_cabang_id: request.input('kantor_cabang_id'),
@@ -83,7 +81,7 @@ class ProgresOrderController {
       const data = {
         progres_order_nomor: request.input('progres_order_nomor'),
         progres_order_nomor_onf: request.input('progres_order_nomor_onf'),
-        progres_order_tanggal_order: request.input('posisi_ukur_posisi'),
+        progres_order_tanggal_order: request.input('progres_order_tanggal_order'),
         progres_order_estimasi: request.input('progres_order_estimasi'),
         progres_order_verif: request.input('progres_order_verif'),
         customer_perusahaan_id: request.input('customer_perusahaan_id'),
@@ -144,7 +142,6 @@ class ProgresOrderController {
 
       const progresOrder = await ProgresOrder.query()
         .with('customerPerusahaan')
-        .with('penawaranOrder')
         .with('kantorCabang')
         .with('orderStatus')
         .orderBy(`${column}`, `${sort}`)
@@ -166,7 +163,6 @@ class ProgresOrderController {
 
       let progresOrder = await ProgresOrder.query()
         .with('customerPerusahaan')
-        .with('penawaranOrder')
         .with('kantorCabang')
         .with('orderStatus')
         .whereRaw(`LOWER(${column}) LIKE '%${value}%'`)
@@ -185,7 +181,7 @@ class ProgresOrderController {
       })
     }
   }
-  
+
 }
 
 module.exports = ProgresOrderController

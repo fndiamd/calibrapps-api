@@ -8,10 +8,6 @@ class SeqDataUkur extends Model {
         return 'seq_data_ukur_id'
     }
 
-    dataUkur(){
-        return this.belongsTo('App/Models/DataUkur')
-    }
-
     posisiUkur(){
         return this.belongsTo('App/Models/PosisiUkur')
     }

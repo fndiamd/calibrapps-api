@@ -8,6 +8,13 @@ class PosisiUkurSchema extends Schema {
     this.create('posisi_ukurs', (table) => {
       table.increments('posisi_ukur_id')
       table.string('posisi_ukur_posisi', 100)
+      table.integer('data_ukur_id')
+        .notNullable()
+        .unsigned()
+        .references('data_ukur_id')
+        .inTable('data_ukurs')
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE')
       table.timestamps()
     })
   }
