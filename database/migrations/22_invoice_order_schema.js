@@ -21,7 +21,6 @@ class InvoiceOrderSchema extends Schema {
         .references('invoice_status_id')
         .inTable('invoice_statuses')
         .onUpdate('CASCADE')
-        .onDelete('SET NULL')
       table.timestamps()
     })
   }

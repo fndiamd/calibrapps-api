@@ -25,7 +25,6 @@ class UserCustomerSchema extends Schema {
         .references('customer_role_id')
         .inTable('customer_roles')
         .onUpdate('CASCADE')
-        .onDelete('SET NULL')
       table.timestamps()
     })
   }

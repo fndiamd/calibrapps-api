@@ -17,7 +17,6 @@ class PerusahaanBrokerSchema extends Schema {
         .references('broker_status_id')
         .inTable('broker_statuses')
         .onUpdate('CASCADE')
-        .onDelete('SET NULL')
       table.timestamps()
     })
   }

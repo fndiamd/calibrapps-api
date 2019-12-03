@@ -31,7 +31,6 @@ class ProgresOrderSchema extends Schema {
         .references('order_status_id')
         .inTable('order_statuses')
         .onUpdate('CASCADE')
-        .onDelete('SET NULL')
       table.timestamps()
     })
   }

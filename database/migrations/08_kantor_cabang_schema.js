@@ -17,7 +17,6 @@ class KantorCabangSchema extends Schema {
         .references('kantor_status_id')
         .inTable('kantor_statuses')
         .onUpdate('CASCADE')
-        .onDelete('SET NULL')
       table.timestamps()
     })
   }

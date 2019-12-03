@@ -16,7 +16,6 @@ class PenawaranOrderSchema extends Schema {
         .references('penawaran_status_id')
         .inTable('penawaran_statuses')
         .onUpdate('CASCADE')
-        .onDelete('SET NULL')
       table.timestamps()
     })
   }

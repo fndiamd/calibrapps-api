@@ -19,7 +19,6 @@ class CustomerPerusahaanSchema extends Schema {
         .references('customer_status_id')
         .inTable('customer_statuses')
         .onUpdate('CASCADE')
-        .onDelete('SET NULL')
       table.timestamps()
     })
   }

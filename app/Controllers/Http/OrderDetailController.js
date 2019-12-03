@@ -103,9 +103,10 @@ class OrderDetailController {
   async delete({ params, response }) {
     try {
       const orderDetail = await OrderDetail.findOrFail(params.id)
+
       let barang_id = orderDetail.barang_kalibrasi_id
       let barangKalibrasi = await BarangKalibrasi.findOrFail(barang_id)
-      
+
       barangKalibrasi.delete()
       orderDetail.delete()
 
@@ -157,23 +158,23 @@ class OrderDetailController {
 
       let barang = [];
 
-      for(let i in orderDetail.rows){
+      for (let i in orderDetail.rows) {
         let detailBarang = await BarangKalibrasi
-        .query()
-        .where('barang_kalibrasi_id', orderDetail.rows[i].barang_kalibrasi_id)
-        .with('merkBarang')
-        .with('listKalibrasi')
-        .with('barangStatus')
-        .first()
+          .query()
+          .where('barang_kalibrasi_id', orderDetail.rows[i].barang_kalibrasi_id)
+          .with('merkBarang')
+          .with('listKalibrasi')
+          .with('barangStatus')
+          .first()
         barang.push(detailBarang)
       }
 
       let detail = {
-        detail_order : orderDetail,
-        detail_barang : barang
+        detail_order: orderDetail,
+        detail_barang: barang
       }
 
-      if(orderDetail.rows.length == 0){
+      if (orderDetail.rows.length == 0) {
         return response.status(404).send({
           message: 'Pencarian untuk ' + value + ' tidak ditemukan'
         })
@@ -183,6 +184,30 @@ class OrderDetailController {
     } catch (error) {
       return response.status(400).send({
         message: error.message//'Ops, sepertinya ada yang tidak beres!'
+      })
+    }
+  }
+
+  async normalSearch(){
+    try {
+      let search = request.only(['column', 'value'])
+      let column = search.column || 'progres_order_id'
+      let value = search.value;
+
+      let orderDetail = await OrderDetail.query()
+        .whereRaw(`${column} = '${value}'`)
+        .fetch()
+
+      if (orderDetail.rows.length == 0) {
+        return response.status(404).send({
+          message: 'Pencarian untuk ' + value + ' tidak ditemukan'
+        })
+      }
+
+      return response.json(orderDetail)
+    } catch (error) {
+      return response.status(400).send({
+        message: error.message
       })
     }
   }

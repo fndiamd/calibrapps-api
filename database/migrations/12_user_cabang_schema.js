@@ -24,7 +24,6 @@ class UserCabangSchema extends Schema {
         .references('user_role_id')
         .inTable('user_roles')
         .onUpdate('CASCADE')
-        .onDelete('SET NULL')
       table.timestamps()
     })
   }

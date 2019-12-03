@@ -24,8 +24,7 @@ class DashboardController {
 
     async jumlahPendapatan({response}) {
         const count = await InvoiceOrder.query()
-        .sum('invoice_order_total')
-        .fetch()
+        .getSum('invoice_order_total')
 
         return response.json(count)
     }

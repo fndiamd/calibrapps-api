@@ -13,7 +13,6 @@ class SensorSchema extends Schema {
         .references('satuan_sensor_id')
         .inTable('satuan_sensors')
         .onUpdate('CASCADE')
-        .onDelete('SET NULL')
       table.timestamps()
     })
   }

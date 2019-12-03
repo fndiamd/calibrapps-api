@@ -28,7 +28,6 @@ class TransaksiBrokerSchema extends Schema {
         .references('transaksi_broker_status_id')
         .inTable('transaksi_broker_statuses')
         .onUpdate('CASCADE')
-        .onDelete('SET NULL')
       table.timestamps()
     })
   }

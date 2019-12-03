@@ -24,8 +24,10 @@ Route.group(() => {
 }).prefix('api/auth')
 
 Route.group(() => {
-    Route.post('upload', 'SertifikatController.uploads')
     
+
+    Route.get('sertifikat-check/:sertifikat_nomor', 'SertifikatController.readSertifikat')
+
     // Routes Dashboard
     Route.get('pelanggan', 'DashboardController.jumlahPelanggan')
     Route.get('pemesanan', 'DashboardController.jumlahPemesanan')
@@ -119,7 +121,8 @@ Route.group(() => {
     Route.get('order-detail', 'OrderDetailController.index')
     Route.get('order-detail/:id', 'OrderDetailController.view')
     Route.get('order-detail-pagination', 'OrderDetailController.pagination')
-    Route.get('order-detail-search', 'OrderDetailController.search')
+    Route.post('order-detail-search', 'OrderDetailController.search')
+    Route.post('order-detail-normal-search', 'OrderDetailController.normalSearch')
 
     // Routes Order Status
     Route.get('order-status', 'OrderStatusController.index')

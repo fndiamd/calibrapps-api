@@ -70,6 +70,14 @@ class DataPengamatanController {
                 data_pengamatan_kelembaban_terkoreksi: request.input('data_pengamatan_kelembaban_terkoreksi'),
                 data_pengamatan_no_id_standar: request.input('data_pengamatan_no_id_standar'),
                 data_pengamatan_standar_telusur: request.input('data_pengamatan_standar_telusur'),
+                data_pengamatan_lebar_pintu: request.input('data_pengamatan_lebar_pintu'),
+                data_pengamatan_letak_sensor: request.input('data_pengamatan_letak_sensor'),
+                data_pengamatan_panjang_benda: request.input('data_pengamatan_panjang_benda'),
+                data_pengamatan_lebar_benda: request.input('data_pengamatan_lebar_benda'),
+                data_pengamatan_tinggi_benda: request.input('data_pengamatan_tinggi_benda'),
+                data_pengamatan_posisi_1: request.input('data_pengamatan_posisi_1'),
+                data_pengamatan_posisi_2_3: request.input('data_pengamatan_posisi_2_3'),
+                data_pengamatan_posisi_3: request.input('data_pengamatan_posisi_3'),
                 sensor_id: request.input('sensor_id'),
                 status_pengamatan_id: request.input('pengamatan_status_id'),
                 user_cabang_id: request.input('user_cabang_id')
@@ -88,6 +96,14 @@ class DataPengamatanController {
             dataPengamatan.data_pengamatan_suhu_terkoreksi = data.data_pengamatan_suhu_terkoreksi
             dataPengamatan.data_pengamatan_no_id_standar = data.data_pengamatan_no_id_standar
             dataPengamatan.data_pengamatan_standar_telusur = data.data_pengamatan_standar_telusur
+            dataPengamatan.data_pengamatan_lebar_pintu = data.data_pengamatan_lebar_pintu
+            dataPengamatan.data_pengamatan_letak_sensor = data.data_pengamatan_letak_sensor
+            dataPengamatan.data_pengamatan_panjang_benda = data.data_pengamatan_panjang_benda
+            dataPengamatan.data_pengamatan_lebar_benda = data.data_pengamatan_lebar_benda
+            dataPengamatan.data_pengamatan_tinggi_benda = data.data_pengamatan_tinggi_benda
+            dataPengamatan.data_pengamatan_posisi_1 = data.data_pengamatan_posisi_1
+            dataPengamatan.data_pengamatan_posisi_2_3 = data.data_pengamatan_posisi_2_3
+            dataPengamatan.data_pengamatan_posisi_3 = data.data_pengamatan_posisi_3
             dataPengamatan.sensor_id = data.sensor_id
             dataPengamatan.pengamatan_status_id = data.status_pengamatan_id
             dataPengamatan.user_cabang_id = data.user_cabang_id
@@ -114,6 +130,14 @@ class DataPengamatanController {
                 data_pengamatan_kelembaban_terkoreksi: request.input('data_pengamatan_kelembaban_terkoreksi'),
                 data_pengamatan_no_id_standar: request.input('data_pengamatan_no_id_standar'),
                 data_pengamatan_standar_telusur: request.input('data_pengamatan_standar_telusur'),
+                data_pengamatan_lebar_pintu: request.input('data_pengamatan_lebar_pintu'),
+                data_pengamatan_letak_sensor: request.input('data_pengamatan_letak_sensor'),
+                data_pengamatan_panjang_benda: request.input('data_pengamatan_panjang_benda'),
+                data_pengamatan_lebar_benda: request.input('data_pengamatan_lebar_benda'),
+                data_pengamatan_tinggi_benda: request.input('data_pengamatan_tinggi_benda'),
+                data_pengamatan_posisi_1: request.input('data_pengamatan_posisi_1'),
+                data_pengamatan_posisi_2_3: request.input('data_pengamatan_posisi_2_3'),
+                data_pengamatan_posisi_3: request.input('data_pengamatan_posisi_3'),
                 sensor_id: request.input('sensor_id'),
                 status_pengamatan_id: request.input('pengamatan_status_id'),
                 user_cabang_id: request.input('user_cabang_id')
@@ -132,10 +156,18 @@ class DataPengamatanController {
             dataPengamatan.data_pengamatan_suhu_terkoreksi = data.data_pengamatan_suhu_terkoreksi
             dataPengamatan.data_pengamatan_no_id_standar = data.data_pengamatan_no_id_standar
             dataPengamatan.data_pengamatan_standar_telusur = data.data_pengamatan_standar_telusur
+            dataPengamatan.data_pengamatan_lebar_pintu = data.data_pengamatan_lebar_pintu
+            dataPengamatan.data_pengamatan_letak_sensor = data.data_pengamatan_letak_sensor
+            dataPengamatan.data_pengamatan_panjang_benda = data.data_pengamatan_panjang_benda
+            dataPengamatan.data_pengamatan_lebar_benda = data.data_pengamatan_lebar_benda
+            dataPengamatan.data_pengamatan_tinggi_benda = data.data_pengamatan_tinggi_benda
+            dataPengamatan.data_pengamatan_posisi_1 = data.data_pengamatan_posisi_1
+            dataPengamatan.data_pengamatan_posisi_2_3 = data.data_pengamatan_posisi_2_3
+            dataPengamatan.data_pengamatan_posisi_3 = data.data_pengamatan_posisi_3
             dataPengamatan.sensor_id = data.sensor_id
             dataPengamatan.pengamatan_status_id = data.status_pengamatan_id
             dataPengamatan.user_cabang_id = data.user_cabang_id
-
+            
             await dataPengamatan.save()
             return response.json(dataPengamatan)
         } catch (error) {

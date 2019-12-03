@@ -22,7 +22,6 @@ class BarangKalibrasiSchema extends Schema {
         .references('barang_status_id')
         .inTable('barang_statuses')
         .onUpdate('CASCADE')
-        .onDelete('SET NULL')
       table.integer('merk_barang_id')
         .notNullable()
         .unsigned()
