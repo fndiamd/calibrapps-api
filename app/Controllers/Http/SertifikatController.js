@@ -43,17 +43,14 @@ class SertifikatController {
     }
 
     async readSertifikat({ params, response }) {
-        // const dataSertifikat = await Sertifikat
-        //     .query()
-        //     .where('sertifikat_nomor', params.sertifikat_nomor)
-        //     .first();
-        const fs = use('fs')
-        const readFile = Helpers.promisify(fs.readFile)
-        response.implicitEnd = false
+        const dataSertifikat = await Sertifikat
+            .query()
+            .where('sertifikat_nomor', params.sertifikat_nomor)
+            .first();
 
-        fs.readFile(Helpers.resourcesPath('uploads/sertifikat/') + 'tree-736885.jpg', (error, contents) => {
-            response.send(contents, '123123.jpg')
-        })
+        response.attachment(
+            Helpers.resourcesPath('uploads/sertifikat/') + dataSertifikat.sertifikat_file,dataSertifikat.sertifikat_file
+        )
     }
 
     async store({ response, request }) {

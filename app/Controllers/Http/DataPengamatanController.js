@@ -119,7 +119,7 @@ class DataPengamatanController {
 
     async update({ params, response, request }) {
         try {
-            const dataPengamatan = await DataPengamatan.find(params.id)
+            const dataPengamatan = await DataPengamatan.findOrFail(params.id)
             const validation = await validate(request.all(), rules, vmessage)
 
             const data = {
@@ -172,7 +172,7 @@ class DataPengamatanController {
             return response.json(dataPengamatan)
         } catch (error) {
             return response.status(400).send({
-                message: 'Ops, sepertinya ada yang tidak beres!'
+                message: error.message //'Ops, sepertinya ada yang tidak beres!'
             })
         }
     }

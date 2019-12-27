@@ -8,8 +8,8 @@ class SatuanSensorSchema extends Schema {
     this.create('satuan_sensors', (table) => {
       table.increments('satuan_sensor_id')
       table.string('satuan_sensor_satuan', 50).notNullable()
-      table.decimal('satuan_sensor_rentang_min')
-      table.decimal('satuan_sensor_rentang_max')
+      table.decimal('satuan_sensor_rentang_min', 8, 3)
+      table.decimal('satuan_sensor_rentang_max', 8, 3)
       table.timestamps()
     })
   }

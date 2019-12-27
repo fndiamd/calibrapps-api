@@ -47,7 +47,7 @@ class SatuanSensorController {
       const data = {
         satuan_sensor_satuan: request.input('satuan_sensor_satuan'),
         satuan_sensor_rentang_min: request.input('satuan_sensor_rentang_min'),
-        satuan_sensor_rentang_max = request.input('satuan_sensor_rentang_max'),
+        satuan_sensor_rentang_max: request.input('satuan_sensor_rentang_max'),
         sensor_id: request.input('sensor_id')
       }
 

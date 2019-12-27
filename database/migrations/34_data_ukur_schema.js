@@ -7,7 +7,7 @@ class DataUkurSchema extends Schema {
   up() {
     this.create('data_ukurs', (table) => {
       table.increments('data_ukur_id')
-      table.string('data_ukur_setting_point', 100)
+      table.json('data_ukur_data')
       table.integer('data_pengamatan_id')
         .notNullable()
         .unsigned()
