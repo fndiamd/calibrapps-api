@@ -6,7 +6,6 @@ const { validate } = use('Validator')
 let rules = {
     user_customer_nama: 'required',
     user_customer_email: 'required|email|unique:user_customers,user_customer_email',
-    user_customer_password: 'required|min:8'
 }
 
 const vmessage = {
@@ -76,6 +75,10 @@ class UserCustomerController {
                 customer_role_id: request.input('customer_role_id')
             }
 
+            rules = {
+                user_customer_password: 'required|min:8'
+            }
+
             if (validation.fails()) {
                 return response.status(400).send({
                     message: validation.messages()[0].message,
@@ -120,7 +123,6 @@ class UserCustomerController {
                 rules = {
                     user_customer_nama: 'required',
                     user_customer_email: 'required|email',
-                    user_customer_password: 'required|min:8'
                 }
             }
 

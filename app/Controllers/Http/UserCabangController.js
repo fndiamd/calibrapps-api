@@ -6,7 +6,6 @@ const { validate } = use('Validator')
 let rules = {
     user_cabang_nama: 'required',
     user_cabang_email: 'required|email|unique:user_cabangs,user_cabang_email',
-    user_cabang_password: 'required|min:8'
 }
 
 const vmessage = {
@@ -73,6 +72,10 @@ class UserCabangController {
                 user_cabang_alamat: request.input('user_cabang_alamat'),
                 kantor_cabang_id: request.input('kantor_cabang_id'),
                 user_role_id: request.input('user_role_id')
+            }
+
+            rules = {
+                user_cabang_password: 'required|min:8'
             }
 
             if (validation.fails()) {
