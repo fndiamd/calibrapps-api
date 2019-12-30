@@ -12,12 +12,8 @@ class DataUkur extends Model {
         return this.belongsTo('App/Models/DataPengamatan')
     }
 
-    barangKalibrasi(){
-        return this.belongsTo('App/Models/BarangKalibrasi')
-    }
-
-    seqDataUkur(){
-        return this.hasMany('App/Models/SeqDataUkur')
+    sensor(){
+        return this.belongsTo('App/Models/Sensor')
     }
 }
 

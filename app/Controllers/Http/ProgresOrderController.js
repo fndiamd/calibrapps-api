@@ -182,6 +182,23 @@ class ProgresOrderController {
     }
   }
 
+  async notify({ request, response }) {
+    try {
+      const progresOrder = await ProgresOrder.query().where('progres_order_verif', false).fetch()
+      const count = await ProgresOrder.query().where('progres_order_verif', false).count('* as total')
+      const data = {
+        progresOrder: progresOrder,
+        total: count[0]['total']
+      }
+
+      return response.json(data)
+    } catch (error) {
+      return response.status(400).send({
+        message: 'Ops, sepertinya ada yang tidak beres!'
+      })
+    }
+  }
+
 }
 
 module.exports = ProgresOrderController

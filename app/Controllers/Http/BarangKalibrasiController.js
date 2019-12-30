@@ -182,6 +182,22 @@ class BarangKalibrasiController {
             })
         }
     }
+
+    async needCalibration({ request, response }){
+        try {
+            const barangKalibrasi = await BarangKalibrasi.query().where('barang_status_id', 1).fetch()
+            const count = await BarangKalibrasi.query().where('barang_status_id', 1).count('* as total')
+            const data = {
+                barangKalibrasi : barangKalibrasi,
+                total : count[0]['total']
+            }
+            return response.json(data)
+        } catch (error) {
+            return response.status(400).send({
+                message: 'Ops, sepertinya ada yang tidak beres!'
+            })
+        }
+    }
 }
 
 module.exports = BarangKalibrasiController

@@ -18,14 +18,16 @@ Route.group(() => {
     Route.post('customer-register', 'Auth/UserCustomerController.register')
     Route.post('customer-sendmail', 'Auth/UserCustomerController.sendingEmail')
     Route.get('account-verification/:token', 'Auth/UserCustomerController.accountVerification')
+
     // masukkan email untuk lupa password
     Route.post('customer-forgot-password', 'Auth/UserCustomerController.forgotPassword')
     Route.post('customer-reset-password/:token', 'Auth/UserCustomerController.changePassword')
 }).prefix('api/auth')
 
 Route.group(() => {
-    
 
+    Route.post('customer-perusahaan', 'CustomerPerusahaanController.store')
+    Route.post('user-customer', 'UserCustomerController.store')
     Route.get('sertifikat-check/:sertifikat_nomor', 'SertifikatController.readSertifikat')
 
     // Routes Dashboard
@@ -34,6 +36,7 @@ Route.group(() => {
     Route.get('pendapatan', 'DashboardController.jumlahPendapatan')
 
     // Routes Barang Kalibrasi
+    Route.get('barang-kalibrasi-notif', 'BarangKalibrasiController.needCalibration')
     Route.get('barang-kalibrasi', 'BarangKalibrasiController.index')
     Route.get('barang-kalibrasi/:id', 'BarangKalibrasiController.view')
     Route.get('barang-kalibrasi-pagination', 'BarangKalibrasiController.pagination')
@@ -52,6 +55,7 @@ Route.group(() => {
     Route.get('broker-status-search', 'BrokerStatusController.search')
 
     // Routes Customer Perusahaan
+    Route.get('customer-perusahaan-notif', 'CustomerPerusahaanController.notify')
     Route.get('customer-perusahaan', 'CustomerPerusahaanController.index')
     Route.get('customer-perusahaan/:id', 'CustomerPerusahaanController.view')
     Route.get('customer-perusahaan-pagination', 'CustomerPerusahaanController.pagination')
@@ -148,12 +152,6 @@ Route.group(() => {
     Route.get('perusahaan-broker-pagination', 'PerusahaanBrokerController.pagination')
     Route.get('perusahaan-broker-search', 'PerusahaanBrokerController.search')
 
-    // Routes Posisi Ukur
-    Route.get('posisi-ukur', 'PosisiUkurController.index')
-    Route.get('posisi-ukur/:id', 'PosisiUkurController.view')
-    Route.get('posisi-ukur-pagination', 'PosisiUkurController.pagination')
-    Route.get('posisi-ukur-search', 'PosisiUkurController.search')
-
     // Routes Progres Order
     Route.get('progres-order', 'ProgresOrderController.index')
     Route.get('progres-order/:id', 'ProgresOrderController.view')
@@ -183,12 +181,6 @@ Route.group(() => {
     Route.get('sertifikat/:id', 'SertifikatController.view')
     Route.get('sertifikat-pagination', 'SertifikatController.pagination')
     Route.get('sertifikat-search', 'SertifikatController.search')
-
-    // Routes Seq Data Ukur
-    Route.get('seq-data-ukur', 'SeqDataUkurController.index')
-    Route.get('seq-data-ukur/:id', 'SeqDataUkurController.view')
-    Route.get('seq-data-ukur-pagination', 'SeqDataUkurController.pagination')
-    Route.get('seq-data-ukur-search', 'SeqDataUkurController.search')
 
     // Routes Standar Kalibrasi
     Route.get('standar-kalibrasi', 'StandarKalibrasiController.index')
@@ -262,12 +254,6 @@ Route.group(() => {
     Route.post('user-role', 'UserRoleController.store')
     Route.post('kantor-status', 'KantorStatusController.store')
 
-    Route.post('user-customer', 'UserCustomerController.store')
-    Route.put('user-customer/:id', 'UserCustomerController.update')
-
-    Route.put('user-role/:id', 'UserRoleController.update')
-    Route.delete('user-role/:id', 'UserRoleController.delete')
-
 }).prefix('api')
 
 Route.group(() => {
@@ -283,18 +269,12 @@ Route.group(() => {
     Route.post('customer-role', 'CustomerRoleController.store')
 
     // Routes user role
-    // Route.put('user-role/:id', 'UserRoleController.update')
-    // Route.delete('user-role/:id', 'UserRoleController.delete')
-
-    // Routes user customer 
-    //Route.put('user-customer/:id', 'UserCustomerController.update')
-    Route.delete('user-customer/:id', 'UserCustomerController.delete')
-    //Route.post('user-customer', 'UserCustomerController.store')
+    Route.put('user-role/:id', 'UserRoleController.update')
+    Route.delete('user-role/:id', 'UserRoleController.delete')
 
     // Routes user cabang
     Route.put('user-cabang/:id', 'UserCabangController.update')
     Route.delete('user-cabang/:id', 'UserCabangController.delete')
-
 
     // Routes unsur kalibrasi
     Route.put('unsur-kalibrasi/:id', 'UnsurKalibrasiController.update')
@@ -345,11 +325,9 @@ Route.group(() => {
     Route.put('kantor-cabang/:id', 'KantorCabangController.update')
     Route.delete('kantor-cabang/:id', 'KantorCabangController.delete')
 
-
     // Routes kantor status
     Route.put('kantor-status/:id', 'KantorStatusController.update')
     Route.delete('kantor-status/:id', 'KantorStatusController.delete')
-
 
     // Routes list kalibrasi
     Route.put('list-kalibrasi/:id', 'ListKalibrasiController.update')
@@ -386,16 +364,6 @@ Route.group(() => {
     Route.delete('perusahaan-broker/:id', 'PerusahaanBrokerController.delete')
     Route.post('perusahaan-broker', 'PerusahaanBrokerController.store')
 
-    // Routes posisi ukur
-    Route.put('posisi-ukur/:id', 'PosisiUkurController.update')
-    Route.delete('posisi-ukur/:id', 'PosisiUkurController.delete')
-    Route.post('posisi-ukur', 'PosisiUkurController.store')
-
-    // Routes progres order
-    Route.put('progres-order/:id', 'ProgresOrderController.update')
-    Route.delete('progres-order/:id', 'ProgresOrderController.delete')
-    Route.post('progres-order', 'ProgresOrderController.store')
-
     // Routes ruang lingkup
     Route.put('ruang-lingkup/:id', 'RuangLingkupController.update')
     Route.delete('ruang-lingkup/:id', 'RuangLingkupController.delete')
@@ -415,11 +383,6 @@ Route.group(() => {
     Route.put('sertifikat/:id', 'SertifikatController.update')
     Route.delete('sertifikat/:id', 'SertifikatController.delete')
     Route.post('sertifikat', 'SertifikatController.store')
-
-    // Routes seq data ukur
-    Route.put('seq-data-ukur/:id', 'SeqDataUkurController.update')
-    Route.delete('seq-data-ukur/:id', 'SeqDataUkurController.delete')
-    Route.post('seq-data-ukur', 'SeqDataUkurController.store')
 
     // Routes standar kalibrasi
     Route.put('standar-kalibrasi/:id', 'StandarKalibrasiController.update')
@@ -451,10 +414,22 @@ Route.group(() => {
     Route.delete('broker-status/:id', 'BrokerStatusController.delete')
     Route.post('broker-status', 'BrokerStatusController.store')
 
+}).prefix('api').middleware(['auth:user'])
+
+
+Route.group(() => {
     // Routes customer perusahaan
     Route.put('customer-perusahaan/:id', 'CustomerPerusahaanController.update')
     Route.delete('customer-perusahaan/:id', 'CustomerPerusahaanController.delete')
-    Route.post('customer-perusahaan', 'CustomerPerusahaanController.store')
+    
 
-}).prefix('api').middleware(['auth:user'])
+    // Routes progres order
+    Route.put('progres-order/:id', 'ProgresOrderController.update')
+    Route.delete('progres-order/:id', 'ProgresOrderController.delete')
+    Route.post('progres-order', 'ProgresOrderController.store')
 
+    // Routes user customer 
+    Route.put('user-customer/:id', 'UserCustomerController.update')
+    Route.delete('user-customer/:id', 'UserCustomerController.delete')
+
+}).prefix('api').middleware(['auth:user,customer'])

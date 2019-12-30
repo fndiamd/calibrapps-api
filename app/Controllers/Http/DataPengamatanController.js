@@ -4,13 +4,13 @@ const DataPengamatan = use('App/Models/DataPengamatan')
 const { validate } = use('Validator')
 
 let rules = {
-    sensor_id: 'required',
+    barang_kalibrasi_id: 'required',
     status_pengamatan_id: 'required',
     user_cabang_id: 'required'
 }
 
 const vmessage = {
-    'sensor_id.required': 'Sensor tidak boleh kosong',
+    'barang_kalibrasi_id.required': 'Barang kalibrasi tidak boleh kosong',
     'status_pengamatan_id.required': 'Status pengamatan tidak boleh kosong',
     'user_cabang_id.required': 'User cabang tidak boleh kosong'
 }
@@ -19,7 +19,7 @@ class DataPengamatanController {
     async index({ response }) {
         try {
             let dataPengamatan = await DataPengamatan.query()
-                .with('sensor')
+                .with('barangKalibrasi')
                 .with('statusPengamatan')
                 .with('userCabang')
                 .fetch()
@@ -38,7 +38,7 @@ class DataPengamatanController {
             let dataPengamatan = await DataPengamatan
                 .query()
                 .where('data_pengamatan_id', params.id)
-                .with('sensor')
+                .with('barangKalibrasi')
                 .with('statusPengamatan')
                 .with('userCabang')
                 .first()
@@ -65,21 +65,11 @@ class DataPengamatanController {
             const data = {
                 data_pengamatan_tanggal_kalibrasi: request.input('data_pengamatan_tanggal_kalibrasi'),
                 data_pengamatan_tempat_kalibrasi: request.input('data_pengamatan_tempat_kalibrasi'),
-                data_pengamatan_kondisi_ruangan: request.input('data_pengamatan_kondisi_ruangan'),
                 data_pengamatan_suhu_terkoreksi: request.input('data_pengamatan_suhu_terkoreksi'),
                 data_pengamatan_kelembaban_terkoreksi: request.input('data_pengamatan_kelembaban_terkoreksi'),
-                data_pengamatan_no_id_standar: request.input('data_pengamatan_no_id_standar'),
-                data_pengamatan_standar_telusur: request.input('data_pengamatan_standar_telusur'),
-                data_pengamatan_lebar_pintu: request.input('data_pengamatan_lebar_pintu'),
-                data_pengamatan_letak_sensor: request.input('data_pengamatan_letak_sensor'),
-                data_pengamatan_panjang_benda: request.input('data_pengamatan_panjang_benda'),
-                data_pengamatan_lebar_benda: request.input('data_pengamatan_lebar_benda'),
-                data_pengamatan_tinggi_benda: request.input('data_pengamatan_tinggi_benda'),
-                data_pengamatan_posisi_1: request.input('data_pengamatan_posisi_1'),
-                data_pengamatan_posisi_2_3: request.input('data_pengamatan_posisi_2_3'),
-                data_pengamatan_posisi_3: request.input('data_pengamatan_posisi_3'),
-                sensor_id: request.input('sensor_id'),
-                status_pengamatan_id: request.input('pengamatan_status_id'),
+                data_pengamatan_detail : request.input('data_pengamatan_detail'),
+                barang_kalibrasi_id : request.input('barang_kalibrasi_id'),
+                status_pengamatan_id: 1,
                 user_cabang_id: request.input('user_cabang_id')
             }
 
@@ -92,19 +82,10 @@ class DataPengamatanController {
 
             dataPengamatan.data_pengamatan_tanggal_kalibrasi = data.data_pengamatan_tanggal_kalibrasi
             dataPengamatan.data_pengamatan_tempat_kalibrasi = data.data_pengamatan_tempat_kalibrasi
-            dataPengamatan.data_pengamatan_kondisi_ruangan = data.data_pengamatan_kondisi_ruangan
             dataPengamatan.data_pengamatan_suhu_terkoreksi = data.data_pengamatan_suhu_terkoreksi
-            dataPengamatan.data_pengamatan_no_id_standar = data.data_pengamatan_no_id_standar
-            dataPengamatan.data_pengamatan_standar_telusur = data.data_pengamatan_standar_telusur
-            dataPengamatan.data_pengamatan_lebar_pintu = data.data_pengamatan_lebar_pintu
-            dataPengamatan.data_pengamatan_letak_sensor = data.data_pengamatan_letak_sensor
-            dataPengamatan.data_pengamatan_panjang_benda = data.data_pengamatan_panjang_benda
-            dataPengamatan.data_pengamatan_lebar_benda = data.data_pengamatan_lebar_benda
-            dataPengamatan.data_pengamatan_tinggi_benda = data.data_pengamatan_tinggi_benda
-            dataPengamatan.data_pengamatan_posisi_1 = data.data_pengamatan_posisi_1
-            dataPengamatan.data_pengamatan_posisi_2_3 = data.data_pengamatan_posisi_2_3
-            dataPengamatan.data_pengamatan_posisi_3 = data.data_pengamatan_posisi_3
-            dataPengamatan.sensor_id = data.sensor_id
+            dataPengamatan.data_pengamatan_kelembaban_terkoreksi = data.data_pengamatan_kelembaban_terkoreksi
+            dataPengamatan.data_pengamatan_detail = data.data_pengamatan_detail
+            dataPengamatan.barang_kalibrasi_id = data.barang_kalibrasi_id
             dataPengamatan.pengamatan_status_id = data.status_pengamatan_id
             dataPengamatan.user_cabang_id = data.user_cabang_id
 
@@ -125,20 +106,10 @@ class DataPengamatanController {
             const data = {
                 data_pengamatan_tanggal_kalibrasi: request.input('data_pengamatan_tanggal_kalibrasi'),
                 data_pengamatan_tempat_kalibrasi: request.input('data_pengamatan_tempat_kalibrasi'),
-                data_pengamatan_kondisi_ruangan: request.input('data_pengamatan_kondisi_ruangan'),
                 data_pengamatan_suhu_terkoreksi: request.input('data_pengamatan_suhu_terkoreksi'),
                 data_pengamatan_kelembaban_terkoreksi: request.input('data_pengamatan_kelembaban_terkoreksi'),
-                data_pengamatan_no_id_standar: request.input('data_pengamatan_no_id_standar'),
-                data_pengamatan_standar_telusur: request.input('data_pengamatan_standar_telusur'),
-                data_pengamatan_lebar_pintu: request.input('data_pengamatan_lebar_pintu'),
-                data_pengamatan_letak_sensor: request.input('data_pengamatan_letak_sensor'),
-                data_pengamatan_panjang_benda: request.input('data_pengamatan_panjang_benda'),
-                data_pengamatan_lebar_benda: request.input('data_pengamatan_lebar_benda'),
-                data_pengamatan_tinggi_benda: request.input('data_pengamatan_tinggi_benda'),
-                data_pengamatan_posisi_1: request.input('data_pengamatan_posisi_1'),
-                data_pengamatan_posisi_2_3: request.input('data_pengamatan_posisi_2_3'),
-                data_pengamatan_posisi_3: request.input('data_pengamatan_posisi_3'),
-                sensor_id: request.input('sensor_id'),
+                data_pengamatan_detail : request.input('data_pengamatan_detail'),
+                barang_kalibrasi_id : request.input('barang_kalibrasi_id'),
                 status_pengamatan_id: request.input('pengamatan_status_id'),
                 user_cabang_id: request.input('user_cabang_id')
             }
@@ -152,19 +123,10 @@ class DataPengamatanController {
 
             dataPengamatan.data_pengamatan_tanggal_kalibrasi = data.data_pengamatan_tanggal_kalibrasi
             dataPengamatan.data_pengamatan_tempat_kalibrasi = data.data_pengamatan_tempat_kalibrasi
-            dataPengamatan.data_pengamatan_kondisi_ruangan = data.data_pengamatan_kondisi_ruangan
             dataPengamatan.data_pengamatan_suhu_terkoreksi = data.data_pengamatan_suhu_terkoreksi
-            dataPengamatan.data_pengamatan_no_id_standar = data.data_pengamatan_no_id_standar
-            dataPengamatan.data_pengamatan_standar_telusur = data.data_pengamatan_standar_telusur
-            dataPengamatan.data_pengamatan_lebar_pintu = data.data_pengamatan_lebar_pintu
-            dataPengamatan.data_pengamatan_letak_sensor = data.data_pengamatan_letak_sensor
-            dataPengamatan.data_pengamatan_panjang_benda = data.data_pengamatan_panjang_benda
-            dataPengamatan.data_pengamatan_lebar_benda = data.data_pengamatan_lebar_benda
-            dataPengamatan.data_pengamatan_tinggi_benda = data.data_pengamatan_tinggi_benda
-            dataPengamatan.data_pengamatan_posisi_1 = data.data_pengamatan_posisi_1
-            dataPengamatan.data_pengamatan_posisi_2_3 = data.data_pengamatan_posisi_2_3
-            dataPengamatan.data_pengamatan_posisi_3 = data.data_pengamatan_posisi_3
-            dataPengamatan.sensor_id = data.sensor_id
+            dataPengamatan.data_pengamatan_kelembaban_terkoreksi = data.data_pengamatan_kelembaban_terkoreksi
+            dataPengamatan.data_pengamatan_detail = data.data_pengamatan_detail
+            dataPengamatan.barang_kalibrasi_id = data.barang_kalibrasi_id
             dataPengamatan.pengamatan_status_id = data.status_pengamatan_id
             dataPengamatan.user_cabang_id = data.user_cabang_id
             
@@ -172,7 +134,7 @@ class DataPengamatanController {
             return response.json(dataPengamatan)
         } catch (error) {
             return response.status(400).send({
-                message: error.message //'Ops, sepertinya ada yang tidak beres!'
+                message: 'Ops, sepertinya ada yang tidak beres!'
             })
         }
     }
@@ -226,7 +188,7 @@ class DataPengamatanController {
             let value = search.value
 
             let dataPengamatan = await DataPengamatan.query()
-                .with('sensor')
+                .with('barangKalibrasi')
                 .with('statusPengamatan')
                 .with('userCabang')
                 .whereRaw(`${column} = '${value}'`)

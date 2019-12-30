@@ -4,14 +4,15 @@ const CustomerPerusahaan = use('App/Models/CustomerPerusahaan')
 const { validate } = use('Validator')
 
 let rules = {
-    customer_perusahaan_pkal: 'required|unique:customer_perusahaans,customer_perusahaan_pkal',
+    customer_perusahaan_npwp: 'required|unique:customer_perusahaans,customer_perusahaan_npwp',
     customer_perusahaan_nama: 'required',
     customer_status_id: 'required'
 }
 
 const vmessage = {
-    'customer_perusahaan_pkal.unique': 'Nomor PKAL sudah digunakan, tidak boleh duplikat',
-    'customer_perusahaan_pkal.required': 'Nomor PKAL tidak boleh kosong',
+    'customer_perusahaan_npwp.unique': 'Nomor NPWP sudah digunakan, tidak boleh duplikat',
+    'customer_perusahaan_npwp.required': 'Nomor NPWP tidak boleh kosong',
+    'customer_perusahaan_nama.required' : 'Nama perusahaan tidak boleh kosong',
     'customer_status_id.required': 'Status customer tidak boleh kosong'
 }
 
@@ -27,7 +28,7 @@ class CustomerPerusahaanController {
             return response.json(customerPerusahaan)
         } catch (error) {
             return response.status(400).send({
-                message: 'Ops, sepertinya ada yang tidak beres!'
+                message: error.message//'Ops, sepertinya ada yang tidak beres!'
             })
         }
     }
@@ -58,11 +59,13 @@ class CustomerPerusahaanController {
     async store({ response, request }) {
         try {
             const customerPerusahaan = new CustomerPerusahaan()
+            const count = await CustomerPerusahaan.query().count('* as total')
+            const pkal = 1300 + parseInt(count[0]['total']);
             const validation = await validate(request.all(), rules, vmessage)
 
             const data = {
                 customer_perusahaan_npwp: request.input('customer_perusahaan_npwp'),
-                customer_perusahaan_pkal: request.input('customer_perusahaan_pkal'),
+                customer_perusahaan_pkal: pkal,
                 customer_perusahaan_nama: request.input('customer_perusahaan_nama'),
                 customer_perusahaan_alamat: request.input('customer_perusahaan_alamat'),
                 customer_perusahaan_telepon: request.input('customer_perusahaan_telepon'),
@@ -109,8 +112,8 @@ class CustomerPerusahaanController {
                 customer_status_id: request.input('customer_status_id')
             }
 
-            if (customerPerusahaan.customer_perusahaan_pkal === data.customer_perusahaan_pkal) {
-                rules.customer_perusahaan_pkal = 'required'
+            if (customerPerusahaan.customer_perusahaan_npwp === data.customer_perusahaan_npwp) {
+                rules.customer_perusahaan_npwp = 'required'
             }
 
             const validation = await validate(request.all(), rules, vmessage)
@@ -203,6 +206,22 @@ class CustomerPerusahaanController {
             }
 
             return response.json(customerPerusahaan)
+        } catch (error) {
+            return response.status(400).send({
+                message: 'Ops, sepertinya ada yang tidak beres!'
+            })
+        }
+    }
+
+    async notify({ request, response }){
+        try {
+            const customerPerusahaan = await CustomerPerusahaan.query().where('customer_perusahaan_verif', false).fetch()
+            const count = await CustomerPerusahaan.query().where('customer_perusahaan_verif',false).count('* as total')
+            const data = {
+                customerPerusahaan : customerPerusahaan,
+                total : count[0]['total']
+            }
+            return response.json(data)
         } catch (error) {
             return response.status(400).send({
                 message: 'Ops, sepertinya ada yang tidak beres!'

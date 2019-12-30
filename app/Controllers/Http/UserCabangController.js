@@ -105,18 +105,17 @@ class UserCabangController {
         const data = {
             user_cabang_nama: request.input('user_cabang_nama'),
             user_cabang_email: request.input('user_cabang_email'),
-            user_cabang_password: request.input('user_cabang_password'),
+            user_cabang_password: userCabang.user_cabang_password,
             user_cabang_telepon: request.input('user_cabang_telepon'),
             user_cabang_alamat: request.input('user_cabang_alamat'),
             kantor_cabang_id: request.input('kantor_cabang_id'),
             user_role_id: request.input('user_role_id')
         }
 
-        if (userCustomer.user_cabang_email === data.user_cabang_email) {
+        if (userCabang.user_cabang_email === data.user_cabang_email) {
             rules = {
                 user_cabang_nama: 'required',
-                user_cabang_email: 'required|email',
-                user_cabang_password: 'required|min:8'
+                user_cabang_email: 'required|email'
             }
         }
 

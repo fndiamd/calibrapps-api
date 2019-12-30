@@ -4,15 +4,15 @@ const DataUkur = use('App/Models/DataUkur')
 const { validate } = use('Validator')
 
 let rules = {
-    data_ukur_setting_point: 'required',
+    data_ukur_data: 'required',
     data_pengamatan_id: 'required',
-    barang_kalibrasi_id: 'required'
+    sensor_id: 'required'
 }
 
 const vmessage = {
-    'data_ukur_setting_point.required': 'Setting point tidak boleh kosong',
+    'data_ukur_data.required': 'Data ukur tidak boleh kosong',
     'data_pengamatan_id.required': 'Data pengamatan tidak boleh kosong',
-    'barang_kalibrasi_id.required': 'Barang kalibrasi tidak boleh kosong'
+    'sensor_id.required': 'Sensor tidak boleh kosong'
 }
 
 class DataUkurController {
@@ -21,7 +21,7 @@ class DataUkurController {
         try {
             let dataUkur = await DataUkur.query()
                 .with('dataPengamatan')
-                .with('barangKalibrasi')
+                .with('sensor')
                 .fetch()
 
             return response.json(dataUkur)
@@ -39,7 +39,7 @@ class DataUkurController {
                 .query()
                 .where('data_ukur_id', params.id)
                 .with('dataPengamatan')
-                .with('barangKalibrasi')
+                .with('sensor')
                 .first()
 
             return dataUkur
@@ -62,7 +62,8 @@ class DataUkurController {
             const validation = await validate(request.all(), rules, vmessage)
 
             const data = {
-                data_ukur_setting_point: request.input('data_ukur_setting_point'),
+                data_ukur_data : request.input('data_ukur_data'),
+                sensor_id : request.input('sensor_id'),
                 data_pengamatan_id: request.input('data_pengamatan_id')
             }
 
@@ -73,7 +74,8 @@ class DataUkurController {
                 })
             }
 
-            dataUkur.data_ukur_setting_point = data.data_ukur_setting_point
+            dataUkur.data_ukur_data = data.data_ukur_data
+            dataUkur.sensor_id = data.sensor_id
             dataUkur.data_pengamatan_id = data.data_pengamatan_id
 
             await dataUkur.save()
@@ -91,7 +93,8 @@ class DataUkurController {
             const validation = await validate(request.all(), rules, vmessage)
 
             const data = {
-                data_ukur_setting_point: request.input('data_ukur_setting_point'),
+                data_ukur_data : request.input('data_ukur_data'),
+                sensor_id : request.input('sensor_id'),
                 data_pengamatan_id: request.input('data_pengamatan_id')
             }
 
@@ -102,7 +105,8 @@ class DataUkurController {
                 })
             }
 
-            dataUkur.data_ukur_setting_point = data.data_ukur_setting_point
+            dataUkur.data_ukur_data = data.data_ukur_data
+            dataUkur.sensor_id = data.sensor_id
             dataUkur.data_pengamatan_id = data.data_pengamatan_id
 
             await dataUkur.save()
@@ -149,7 +153,7 @@ class DataUkurController {
 
             const dataUkur = await DataUkur.query()
                 .with('dataPengamatan')
-                .with('barangKalibrasi')
+                .with('sensor')
                 .orderBy(`${column}`, `${sort}`)
                 .paginate(page, limit)
 
@@ -164,13 +168,13 @@ class DataUkurController {
     async search({ request, response }) {
         try {
             let search = request.only(['column', 'value'])
-            let column = search.column || 'data_ukur_setting_point';
+            let column = search.column || 'data_pengamatan_id';
             let value = search.value.toLowerCase();
 
             let dataUkur = await DataUkur.query()
                 .with('dataPengamatan')
-                .with('barangKalibrasi')
-                .whereRaw(`LOWER(${column}) LIKE '%${value}%'`)
+                .with('sensor')
+                .where(`${column} = '${value}'`)
                 .fetch()
 
             if (dataUkur.rows.length == 0) {

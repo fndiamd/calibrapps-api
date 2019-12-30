@@ -12,21 +12,18 @@ class DataPengamatan extends Model {
         return super.dates.concat(['data_pengamatan_tanggal_kalibrasi'])
     }
 
-    sensor(){
-        return this.belongsTo('App/Models/Sensor')
-    }
-
-    userCabang(){
-        return this.belongsTo('App/Models/UserCabang')
+    barangKalibrasi(){
+        return this.belongsTo('App/Models/BarangKalibrasi')
     }
 
     statusPengamatan(){
         return this.belongsTo('App/Models/StatusPengamatan')
     }
 
-    dataUkur(){
-        return this.belongsTo('App/Models/DataUkur')
+    userCabang(){
+        return this.belongsTo('App/Models/UserCabang')
     }
+
 }
 
 module.exports = DataPengamatan
